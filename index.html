@@ -9,31 +9,38 @@
     <meta name="theme-color" content="#050505">
     <title>Hello :) I am Sayani</title>
     
+    <!-- Spline Viewer Web Component CDN -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.54/build/spline-viewer.js"></script>
+    
     <style>
-        /* --- FORENSIC & HACKING BACKGROUND EDIT --- */
-        body::before {
-            content: "";
+        /* --- 3D CANVAS SPLINE BACKDROP STYLING --- */
+        .spline-background-container {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px;
-            pointer-events: none;
-            z-index: -1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3; 
+            pointer-events: auto; 
+        }
+        
+        spline-viewer {
+            width: 100%;
+            height: 100%;
+            filter: brightness(1.4) contrast(1.25) saturate(1.1);
         }
 
+        /* --- FORENSIC SCANLINE LAYER --- */
         .forensic-scanline {
             width: 100%;
             height: 10px;
             z-index: 999;
-            background: rgba(0, 255, 204, 0.03);
+            background: rgba(0, 255, 204, 0.02);
             position: fixed;
             bottom: 100%;
             animation: scanline 6s linear infinite;
             pointer-events: none;
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.1);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.08);
         }
 
         @keyframes scanline {
@@ -41,185 +48,195 @@
             100% { bottom: -100%; }
         }
 
-        /* --- YOUR ORIGINAL STYLES (NO CHANGES BELOW) --- */
-      /* --- FINAL SINGLE-BORDER FLIP FIX --- */
-.cert-display-case {
-    display: flex;
-    justify-content: center;
-    padding: 30px 0;
-    perspective: 1000px;
-}
+        /* --- HARMONIZED THEME DESIGN MATRIX --- */
+        .cert-display-case {
+            display: flex;
+            justify-content: center;
+            padding: 30px 0;
+            perspective: 1000px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 4rem auto;
+        }
 
-.cert-card {
-    width: 600px; 
-    height: 420px;
-    background: transparent;
-    cursor: pointer;
-    position: relative;
-    /* This is your ONLY border */
-    border: 2px solid var(--accent-primary);
-    border-radius: 8px;
-    overflow: hidden; 
-}
+        .cert-card {
+            width: 100%; 
+            height: 420px;
+            background: rgba(5, 5, 5, 0.85);
+            cursor: pointer;
+            position: relative;
+            border: 2px solid var(--accent-primary);
+            border-radius: 8px;
+            overflow: hidden; 
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
+        }
 
-.cert-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-style: preserve-3d;
-}
+        .cert-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
 
-.cert-card:hover .cert-inner {
-    transform: rotateY(180deg);
-}
+        .cert-card:hover .cert-inner {
+            transform: rotateY(180deg);
+        }
 
-.cert-front, .cert-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    background: #000;
-}
+        .cert-front, .cert-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background: #050505;
+        }
 
-.cert-back {
-    transform: rotateY(180deg);
-}
+        .cert-back {
+            transform: rotateY(180deg);
+        }
 
-.cert-front img, .cert-back img {
-    width: 100%;
-    height: 100%;
-    object-fit: fill; /* This stretches the image slightly to kill the inner box gaps */
-    display: block;
-}
+        .cert-front img, .cert-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill; 
+            display: block;
+        }
 
-/* SMALLER LABEL: Won't cover the cert content */
-.cert-label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: var(--accent-primary);
-    color: #000;
-    padding: 3px 10px;
-    font-size: 0.65rem; /* Smaller font */
-    font-weight: bold;
-    z-index: 10;
-    border-bottom-right-radius: 8px;
-    text-transform: uppercase;
-}
+        .cert-label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--accent-primary);
+            color: #000;
+            padding: 4px 12px;
+            font-size: 0.7rem; 
+            font-weight: bold;
+            z-index: 10;
+            border-bottom-right-radius: 8px;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            letter-spacing: 1px;
+        }
 
-/* Hover effect for the whole container */
-.cert-card:hover {
-    box-shadow: 0 0 25px rgba(0, 255, 204, 0.3);
-}
-        /* --- FINAL BALANCED BADGE & MOBILE FIX --- */
+        .cert-card:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.25);
+            border-color: var(--accent-secondary);
+        }
 
-/* 1. Fix Laptop View (Preventing them from being "too much") */
-.thm-item img {
-    width: 140px !important; /* Reduced from 180px so they don't overlap */
-    height: auto !important;
-    transition: transform 0.3s ease;
-}
+        /* --- TRYHACKME CORNER LAYOUT FIX --- */
+        .thm-scene { 
+            width: 100%; 
+            height: 500px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            perspective: 1200px; 
+            overflow: hidden; 
+            position: relative; 
+            margin-top: 2rem; 
+            margin-bottom: 2rem;
+        }
+        
+        .thm-ring { 
+            position: relative; 
+            width: 160px; 
+            height: 100px; 
+            transform-style: preserve-3d; 
+            animation: thm-spin 30s linear infinite; 
+        }
+        
+        .thm-ring:hover { animation-play-state: paused; }
+        
+        .thm-item { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            backface-visibility: visible;
+        }
+        
+        .thm-item img { 
+            width: 120px; 
+            height: auto; 
+            object-fit: contain; 
+            filter: drop-shadow(0 0 8px var(--accent-primary)); 
+            transition: transform 0.3s ease, filter 0.3s; 
+        }
+        
+        .thm-item:hover img { 
+            transform: scale(1.25); 
+            filter: drop-shadow(0 0 18px var(--accent-secondary)); 
+        }
 
-.thm-scene {
-    height: 450px !important;
-    perspective: 1200px !important; /* Adjusts the 3D depth */
-}
+        .thm-profile-case {
+            position: relative;
+            border: 2px solid #333;
+            padding: 5px;
+            background: rgba(8, 8, 8, 0.9);
+            overflow: hidden;
+            transition: 0.3s;
+            width: 100%;
+            max-width: 480px;
+            margin: 3rem auto;
+            backdrop-filter: blur(10px);
+            border-radius: 6px;
+        }
+        .thm-profile-case:hover { border-color: var(--accent-primary); box-shadow: 0 0 25px rgba(0, 255, 204, 0.2); }
+        .thm-profile-img { width: 100%; height: auto; display: block; filter: contrast(1.1); }
 
-/* 2. Fix Mobile View (Alignment & Scaling) */
-@media (max-width: 768px) {
-    .hero { margin-top: 50px !important; }
-    /* Fix Header Overlap */
-    header .nav-container {
-        flex-direction: column !important;
-        padding: 10px 0 !important;
-    }
-
-    .nav-links {
-        display: flex !important;
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-        gap: 5px !important;
-        margin-top: 5px !important;
-    }
-
-    .nav-links a {
-        font-size: 0.6rem !important;
-        padding: 2px 5px !important;
-    }
-    /* Stack everything vertically (Fixes parallel view) */
-    section, .about-grid, .hero, .container, .cert-display-case {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        width: 100% !important;
-    }
-
-    /* Make badges fit the phone screen width */
-    .thm-scene {
-        height: 300px !important;
-        transform: scale(0.8) !important; /* Shrinks the whole carousel to fit mobile */
-    }
-
-    .thm-item img {
-        width: 100px !important; /* Smaller size for mobile screens */
-    }
-
-    /* This pulls the badges closer to the center on mobile so they don't fly off-screen */
-    div[style*="translateZ(400px)"] {
-        transform-origin: center !important;
-        /* We use a scale here to keep your 400px math but make it look right on phones */
-    }
-}
-        /* --- RESET & VARIABLES --- */
+        /* --- BASE STYLES & LAYERING --- */
         :root {
-            --bg-color: #050505;
-            --text-color: #a0a0a0;
-            --accent-primary: #00ffcc; /* Cyber Cyan */
-            --accent-secondary: #ff00ff; /* Neon Magenta */
-            --horror-red: #8a0000;      /* Dried Blood Red */
-            --horror-bright: #ff0000;   /* Fresh Blood Red */
-            --terminal-amber: #ffb000;  /* Retro Terminal */
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --bg-color: transparent; 
+            --text-color: #b0b3b8;
+            --accent-primary: #00ffcc; 
+            --accent-secondary: #ff00ff; 
+            --horror-red: #8a0000;      
+            --horror-bright: #ff0000;   
+            --terminal-amber: #ffb000;  
+            --glass: rgba(10, 10, 10, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --font-mono: 'Courier New', Courier, monospace;
             --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --font-serif: 'Times New Roman', Times, serif; 
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none; /* Custom cursor handling */
+            cursor: none; 
             -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
             width: 100%;
             overflow-x: hidden;
-            background-color: var(--bg-color);
+            background-color: #050505;
             color: var(--text-color);
             font-family: var(--font-sans);
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
-        /* --- BACKGROUND COLOR CYCLE ANIMATION (Enhanced) --- */
         body {
-            animation: color-cycle 20s infinite alternate ease-in-out;
+            animation: color-cycle 25s infinite alternate ease-in-out;
         }
 
         @keyframes color-cycle {
-            0% { background-color: #050505; }      /* Deep Black */
-            25% { background-color: #1a0505; }     /* Deep Red Tint (Horror) */
-            50% { background-color: #0f001a; }     /* Deep Purple Tint (Mystery) */
-            75% { background-color: #00151a; }     /* Deep Cyan Tint (Cyber) */
-            100% { background-color: #050505; }    /* Back to Black */
+            0% { background-color: rgba(5, 5, 5, 0.3); }      
+            25% { background-color: rgba(15, 5, 5, 0.35); }     
+            50% { background-color: rgba(5, 0, 15, 0.35); }     
+            75% { background-color: rgba(0, 10, 15, 0.35); }     
+            100% { background-color: rgba(5, 5, 5, 0.3); }    
         }
 
         a { text-decoration: none; color: inherit; cursor: none; }
-        ul { list-style: none; }
 
         /* --- CUSTOM CURSOR --- */
         #cursor {
@@ -235,40 +252,33 @@
             mix-blend-mode: difference;
         }
         #cursor.hovered {
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 255, 204, 0.2);
+            width: 52px;
+            height: 52px;
+            background: rgba(0, 255, 204, 0.15);
             border-color: var(--accent-secondary);
         }
 
-        /* Hide custom cursor on touch devices */
         @media (hover: none) and (pointer: coarse) {
             #cursor { display: none !important; }
             * { cursor: auto !important; }
         }
-
-        /* --- CANVAS LAYERS --- */
-        #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; opacity: 0.4; }
-        #canvas-ripple { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.6; mix-blend-mode: screen; }
-
         
         /* --- NAVIGATION --- */
         nav { 
             position: fixed; top: 0; width: 100%; 
-            padding: 1rem 2rem; 
+            padding: 1.2rem 2.5rem; 
             display: flex; justify-content: space-between; align-items: center; 
-            z-index: 1000; backdrop-filter: blur(10px); 
-            background: rgba(5, 5, 5, 0.85); 
+            z-index: 1000; backdrop-filter: blur(14px); 
+            background: rgba(4, 4, 4, 0.8); 
             border-bottom: 1px solid var(--glass-border); 
         }
-        .logo { font-family: var(--font-mono); font-size: 1.2rem; font-weight: bold; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 2px; }
-        .nav-links { display: flex; gap: 2rem; }
-        .nav-links a { font-family: var(--font-mono); font-size: 0.85rem; position: relative; transition: color 0.3s; }
+        .logo { font-family: var(--font-mono); font-size: 1.25rem; font-weight: bold; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 2px; }
+        .nav-links { display: flex; gap: 2.2rem; }
+        .nav-links a { font-family: var(--font-mono); font-size: 0.85rem; color: #d0d0d0; position: relative; transition: color 0.3s; }
         .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--accent-secondary); transition: width 0.3s ease; }
         .nav-links a:hover { color: var(--accent-primary); }
         .nav-links a:hover::after { width: 100%; }
 
-        /* Mobile Menu */
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
         .bar { width: 25px; height: 3px; background-color: var(--accent-primary); transition: 0.3s; }
         
@@ -276,232 +286,179 @@
         .hero { 
             min-height: 100dvh; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            text-align: center; padding: 6rem 1.5rem 2rem; 
-            position: relative; opacity: 1; 
-            animation: hero-fade-in 2s ease forwards 7.5s; 
+            text-align: center; padding: 7rem 1.5rem 3rem; 
+            position: relative; 
+            animation: hero-fade-in 2s ease forwards; 
         }
-        .hero-avatar-container { width: 160px; height: 160px; margin-bottom: 2rem; position: relative; display: flex; justify-content: center; align-items: center; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .hero-avatar-container:hover { transform: scale(1.1); }
-        .hero-avatar-glow { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary)); filter: blur(20px); opacity: 0.5; transition: opacity 0.3s, background 0.3s; animation: pulse-glow 3s infinite alternate; }
-        .hero-avatar-container:hover .hero-avatar-glow { opacity: 1.9; background: linear-gradient(45deg, var(--accent-secondary), var(--accent-tertiary)); animation: none; }
-        .hero-avatar-ring { position: absolute; width: 110%; height: 110%; border-radius: 50%; border: 2px dashed var(--accent-primary); animation: spin-ring 10s linear infinite; transition: border-color 0.3s; }
-        .hero-avatar-container:hover .hero-avatar-ring { border-color: var(--accent-secondary); animation: spin-ring 2s linear infinite; border-width: 3px; }
-        .hero-avatar-ring::before { content: ''; position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; background: var(--accent-secondary); border-radius: 50%; box-shadow: 0 0 10px var(--accent-secondary); transition: background 0.3s, box-shadow 0.3s; }
-        .hero-avatar-container:hover .hero-avatar-ring::before { background: var(--accent-tertiary); box-shadow: 0 0 15px var(--accent-tertiary); }
-        .hero-scan-line { position: absolute; width: 100%; height: 4px; background: rgba(255, 255, 255, 0.8); box-shadow: 0 0 15px var(--accent-primary), 0 0 30px var(--accent-primary); top: -10%; left: 0; z-index: 10; opacity: 0; pointer-events: none; border-radius: 50%; }
-        .hero-avatar-container:hover .hero-scan-line { animation: scan-avatar 1.2s ease-in-out infinite; opacity: 1; }
-        .hero-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.1); position: relative; z-index: 2; background-color: #111; transition: border-color 0.3s; }
-        .hero-avatar-container:hover .hero-img { border-color: var(--accent-primary); }
-        .hero-tag { font-family: var(--font-mono); color: var(--accent-secondary); margin-bottom: 1rem; border: 1px solid var(--accent-secondary); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.7rem; animation: pulse 2s infinite; }
-        .glitch-wrapper { position: relative; }
-        .hero h1 { font-size: 4rem; font-weight: 900; text-transform: uppercase; line-height: 1; color: #fff; position: relative; margin-bottom: 1rem; }
+        .hero-avatar-container { width: 165px; height: 165px; margin-bottom: 2rem; position: relative; display: flex; justify-content: center; align-items: center; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .hero-avatar-container:hover { transform: scale(1.08); }
+        .hero-avatar-glow { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary)); filter: blur(16px); opacity: 0.4; animation: pulse-glow 3s infinite alternate; }
+        .hero-avatar-container:hover .hero-avatar-glow { opacity: 0.8; }
+        .hero-avatar-ring { position: absolute; width: 112%; height: 112%; border-radius: 50%; border: 2px dashed var(--accent-primary); animation: spin-ring 14s linear infinite; }
+        .hero-avatar-container:hover .hero-avatar-ring { border-color: var(--accent-secondary); animation: spin-ring 4s linear infinite; }
+        .hero-avatar-ring::before { content: ''; position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; background: var(--accent-secondary); border-radius: 50%; box-shadow: 0 0 10px var(--accent-secondary); }
+        .hero-scan-line { position: absolute; width: 100%; height: 4px; background: rgba(255, 255, 255, 0.7); box-shadow: 0 0 15px var(--accent-primary); top: -10%; left: 0; z-index: 10; opacity: 0; border-radius: 50%; }
+        .hero-avatar-container:hover .hero-scan-line { animation: scan-avatar 1.5s ease-in-out infinite; opacity: 1; }
+        .hero-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.1); position: relative; z-index: 2; background-color: #0b0b0b; }
+        
+        .hero-tag { font-family: var(--font-mono); color: var(--accent-secondary); margin-bottom: 1.5rem; border: 1px solid var(--accent-secondary); padding: 0.5rem 1.2rem; border-radius: 50px; font-size: 0.75rem; background: rgba(5, 5, 5, 0.7); backdrop-filter: blur(8px); }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; text-transform: uppercase; line-height: 1.1; color: #fff; margin-bottom: 1rem; letter-spacing: -1px; }
         .glitch { position: relative; }
         .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        .glitch::before { left: 2px; text-shadow: -1px 0 var(--accent-secondary); clip: rect(44px, 450px, 56px, 0); animation: glitch-anim 5s infinite linear alternate-reverse; }
-        .glitch::after { left: -2px; text-shadow: -1px 0 var(--accent-primary); clip: rect(44px, 450px, 56px, 0); animation: glitch-anim2 5s infinite linear alternate-reverse; }
-        .hero p { margin-top: 1rem; font-size: 1rem; max-width: 600px; color: #aaa; padding: 0 1rem; }
+        .glitch::before { left: 2px; text-shadow: -1px 0 var(--accent-secondary); clip: rect(44px, 450px, 56px, 0); animation: glitch-anim 6s infinite linear alternate-reverse; }
+        .glitch::after { left: -2px; text-shadow: -1px 0 var(--accent-primary); clip: rect(44px, 450px, 56px, 0); animation: glitch-anim2 6s infinite linear alternate-reverse; }
         
-        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 2rem; }
+        .hero p { margin-top: 0.5rem; font-size: 1.05rem; max-width: 650px; color: #d0d2d6; text-shadow: 0 2px 8px rgba(0,0,0,0.8); font-family: var(--font-mono); }
+        .hero-btns { display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; margin-top: 2.5rem; }
         
         .cta-btn { 
-            padding: 1rem 2rem; background: transparent; border: 2px solid var(--accent-primary); 
-            color: var(--accent-primary); font-family: var(--font-mono); font-weight: bold; font-size: 1rem; 
+            padding: 0.9rem 2.2rem; background: rgba(5, 5, 5, 0.6); border: 2px solid var(--accent-primary); 
+            color: var(--accent-primary); font-family: var(--font-mono); font-weight: bold; font-size: 0.9rem; 
             transition: 0.3s; position: relative; overflow: hidden; z-index: 1; display: inline-block;
+            backdrop-filter: blur(8px); border-radius: 4px;
         }
         .cta-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--accent-primary); z-index: -1; transition: 0.3s; }
         .cta-btn:hover { color: #000; }
         .cta-btn:hover::before { left: 0; }
-        
-        .download-btn {
-            border-color: var(--accent-secondary);
-            color: var(--accent-secondary);
-        }
+        .download-btn { border-color: var(--accent-secondary); color: var(--accent-secondary); }
         .download-btn::before { background: var(--accent-secondary); }
 
         /* --- SECTIONS --- */
-        section { padding: 4rem 1.5rem; max-width: 1200px; margin: 0 auto; }
-        .section-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 3rem; position: relative; display: inline-block; font-family: var(--font-mono); white-space: nowrap; }
-        .section-title::after { content: ''; position: absolute; bottom: 8px; right: -10px; width: 40px; height: 4px; background: var(--accent-secondary); }
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-        .about-text p { margin-bottom: 1.5rem; font-size: 1rem; }
-        .stats-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-        .stat-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 1.5rem; text-align: center; transition: transform 0.3s; }
-        .stat-card:hover { transform: translateY(-5px); border-color: var(--accent-primary); }
-        .stat-number { font-size: 2rem; font-weight: bold; color: var(--accent-primary); display: block; }
-        .stat-label { font-family: var(--font-mono); font-size: 0.8rem; color: #888; }
+        section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 5; }
+        .section-title { font-size: 2.4rem; font-weight: 800; margin-bottom: 3rem; position: relative; display: inline-block; font-family: var(--font-mono); color: #fff; letter-spacing: 1px; }
+        .section-title::after { content: ''; position: absolute; bottom: 4px; right: -15px; width: 45px; height: 4px; background: var(--accent-secondary); }
         
-        /* CEH Badge Spin Logic */
-        .ceh-badge-img { width: 80px; height: auto; margin: 0 auto 0.5rem; display: block; transition: transform 0.8s ease-in-out; }
+        .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center; }
+        .about-text { background: rgba(10, 10, 10, 0.7); padding: 2rem; border-radius: 8px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); color: #e1e3e6; }
+        .about-text p { margin-bottom: 1.2rem; font-size: 0.98rem; }
+        
+        .stats-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+        .stat-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 1.5rem; text-align: center; border-radius: 6px; backdrop-filter: blur(10px); transition: all 0.3s ease; }
+        .stat-card:hover { transform: translateY(-4px); border-color: var(--accent-primary); background: rgba(0, 255, 204, 0.03); }
+        .stat-number { font-size: 1.8rem; font-weight: bold; color: var(--accent-primary); display: block; font-family: var(--font-mono); }
+        .stat-label { font-family: var(--font-mono); font-size: 0.8rem; color: #a2a5a9; }
+        
+        .ceh-badge-img { width: 80px; height: auto; margin: 0 auto 0.6rem; display: block; transition: transform 0.8s ease-in-out; }
         .stat-card:hover .ceh-badge-img { transform: rotateY(360deg); }
 
-        /* --- NEW PROFILE CERT DISPLAY CASE (UPDATED) --- */
-        .cert-display-case {
-            margin-bottom: 4rem; position: relative; border: 2px solid #333; padding: 5px; background: #080808;
-            overflow: hidden; transition: 0.3s; width: 40%; margin-left: auto; margin-right: auto; perspective: 1000px; 
-        }
-        .cert-display-case:hover { border-color: var(--accent-primary); box-shadow: 0 0 20px rgba(0, 255, 204, 0.1); }
-        .cert-display-header { position: absolute; top: 0; left: 0; background: var(--accent-primary); color: #000; font-family: var(--font-mono); font-size: 0.8rem; padding: 0.2rem 0.5rem; font-weight: bold; z-index: 5; }
-        .cert-display-img { width: 100%; height: auto; display: block; filter: grayscale(80%) contrast(1.2); transition: transform 1s ease-in-out, filter 0.5s; transform-style: preserve-3d; }
-        .cert-display-case:hover .cert-display-img { filter: grayscale(0%) contrast(1); transform: rotateY(360deg); }
-
-        /* --- CAROUSEL --- */
-        .carousel-wrapper { margin-bottom: 4rem; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: rgba(0, 0, 0, 0.5); border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 1.5rem 0; transform: rotate(-2deg); z-index: 10; }
-        .carousel-track { display: flex; width: max-content; animation: scroll 20s linear infinite; }
-        .carousel-item { font-family: var(--font-mono); font-size: 2rem; font-weight: bold; color: var(--accent-primary); margin: 0 2rem; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; opacity: 0.7; transition: 0.3s; }
-        .carousel-item:hover { opacity: 1; color: #fff; text-shadow: 0 0 10px var(--accent-secondary); }
-        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
-        .skill-category { background: rgba(20, 20, 20, 0.8); border: 1px solid #333; padding: 1.5rem; position: relative; overflow: hidden; transition: 0.4s; }
-        .skill-category:hover { border-color: var(--accent-secondary); box-shadow: 0 0 20px rgba(255, 0, 255, 0.2); }
-        .skill-category h3 { font-family: var(--font-mono); color: var(--accent-primary); margin-bottom: 1.5rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
-        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.8rem; }
-        .tag { background: #222; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem; border: 1px solid transparent; transition: 0.3s; }
-        .tag:hover { border-color: var(--accent-tertiary); color: var(--accent-tertiary); transform: scale(1.05); }
+        /* --- CAROUSEL REELS --- */
+        .carousel-wrapper { margin-bottom: 4rem; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: rgba(4, 4, 4, 0.8); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); padding: 1.5rem 0; transform: rotate(-1.5deg); backdrop-filter: blur(8px); }
+        .carousel-track { display: flex; width: max-content; animation: scroll 22s linear infinite; }
+        .carousel-item { font-family: var(--font-mono); font-size: 1.8rem; font-weight: bold; color: var(--accent-primary); margin: 0 2.2rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.75; }
+        
+        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .skill-category { background: rgba(8, 8, 8, 0.8); border: 1px solid var(--glass-border); padding: 1.8rem; border-radius: 6px; backdrop-filter: blur(12px); transition: 0.4s; }
+        .skill-category:hover { border-color: var(--accent-secondary); box-shadow: 0 0 20px rgba(255, 0, 255, 0.12); transform: translateY(-2px); }
+        .skill-category h3 { font-family: var(--font-mono); color: var(--accent-primary); margin-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; font-size: 1.05rem; }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+        .tag { background: rgba(30, 30, 30, 0.6); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.82rem; color: #d0d2d6; border: 1px solid rgba(255,255,255,0.03); transition: 0.3s; }
+        .tag:hover { border-color: var(--accent-primary); color: #fff; transform: scale(1.03); }
 
         /* --- PROJECTS --- */
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .project-card { background-color: transparent; perspective: 1000px; height: 320px; border: none; }
-        .project-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 2rem; }
+        .project-card { background-color: transparent; perspective: 1000px; height: 330px; border: none; }
+        .project-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
         .project-card:hover .project-card-inner { transform: rotateY(180deg); }
-        .project-card-front, .project-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border: 1px solid #333; background: #0a0a0a; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; overflow: hidden; }
+        .project-card-front, .project-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 8, 8, 0.85); backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 1.8rem; overflow: hidden; }
         .project-card-front { border-top: 4px solid var(--accent-primary); }
-        .folder-icon { font-size: 4rem; color: #333; margin-bottom: 1rem; text-shadow: 0 0 10px var(--accent-primary); }
-        .project-id { font-family: var(--font-mono); font-size: 2.5rem; font-weight: 900; color: #fff; margin-bottom: 0.5rem; }
-        .project-hint { color: var(--accent-primary); font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 2px; border-top: 1px solid #333; padding-top: 1rem; width: 80%; }
-        .project-card-back { transform: rotateY(180deg); background: #111; border-color: var(--accent-secondary); align-items: flex-start; text-align: left; }
-        .project-date { font-family: var(--font-mono); font-size: 0.8rem; color: #666; margin-bottom: 0.5rem; display: block; }
-        .project-title { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; line-height: 1.2; }
-        .project-desc { font-size: 0.95rem; color: #aaa; margin-bottom: 1.5rem; }
+        .project-card-back { transform: rotateY(180deg); background: rgba(15, 15, 15, 0.95); border-color: var(--accent-secondary); }
+        .project-date { font-family: var(--font-mono); font-size: 0.8rem; color: #72767d; margin-bottom: 0.4rem; }
+        .project-title { font-size: 1.35rem; margin-bottom: 0.8rem; color: #fff; font-weight: 700; }
+        .project-desc { font-size: 0.9rem; color: #b1b4b9; margin-bottom: 1.2rem; }
         .project-tech { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-secondary); margin-top: auto; }
 
-        /* --- CERTIFICATES CAROUSEL --- */
-        .cert-container {
-            width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;
-            overflow: hidden; padding: 3rem 0;
-            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0, 255, 204, 0.03) 50%, rgba(0,0,0,0) 100%);
-            border-top: 1px solid #111; border-bottom: 1px solid #111;
-            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-        }
-        .cert-track { 
-            display: flex; 
-            width: max-content; 
-            animation: cert-scroll 80s linear infinite; 
-            gap: 2.5rem; 
-            /* No padding-left to ensure smooth seamless loop */
-        }
+        /* --- CERTIFICATE SLICK REEL --- */
+        .cert-container { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; overflow: hidden; padding: 2.5rem 0; mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); }
+        .cert-track { display: flex; width: max-content; animation: cert-scroll 75s linear infinite; gap: 2.5rem; }
         .cert-track:hover { animation-play-state: paused; }
-        .cert-card {
-            width: 300px; height: 240px;
-            background: #050505; border: 1px solid #222; padding: 0;
-            display: flex; flex-direction: column; transition: all 0.4s;
-            position: relative; cursor: pointer; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.8);
-            flex-shrink: 0; /* Prevent shrinking */
-        }
-        .cert-card:hover { border-color: var(--accent-primary); box-shadow: 0 0 25px rgba(0, 255, 204, 0.15); transform: translateY(-5px) scale(1.02); z-index: 10; }
-        .cert-img-wrapper { width: 100%; height: 160px; background-color: #000; position: relative; overflow: hidden; border-bottom: 1px solid #222; }
-        .cert-img-thumb { width: 100%; height: 100%; background-size: cover; background-position: center; filter: grayscale(100%) contrast(1.1) brightness(0.6); transition: 0.5s ease-out; opacity: 0.7; }
-        .cert-card:hover .cert-img-thumb { filter: grayscale(0%) contrast(1.1) brightness(1); opacity: 1; transform: scale(1.08); }
-        .cert-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; opacity: 0; transition: 0.3s ease; backdrop-filter: blur(2px); }
-        .cert-card:hover .cert-overlay { opacity: 1; }
-        .cert-overlay span { color: var(--accent-primary); border: 1px solid var(--accent-primary); padding: 0.6rem 1.2rem; font-family: var(--font-mono); font-size: 0.85rem; background: rgba(0, 20, 20, 0.8); letter-spacing: 1px; box-shadow: 0 0 10px rgba(0, 255, 204, 0.3); }
-        .cert-content { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(180deg, #0c0c0c 0%, #050505 100%); border-top: 1px solid #1a1a1a; }
-        .cert-name { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; color: #e0e0e0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.2rem; }
-        .cert-issuer { font-size: 0.75rem; color: #666; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
-        .cert-issuer::before { content: ''; display: inline-block; width: 6px; height: 6px; background: var(--accent-secondary); border-radius: 50%; box-shadow: 0 0 5px var(--accent-secondary); }
+        
+        .cert-reel-card { width: 310px; height: 245px; background: rgba(8, 8, 8, 0.85); border: 1px solid var(--glass-border); border-radius: 6px; display: flex; flex-direction: column; transition: all 0.4s; position: relative; cursor: pointer; overflow: hidden; backdrop-filter: blur(10px); }
+        .cert-reel-card:hover { border-color: var(--accent-primary); box-shadow: 0 0 25px rgba(0, 255, 204, 0.15); transform: translateY(-4px); }
+        .cert-img-wrapper { width: 100%; height: 165px; background-color: #000; position: relative; overflow: hidden; }
+        .cert-img-thumb { width: 100%; height: 100%; background-size: cover; background-position: center; filter: grayscale(100%) contrast(1.1) brightness(0.7); transition: 0.5s ease-out; }
+        .cert-reel-card:hover .cert-img-thumb { filter: grayscale(0%) contrast(1.1); transform: scale(1.04); }
+        .cert-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; opacity: 0; transition: 0.3s ease; }
+        .cert-reel-card:hover .cert-overlay { opacity: 1; }
+        .cert-overlay span { color: var(--accent-primary); border: 1px solid var(--accent-primary); padding: 0.5rem 1.2rem; font-family: var(--font-mono); font-size: 0.8rem; background: #050505; }
+        .cert-content { padding: 1rem; background: linear-gradient(180deg, rgba(15,15,15,0.6) 0%, rgba(5,5,5,0.9) 100%); }
+        .cert-name { font-family: var(--font-mono); font-size: 0.88rem; font-weight: 700; color: #e1e3e6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .cert-issuer { font-size: 0.72rem; color: #72767d; display: flex; align-items: center; gap: 0.4rem; text-transform: uppercase; margin-top: 0.2rem; }
+        .cert-issuer::before { content: ''; display: inline-block; width: 5px; height: 5px; background: var(--accent-secondary); border-radius: 50%; }
 
         /* Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(8px); }
-        .modal-content { background: #0a0a0a; border: 1px solid var(--accent-primary); width: 90%; max-width: 800px; max-height: 90dvh; overflow-y: auto; padding: 2rem; position: relative; box-shadow: 0 0 50px rgba(0, 255, 204, 0.1); animation: modal-pop 0.4s; }
-        .modal-close { position: absolute; top: 1rem; right: 1.5rem; font-family: var(--font-mono); color: var(--horror-red); font-size: 2rem; cursor: pointer; transition: 0.3s; line-height: 1; }
-        .modal-close:hover { color: #fff; text-shadow: 0 0 10px red; }
-        .modal-header { border-bottom: 1px solid #222; padding-bottom: 1rem; margin-bottom: 1.5rem; }
-        .modal-title { font-family: var(--font-mono); color: var(--accent-primary); font-size: 1.5rem; margin-bottom: 0.5rem; line-height: 1.2; }
-        .modal-subtitle { font-size: 0.9rem; color: #666; font-family: var(--font-mono); }
-        .modal-body p { margin-bottom: 1rem; color: #ccc; font-size: 1rem; }
-        .modal-stamp { border: 3px solid var(--accent-secondary); color: var(--accent-secondary); display: inline-block; padding: 0.5rem 1.5rem; font-family: var(--font-mono); font-weight: 900; font-size: 1.2rem; transform: rotate(-8deg); margin-top: 1.5rem; opacity: 0.8; letter-spacing: 2px; }
-        #modal-img-container { margin: 1.5rem 0; background: #000; border: 1px solid #333; padding: 5px; }
-        #modal-img-container img { display: block; width: 100%; height: auto; border: 1px solid #222; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 3, 3, 0.92); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+        .modal-content { background: #070707; border: 1px solid var(--accent-primary); width: 92%; max-width: 780px; max-height: 88dvh; overflow-y: auto; padding: 2rem; position: relative; border-radius: 8px; box-shadow: 0 0 40px rgba(0, 255, 204, 0.1); }
+        .modal-close { position: absolute; top: 1rem; right: 1.5rem; font-family: var(--font-mono); color: var(--horror-bright); font-size: 1.8rem; cursor: pointer; transition: 0.3s; }
+        .modal-header { border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .modal-title { font-family: var(--font-mono); color: var(--accent-primary); font-size: 1.4rem; }
+        .modal-subtitle { font-size: 0.85rem; color: #72767d; font-family: var(--font-mono); }
+        .modal-body p { margin-bottom: 1rem; color: #ccced2; }
+        .modal-stamp { border: 2px solid var(--accent-secondary); color: var(--accent-secondary); display: inline-block; padding: 0.4rem 1.2rem; font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem; transform: rotate(-5deg); margin-top: 1rem; }
+        #modal-img-container { margin: 1.2rem 0; background: #000; border: 1px solid rgba(255,255,255,0.05); padding: 4px; }
+        #modal-img-container img { display: block; width: 100%; height: auto; }
 
-        .timeline { position: relative; border-left: 2px solid #333; margin-left: 1rem; padding-left: 2rem; }
-        .timeline-item { margin-bottom: 3rem; position: relative; }
-        .timeline-item::before { content: ''; position: absolute; left: -2.6rem; top: 5px; width: 1rem; height: 1rem; background: var(--bg-color); border: 2px solid var(--accent-secondary); border-radius: 50%; }
-        .timeline-date { font-family: var(--font-mono); color: var(--accent-secondary); margin-bottom: 0.5rem; display: block; }
+        /* --- TIMELINE --- */
+        .timeline { position: relative; border-left: 2px solid rgba(255,255,255,0.05); margin-left: 0.5rem; padding-left: 2rem; }
+        .timeline-item { margin-bottom: 2.5rem; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -2.55rem; top: 6px; width: 0.9rem; height: 0.9rem; background: #050505; border: 2px solid var(--accent-secondary); border-radius: 50%; }
+        .timeline-date { font-family: var(--font-mono); color: var(--accent-secondary); margin-bottom: 0.3rem; display: block; font-size: 0.9rem; }
         .timeline-title { font-size: 1.2rem; font-weight: bold; color: #fff; }
-        .timeline-sub { color: #888; font-style: italic; }
-        .contact-box { background: var(--glass); border: 1px solid var(--accent-primary); padding: 3rem; text-align: center; max-width: 800px; margin: 0 auto; position: relative; }
-        .contact-box::before { content: 'ENCRYPTED CHANNEL'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--bg-color); padding: 0 1rem; font-family: var(--font-mono); color: var(--accent-primary); }
-        .contact-links { display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; flex-wrap: wrap; }
-        .contact-btn { padding: 1rem 2rem; background: #111; border: 1px solid #444; color: #fff; transition: 0.3s; display: flex; align-items: center; gap: 0.5rem; }
-        .contact-btn:hover { background: var(--accent-primary); color: #000; border-color: var(--accent-primary); }
-        footer { text-align: center; padding: 2rem; font-family: var(--font-mono); font-size: 0.8rem; color: #555; border-top: 1px solid #111; }
+        .timeline-sub { color: #a2a5a9; font-size: 0.92rem; }
+
+        /* --- CONTACT --- */
+        .contact-box { background: rgba(8, 8, 8, 0.7); border: 1px solid var(--accent-primary); padding: 2.5rem; text-align: center; max-width: 800px; margin: 0 auto; position: relative; border-radius: 8px; backdrop-filter: blur(12px); }
+        .contact-box::before { content: 'ENCRYPTED CHANNEL'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #050505; padding: 0 1rem; font-family: var(--font-mono); color: var(--accent-primary); font-size: 0.8rem; letter-spacing: 1px; }
+        footer { text-align: center; padding: 2.5rem; font-family: var(--font-mono); font-size: 0.8rem; color: #52565d; border-top: 1px solid rgba(255,255,255,0.03); position: relative; z-index: 5; }
+
+        /* TryHackMe Mobile Optimization Responsive Override Layers */
+        @media (max-width: 768px) {
+            .thm-scene { 
+                transform: scale(0.55); 
+                height: 260px; 
+                margin-top: 0rem; 
+                margin-bottom: 0rem;
+            }
+            .thm-ring {
+                width: 120px;
+            }
+            .thm-item img {
+                width: 85px;
+            }
+            .thm-profile-case {
+                width: 92%;
+                margin: 1.5rem auto;
+            }
+        }
 
         @keyframes cert-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        @keyframes modal-pop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes modal-pop { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes hero-fade-in { to { opacity: 1; } }
-        @keyframes grain-dance { 0%, 100% { transform: translate(0, 0); } 10% { transform: translate(-5%, -10%); } 20% { transform: translate(-15%, 5%); } 30% { transform: translate(7%, -25%); } 40% { transform: translate(-5%, 25%); } 50% { transform: translate(-15%, 10%); } 60% { transform: translate(15%, 0%); } 70% { transform: translate(0%, 15%); } 80% { transform: translate(3%, 35%); } 90% { transform: translate(-10%, 10%); } }
-        @keyframes rot-jitter { 0% { transform: rotate(0deg) scale(1); border-color: var(--horror-red); } 20% { transform: rotate(70deg) scale(1.02); } 40% { transform: rotate(150deg) scale(0.98); border-color: #500; } 60% { transform: rotate(220deg) scale(1.01); } 80% { transform: rotate(290deg) scale(0.99); } 100% { transform: rotate(360deg) scale(1); border-color: var(--horror-red); } }
-        @keyframes rot-jitter-rev { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
-        @keyframes breathe-tri { 0%, 100% { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); opacity: 0.6; } 50% { clip-path: polygon(50% 5%, 5% 95%, 95% 95%); opacity: 1; border-color: var(--horror-bright); background: rgba(100,0,0,0.1); } }
-        @keyframes eye-twitch { 0%, 90% { transform: scale(1); } 91% { transform: scale(1.3) translateX(2px); background: red; } 92% { transform: scale(0.8) translateX(-2px); } 94% { transform: scale(1); background: #fff; } 100% { transform: scale(1); } }
-        @keyframes tear-drip { 0% { height: 0; top: 60%; opacity: 0.8; } 20% { height: 20px; top: 60%; opacity: 1; } 40% { height: 40px; top: 70%; opacity: 0.5; } 100% { height: 60px; top: 120%; opacity: 0; } }
-        @keyframes text-shake { 0% { transform: translate(0, 0) skew(0deg); opacity: 1; } 25% { transform: translate(-2px, 2px) skew(5deg); opacity: 0.9; } 50% { transform: translate(2px, -2px) skew(-5deg); opacity: 1; } 75% { transform: translate(-2px, -2px) skew(2deg); opacity: 0.9; } 100% { transform: translate(2px, 2px) skew(0deg); opacity: 1; } }
-        @keyframes progress-fill { 0% { width: 0%; } 15% { width: 12%; } 25% { width: 12%; } 30% { width: 45%; background: var(--horror-bright); } 60% { width: 48%; } 80% { width: 85%; background: darkred; } 95% { width: 95%; } 100% { width: 100%; background: #fff; } }
-        @keyframes crt-off { 0% { opacity: 1; transform: scale(1); filter: contrast(1) brightness(1); } 20% { opacity: 1; transform: scale(1, 0.01); filter: contrast(4) brightness(5); } 40% { opacity: 1; transform: scale(0.01, 0.01); filter: contrast(4) brightness(5); } 100% { opacity: 0; transform: scale(0, 0); visibility: hidden; } }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         @keyframes spin-ring { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulse-glow { 0% { opacity: 0.3; transform: scale(0.95); } 100% { opacity: 0.6; transform: scale(1.05); } }
-        @keyframes scan-avatar { 0% { top: 0%; opacity: 0; transform: scaleX(0.5); } 20% { opacity: 1; transform: scaleX(1); } 80% { opacity: 1; transform: scaleX(1); } 100% { top: 100%; opacity: 0; transform: scaleX(0.5); } }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 255, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 0, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 255, 0); } }
-        @keyframes glitch-anim { 0% { clip: rect(20px, 9999px, 15px, 0); } 20% { clip: rect(65px, 9999px, 80px, 0); } 40% { clip: rect(10px, 9999px, 5px, 0); } 60% { clip: rect(90px, 9999px, 95px, 0); } 80% { clip: rect(30px, 9999px, 40px, 0); } 100% { clip: rect(50px, 9999px, 20px, 0); } }
-        @keyframes glitch-anim2 { 0% { clip: rect(60px, 9999px, 70px, 0); } 20% { clip: rect(10px, 9999px, 5px, 0); } 40% { clip: rect(80px, 9999px, 90px, 0); } 60% { clip: rect(30px, 9999px, 10px, 0); } 80% { clip: rect(50px, 9999px, 60px, 0); } 100% { clip: rect(10px, 9999px, 20px, 0); } }
+        @keyframes pulse-glow { 0% { opacity: 0.2; transform: scale(0.96); } 100% { opacity: 0.5; transform: scale(1.04); } }
+        @keyframes scan-avatar { 0% { top: 0%; opacity: 0; } 50% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        @keyframes glitch-anim { 0% { clip: rect(20px, 9999px, 15px, 0); } 50% { clip: rect(10px, 9999px, 5px, 0); } 100% { clip: rect(50px, 9999px, 20px, 0); } }
+        @keyframes glitch-anim2 { 0% { clip: rect(60px, 9999px, 70px, 0); } 50% { clip: rect(30px, 9999px, 10px, 0); } 100% { clip: rect(10px, 9999px, 20px, 0); } }
         @keyframes thm-spin { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
 
-        /* --- THM BADGES SECTION STYLES --- */
-        .thm-scene { width: 100%; height: 500px; display: flex; justify-content: center; align-items: center; perspective: 1000px; overflow: hidden; position: relative; margin-top: 4rem; }
-        .thm-ring { position: relative; width: 200px !important;; height: 100px; transform-style: preserve-3d; animation: thm-spin 30s linear infinite; }
-        .thm-ring:hover { animation-play-state: paused; }
-        .thm-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-        .thm-item img { width: 250%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 5px var(--accent-primary)); transition: transform 0.3s; }
-        .thm-item:hover img { transform: scale(1.3); filter: drop-shadow(0 0 15px var(--accent-secondary)); z-index: 100; }
-
-        .hidden { opacity: 0; transform: translateY(50px); transition: 1s all ease; }
+        .hidden { opacity: 0; transform: translateY(30px); transition: 0.8s all cubic-bezier(0.16, 1, 0.3, 1); }
         .show { opacity: 1; transform: translateY(0); }
-
-       /*--- MOBILE OPTIMIZATION --- */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .about-grid { grid-template-columns: 1fr; }
-            .cert-display-case { width: 90%; } 
-            
-            /* Mobile Nav */
-            .nav-links { 
-                position: fixed; top: 0; right: -100%; width: 70%; height: 100vh;
-                background: #0a0a0a; flex-direction: column; align-items: center; justify-content: center;
-                transition: 0.4s; border-left: 1px solid var(--accent-primary); z-index: 1001;
-            }
-            .nav-links.active { right: 0; }
-            .hamburger { display: flex; z-index: 1002; }
-            .hamburger.active .bar:nth-child(2) { opacity: 0; }
-            .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-            .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-            /* TryHackMe Mobile Scaling */
-            .thm-scene { transform: scale(0.55); height: 300px; margin-top: 2rem; }
-            .project-card { height: 400px; } 
-            .cert-card { width: 280px; }
-        }
     </style>
 </head>
 <body oncontextmenu="return false;">
-    <!-- TECH OVERLAYS -->
+
+    <!-- 3D CANVASES BACKDROP LAYER -->
+    <div class="spline-background-container">
+        <spline-viewer url="https://prod.spline.design/Slk6b8kz3LRlKiyk/scene.splinecode"></spline-viewer>
+    </div>
+
+    <!-- FORENSIC INTERFACE TECH OVERLAYS -->
     <div class="forensic-scanline"></div>
 
-    <!-- MAIN UI & CANVAS -->
+    <!-- INTERACTIVE CURSOR ELEMENT -->
     <div id="cursor"></div>
-    <canvas id="canvas-bg"></canvas>
-    <canvas id="canvas-ripple"></canvas>
 
-    <!-- MODAL -->
+    <!-- SYSTEM MODAL ENGINE -->
     <div class="modal-overlay" id="cert-modal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeModal()">X</div>
@@ -518,6 +475,7 @@
         </div>
     </div>
 
+    <!-- NAVBAR -->
     <nav>
        <div class="logo">&lt;whoami /&gt; sayani</div>
         <div class="hamburger" onclick="toggleMenu()">
@@ -535,13 +493,13 @@
         </div>
     </nav>
 
+    <!-- HERO SEGMENT -->
     <header class="hero">
         <div class="hero-avatar-container">
             <div class="hero-avatar-glow"></div>
             <div class="hero-avatar-ring"></div>
             <div class="hero-scan-line"></div>
             <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/sayanipfp%201.jpg" alt="Sayani Maity" class="hero-img">
-            </div>
         </div>
         <div class="hero-tag">STATUS: ONLINE // SCANNING FOR MORE OPPORTUNITIES</div>
         <div class="glitch-wrapper">
@@ -553,39 +511,41 @@
             <a href="https://github.com/isayani-78/sayanimaity78/raw/main/Sayani%20Maity%20Resume.pdf" class="cta-btn download-btn">DOWNLOAD RESUME</a>
         </div>
     </header>
-    <h2 class="section-title hyper-text">FILE: PROFILE</h2>
-<section id="about" class="hidden">
-   <p style="color: #00ffd5; font-family: monospace; font-size: 14px; margin-top: -10px; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase;">
-  <span style="animation: blink 1s infinite;">_</span>( REVERSE SIDE [CLICK] )
-</p>
 
-<style>
-  @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
-</style>
-    
-   <div class="cert-display-case">
-    <div class="cert-card">
-        <div class="cert-inner">
-            <div class="cert-front">
-                <div class="cert-label">(CEH) v13ai</div>
-                <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg" alt="CEH Certificate">
-            </div>
-            <div class="cert-back">
-                <div class="cert-label">EXAM TRANSCRIPT</div>
-                <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg" alt="Exam Transcript">
+    <!-- PROFILE SECTION -->
+    <h2 class="section-title hyper-text">FILE: PROFILE</h2>
+    <section id="about" class="hidden">
+       <p style="color: #00ffd5; font-family: monospace; font-size: 14px; margin-top: -10px; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase;">
+          <span style="animation: blink 1s infinite;">_</span>( REVERSE SIDE [CLICK] )
+       </p>
+
+        <style>
+          @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+        </style>
+        
+       <div class="cert-display-case">
+        <div class="cert-card">
+            <div class="cert-inner">
+                <div class="cert-front">
+                    <div class="cert-label">(CEH) v13ai</div>
+                    <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg" alt="CEH Certificate">
+                </div>
+                <div class="cert-back">
+                    <div class="cert-label">EXAM TRANSCRIPT</div>
+                    <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg" alt="Exam Transcript">
+                </div>
             </div>
         </div>
     </div>
-</div>
-   
+       
         <div class="about-grid">
             <div class="about-text">
                 <p> <strong>Identity:</strong> Sayani Maity<br>
-  <strong>Role:</strong> B.Sc. Digital Forensics Student<br>
-  <strong>Professional Experience:</strong>  Successfully Completed VAPT Internship @ ISOAH Data Securities Pvt. Ltd.
-</p>
+                  <strong>Role:</strong> B.Sc. Digital Forensics Student<br>
+                  <strong>Professional Experience:</strong> Successfully Completed VAPT Internship @ ISOAH Data Securities Pvt. Ltd.
+                </p>
 
-                  <p>I am <strong>Sayani Maity</strong>, currently pursuing a <strong>B.Sc. in Digital Forensics (2023–2026)</strong> at <strong>Indian School of Ethical Hacking (ISOEH), Kolkata,</strong>under<strong>Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India</strong>.</p>
+                  <p>I am <strong>Sayani Maity</strong>, currently pursuing a <strong>B.Sc. in Digital Forensics (2023–2026)</strong> at <strong>Indian School of Ethical Hacking (ISOEH), Kolkata,</strong> under <strong>Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India</strong>.</p>
                   <p>As a <strong>(CEH) v13 AI Certified professional</strong>, I specialize in bridging the gap between theoretical security and real-world defense.</p>
                   <p>I specialize in <strong>Digital Forensics, Penetration Testing, OSINT, and cybersecurity tooling</strong>.</p>
                   <p>Exploring <strong>AI-Driven Security</strong> to strengthen threat detection, analysis, and cyber resilience.</p>
@@ -594,7 +554,6 @@
                   <p>I thrive on solving <strong>complex CTF challenges and conducting deep-dive threat analysis</strong>, with a constant focus on <strong>automation and proactive defense</strong>.</p>
                   <p>My technical arsenal includes hands-on experience with industry-standard tools like <strong>Nmap, Burp Suite, Autopsy, and advanced OSINT research</strong> frameworks.</p>
                   <p>I am passionate about <strong>leveraging my technical skill set to help organizations build resilient, proactive security postures</strong> and contributing to a safer digital ecosystem.</p>
-                </p>
                 <p style="color: var(--accent-primary); font-family: var(--font-mono);">>_ Investigating. Exploiting. Securing.</p>
             </div>
             <div class="stats-container">
@@ -617,10 +576,12 @@
                 <div class="stat-card">
                     <span class="stat-number">VAPT Intern (Completed)</span>
                     <span class="stat-label">ISOAH Data Securities Pvt. Ltd.</span>
+                </div>
             </div>
         </div>
     </section>
-    <!-- Skills Section -->
+
+    <!-- ARSENAL PANEL -->
     <section id="skills" class="hidden">
         <h2 class="section-title hyper-text">THE ARSENAL</h2>
         <div class="carousel-wrapper">
@@ -649,8 +610,6 @@
                 <div class="carousel-item">CRYPTOGRAPHY</div>
             </div>
          </div>
-
-   </div>
         <div class="skills-container">
             <div class="skill-category"><h3>// LANGUAGES & SCRIPTING</h3><div class="skill-tags"><span class="tag">Python</span><span class="tag">Matplotlib</span><span class="tag">Bash</span><span class="tag">Shell Scripting</span><span class="tag">HTML</span><span class="tag">NumPy</span></div></div>
             <div class="skill-category"><h3>// SECURITY & PENTESTING</h3><div class="skill-tags"><span class="tag">VAPT</span><span class="tag">WAPT</span><span class="tag">Threat Management</span><span class="tag">Burp</span><span class="tag">Nmap</span><span class="tag">Internet Security</span><span class="tag">Network Security</span></div></div>
@@ -662,308 +621,253 @@
         </div>
     </section>
 
-
-    <!-- Projects Section -->
+    <!-- PROJECTS PANEL -->
     <section id="projects" class="hidden">
-    <h2 class="section-title hyper-text">PROJECTS</h2>
-
-    <div class="projects-grid">
-
-<!-- PROJECT 1 -->
-<div class="project-card" data-link="https://github.com/isayani-78/forensic-analyzer">
-
-            <div class="project-card-inner">
-        <div class="project-card-front">
-            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project1.png" 
-                 alt="Forensic Analyzer" 
-                 style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0; margin-bottom: 15px;">
-            
-            <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">
-                Forensic Analyzer
-            </h3>
-                    <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
-                        Web-based Digital Forensic Learning Tool implementing hashing and encoding techniques.
-                    </p>
-                    <a
-                        href="https://github.com/isayani-78/forensic-analyzer"
-                        target="_blank"
-                        style="font-size:12px;text-decoration:none;border:1px solid currentColor;padding:4px 10px;color:#fff;"
-                    >
-                        Click & View on GitHub
-                    </a>
+        <h2 class="section-title hyper-text">PROJECTS</h2>
+        <div class="projects-grid">
+            <!-- PROJECT 1 -->
+            <div class="project-card" data-link="https://github.com/isayani-78/forensic-analyzer">
+                <div class="project-card-inner">
+                    <div class="project-card-front">
+                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project1.png" 
+                             alt="Forensic Analyzer" 
+                             style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0; margin-bottom: 15px;">
+                        <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">Forensic Analyzer</h3>
+                        <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
+                            Web-based Digital Forensic Learning Tool implementing hashing and encoding techniques.
+                        </p>
+                        <a href="https://github.com/isayani-78/forensic-analyzer" target="_blank" style="font-size:12px;text-decoration:none;border:1px solid currentColor;padding:4px 10px;color:#fff;">
+                            Click & View on GitHub
+                        </a>
+                    </div>
+                    <div class="project-card-back">
+                        <span class="project-date">Nov 2025 - Present</span>
+                        <h3 class="project-title">Forensic Analyzer.</h3>
+                        <p class="project-desc">
+                            A web-based Digital Forensic Learning Tool. Implemented basic hashing and encoding features for educational analysis. (Academic Project)
+                        </p>
+                        <div class="project-tech">PYTHON // WEB // HASHING</div>
+                    </div>
                 </div>
+            </div>
 
-                <div class="project-card-back">
-                    <span class="project-date">Nov 2025 - Present</span>
-                    <h3 class="project-title">Forensic Analyzer.</h3>
-                    <p class="project-desc">
-                        A web-based Digital Forensic Learning Tool. Implemented basic hashing and encoding features for educational analysis. (Academic Project)
-                    </p>
-                    <div class="project-tech">PYTHON // WEB // HASHING</div>
+           <!-- PROJECT 2 -->
+            <div class="project-card" data-link="https://github.com/isayani-78/forensic-analyzer">
+                <div class="project-card-inner">
+                    <div class="project-card-front">
+                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project2.png" 
+                             alt="Cyber Security Multi-Tool Launcher (CMTL)" 
+                             style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0; margin-bottom: 15px;">
+                        <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">Cyber Security Multi-Tool Launcher (CMTL)</h3>
+                        <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
+                            GUI platform for VAPT, Pen Testing, and Network Scanning.
+                        </p>
+                        <a href="https://github.com/isayani-78/CMTL" target="_blank" style="font-size:12px;text-decoration:none;border:1px solid currentColor;padding:4px 10px;color:#fff;">
+                           Click & View on GitHub
+                        </a>
+                    </div>
+                    <div class="project-card-back">
+                        <span class="project-date">Aug 2025 - Present</span>
+                        <h3 class="project-title">Cyber Security Multi-Tool Launcher</h3>
+                        <p class="project-desc">
+                            GUI platform for VAPT, Pen Testing, and Network Scanning. A one-click interface to streamline tasks for efficiency. (Academic Project)
+                        </p>
+                        <div class="project-tech">GUI // VAPT // AUTOMATION</div>
+                    </div>
                 </div>
+            </div>
 
+            <!-- PROJECT 3 -->
+            <div class="project-card" data-link="https://github.com/isayani-78/forensic-analyzer">
+                <div class="project-card-inner">
+                    <div class="project-card-front">
+                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project3.png" 
+                             alt="AI-Powered Phishing Email Detector." 
+                             style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0; margin-bottom: 15px;">
+                        <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">AI-Powered Phishing Email Detector.</h3>
+                        <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
+                            Detects phishing emails using AI analysis of headers and content.
+                        </p>
+                        <a href="https://github.com/isayani-78/AI-Powered-Phishing-Email-Detector" target="_blank" style="font-size:12px;text-decoration:none;border:1px solid currentColor;padding:4px 10px;color:#fff;">
+                            Click & View on GitHub
+                        </a>
+                    </div>
+                    <div class="project-card-back">
+                        <span class="project-date">June 2025 - Present</span>
+                        <h3 class="project-title">AI-Powered Phishing Email Detector</h3>
+                        <p class="project-desc"> 
+                            Detects phishing emails using AI-based analysis of headers and content to identify malicious patterns.
+                        </p>
+                        <div class="project-tech">AI // EMAIL SEC // THREAT INTEL</div>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-       <!-- PROJECT 2 -->
-<div class="project-card" data-link="https://github.com/isayani-78/forensic-analyzer">
-
-            <div class="project-card-inner">
-        <div class="project-card-front">
-            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project2.png" 
-                 alt="Cyber Security Multi-Tool Launcher (CMTL)" 
-                 style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0; margin-bottom: 15px;">
-            
-            <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">
-                Cyber Security Multi-Tool Launcher (CMTL)
-            </h3>
-                    <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
-                        GUI platform for VAPT, Pen Testing, and Network Scanning.
-                    </p>
-                    <a
-                        href="https://github.com/isayani-78/CMTL"
-                        target="_blank"
-                        style="font-size:12px;text-decoration:none;border:1px solid currentColor;padding:4px 10px;color:#fff;"
-                    >
-                       Click & View on GitHub
-                    </a>
-                </div>
-
-                <div class="project-card-back">
-                    <span class="project-date">Aug 2025 - Present</span>
-                    <h3 class="project-title">Cyber Security Multi-Tool Launcher</h3>
-                    <p class="project-desc">
-                        GUI platform for VAPT, Pen Testing, and Network Scanning. A one-click interface to streamline tasks for efficiency. (Academic Project)
-                    </p>
-                    <div class="project-tech">GUI // VAPT // AUTOMATION</div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- PROJECT 3 -->
-<div class="project-card" data-link="https://github.com/isayani-78/forensic-analyzer">
-
-            <div class="project-card-inner">
-        <div class="project-card-front">
-            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project3.png" 
-                 alt="AI-Powered Phishing Email Detector." 
-                 style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0; margin-bottom: 15px;">
-            
-            <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">
-                AI-Powered Phishing Email Detector.
-            </h3>
-                    <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
-                        Detects phishing emails using AI analysis of headers and content.
-                    </p>
-                    <a
-                        href="https://github.com/isayani-78/AI-Powered-Phishing-Email-Detector"
-                        target="_blank"
-                        style="font-size:12px;text-decoration:none;border:1px solid currentColor;padding:4px 10px;color:#fff;"
-                    >
-                        Click & View on GitHub
-                    </a>
-                </div>
-
-                <div class="project-card-back">
-                    <span class="project-date">June 2025 - Present</span>
-                    <h3 class="project-title">AI-Powered Phishing Email Detector</h3>
-                    <p class="project-desc"> 
-                        Detects phishing emails using AI-based analysis of headers and content to identify malicious patterns.
-                    </p>
-                    <div class="project-tech">AI // EMAIL SEC // THREAT INTEL</div>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-</section>
-
-
-    <!-- Credentials Section -->
+    <!-- CREDENTIAL MATRIX TRACKS -->
     <section id="credentials" class="hidden">
         <h2 class="section-title hyper-text">CREDENTIALS</h2>
         <div class="cert-container">
             <div class="cert-track">
-                 <div class="cert-card" onclick="openCert('Infocom Hackstar 2023', 'ABP & ISOEH', 'CTF Participation', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Hackstar '23</div><div class="cert-issuer">CTF Event</div></div></div>
-                 <div class="cert-card" onclick="openCert('(CEH) v13ai EXAM TRANSCRIPT ', 'EC-Council', '(CEH) v13ai SCORE : 93.6%', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai EXAM TRANSCRIPT</div><div class="cert-issuer">EC-Council</div></div></div>
-                 <div class="cert-card" onclick="openCert('Infocom Hackstar 2024', 'ABP & ISOEH', 'Certificate of Participation for Infocom Hackstar CTF 2024.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Hackstar '24</div><div class="cert-issuer">CTF Event</div></div></div>
-                 <div class="cert-card" onclick="openCert('CTIGA Certification', 'ISOEH', 'Certified Threat Intelligence & Gathering Analyst.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CTIGA</div><div class="cert-issuer">Threat Intel</div></div></div>
-                 <div class="cert-card" onclick="openCert('CRTOM Certification', 'Certified Red Team', 'Red Team Operations.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CRTOM</div><div class="cert-issuer">Red Team Ops</div></div></div>
-                 <div class="cert-card" onclick="openCert('CCEP Certification', 'Certified Expert', 'Cybersecurity Expert Professional.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CCEP</div><div class="cert-issuer">Expert Professional</div></div></div>
-                 <div class="cert-card" onclick="openCert('CPPS Certification', 'Phishing Specialist', 'Certified Phishing Prevention Specialist.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CPPS</div><div class="cert-issuer">Phishing Prevention Specialist</div></div></div>
-                 <div class="cert-card" onclick="openCert('Deloitte Cyber Sim', 'Forage', 'Deloitte Australia Cyber Job Simulation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Deloitte Sim</div><div class="cert-issuer">Forage</div></div></div>
-                 <div class="cert-card" onclick="openCert('Cyber Security CoE', 'Govt. of West Bengal', 'Certificate from Cyber Security Centre of Excellence Govt. of West Bengal', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cyber Security CoE</div><div class="cert-issuer">Govt. WB</div></div></div>
-                 <div class="cert-card" onclick="openCert('Core Python', 'Course Completion', 'Completion of Core Python Programming Course.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Core Python</div><div class="cert-issuer">Course</div></div></div>
-                 <div class="cert-card" onclick="openCert('Mastercard Cyber Job Sim', 'Forage', 'Mastercard & New York Jobs CEO Council Cybersecurity Job Simulation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Mastercard Sim</div><div class="cert-issuer">Forage</div></div></div>
-                 <div class="cert-card" onclick="openCert('MAKAUT CTF Participation', 'MAKAUT University', 'CTF Organised by MAKAUT.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">MAKAUT CTF</div><div class="cert-issuer">University Event</div></div></div>
-                 <div class="cert-card" onclick="openCert('Cyraksha CTF Hackathon 2', 'Cyraksha Cyber Club', 'Participation in CTF of Cyraksha.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cyraksha Hackathon</div><div class="cert-issuer">Cyber Club</div></div></div>
-                 <div class="cert-card" onclick="openCert('Cyraksha CTF Workshop', 'Cyraksha Cyber Club', 'Participation In CTF workshop.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CTF Workshop</div><div class="cert-issuer">Cyber Club</div></div></div>
-                 <div class="cert-card" onclick="openCert('(CEH) v13ai', 'EC-Council', 'Certified Ethical Hacker', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai</div><div class="cert-issuer">EC-Council</div></div></div>
-                 <div class="cert-card" onclick="openCert('Cryptoquest Participation', 'CTF Event', 'Participation in Cryptoquest.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cryptoquest</div><div class="cert-issuer">CTF Event</div></div></div>
-                 <div class="cert-card" onclick="openCert('GroundZero WB Hackathon', 'ISOEH', 'GroundZero West Bengal Hackathon.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">GroundZero</div><div class="cert-issuer">ISOEH</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Infocom Hackstar 2023', 'ABP & ISOEH', 'CTF Participation', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Hackstar '23</div><div class="cert-issuer">CTF Event</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('(CEH) v13ai EXAM TRANSCRIPT ', 'EC-Council', '(CEH) v13ai SCORE : 93.6%', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai EXAM TRANSCRIPT</div><div class="cert-issuer">EC-Council</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Infocom Hackstar 2024', 'ABP & ISOEH', 'Certificate of Participation for Infocom Hackstar CTF 2024.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Hackstar '24</div><div class="cert-issuer">CTF Event</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('CTIGA Certification', 'ISOEH', 'Certified Threat Intelligence & Gathering Analyst.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CTIGA</div><div class="cert-issuer">Threat Intel</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('CRTOM Certification', 'Certified Red Team', 'Red Team Operations.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CRTOM</div><div class="cert-issuer">Red Team Ops</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('CCEP Certification', 'Certified Expert', 'Cybersecurity Expert Professional.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CCEP</div><div class="cert-issuer">Expert Professional</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('CPPS Certification', 'Phishing Specialist', 'Certified Phishing Prevention Specialist.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CPPS</div><div class="cert-issuer">Phishing Prevention Specialist</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Deloitte Cyber Sim', 'Forage', 'Deloitte Australia Cyber Job Simulation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Deloitte Sim</div><div class="cert-issuer">Forage</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Cyber Security CoE', 'Govt. of West Bengal', 'Certificate from Cyber Security Centre of Excellence Govt. of West Bengal', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cyber Security CoE</div><div class="cert-issuer">Govt. WB</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Core Python', 'Course Completion', 'Completion of Core Python Programming Course.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Core Python</div><div class="cert-issuer">Course</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Mastercard Cyber Job Sim', 'Forage', 'Mastercard & New York Jobs CEO Council Cybersecurity Job Simulation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Mastercard Sim</div><div class="cert-issuer">Forage</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('MAKAUT CTF Participation', 'MAKAUT University', 'CTF Organised by MAKAUT.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">MAKAUT CTF</div><div class="cert-issuer">University Event</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Cyraksha CTF Hackathon 2', 'Cyraksha Cyber Club', 'Participation in CTF of Cyraksha.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cyraksha Hackathon</div><div class="cert-issuer">Cyber Club</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Cyraksha CTF Workshop', 'Cyraksha Cyber Club', 'Participation In CTF workshop.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CTF Workshop</div><div class="cert-issuer">Cyber Club</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('(CEH) v13ai', 'EC-Council', 'Certified Ethical Hacker', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai</div><div class="cert-issuer">EC-Council</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Cryptoquest Participation', 'CTF Event', 'Participation in Cryptoquest.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cryptoquest</div><div class="cert-issuer">CTF Event</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('GroundZero WB Hackathon', 'ISOEH', 'GroundZero West Bengal Hackathon.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">GroundZero</div><div class="cert-issuer">ISOEH</div></div></div>
 
                  <!-- DUPLICATE SET -->
-                 <div class="cert-card" onclick="openCert('Infocom Hackstar 2023', 'ABP & ISOEH', 'CTF Participation', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Hackstar '23</div><div class="cert-issuer">CTF Event</div></div></div>
-                <div class="cert-card" onclick="openCert('(CEH) v13ai EXAM TRANSCRIPT ', 'EC-Council', '(CEH) v13ai SCORE : 93.6%', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai EXAM TRANSCRIPT</div><div class="cert-issuer">EC-Council</div></div></div>
-                 <div class="cert-card" onclick="openCert('Infocom Hackstar 2024', 'ABP & ISOEH', 'Certificate of Participation for Infocom Hackstar CTF 2024.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Hackstar '24</div><div class="cert-issuer">CTF Event</div></div></div>
-                 <div class="cert-card" onclick="openCert('CTIGA Certification', 'ISOEH', 'Certified Threat Intelligence & Gathering Analyst.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CTIGA</div><div class="cert-issuer">Threat Intel</div></div></div>
-                 <div class="cert-card" onclick="openCert('CRTOM Certification', 'Certified Red Team', 'Red Team Operations.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CRTOM</div><div class="cert-issuer">Red Team Ops</div></div></div>
-                 <div class="cert-card" onclick="openCert('CCEP Certification', 'Certified Expert', 'Cybersecurity Expert Professional.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CCEP</div><div class="cert-issuer">Expert Professional</div></div></div>
-                 <div class="cert-card" onclick="openCert('CPPS Certification', 'Python Specialist', 'Certified Python Programming Specialist.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CPPS</div><div class="cert-issuer">Python Specialist</div></div></div>
-                 <div class="cert-card" onclick="openCert('Deloitte Cyber Sim', 'Forage', 'Deloitte Australia Cyber Job Simulation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Deloitte Sim</div><div class="cert-issuer">Forage</div></div></div>
-                 <div class="cert-card" onclick="openCert('Cyber Security CoE', 'Govt. of West Bengal', 'Certificate from Cyber Security Centre of Excellence Govt. of West Bengal', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cyber Security CoE</div><div class="cert-issuer">Govt. WB</div></div></div>
-                 <div class="cert-card" onclick="openCert('Core Python', 'Course Completion', 'Completion of Core Python Programming Course.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Core Python</div><div class="cert-issuer">Course</div></div></div>
-                 <div class="cert-card" onclick="openCert('Mastercard Cyber Job Sim', 'Forage', 'Mastercard & New York Jobs CEO Council Cybersecurity Job Simulation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Mastercard Sim</div><div class="cert-issuer">Forage</div></div></div>
-                 <div class="cert-card" onclick="openCert('MAKAUT CTF Participation', 'MAKAUT University', 'CTF Organised by MAKAUT.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">MAKAUT CTF</div><div class="cert-issuer">University Event</div></div></div>
-                 <div class="cert-card" onclick="openCert('Cyraksha CTF Hackathon 2', 'Cyraksha Cyber Club', 'Participation in CTF of Cyraksha.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cyraksha Hackathon</div><div class="cert-issuer">Cyber Club</div></div></div>
-                 <div class="cert-card" onclick="openCert('Cyraksha CTF Workshop', 'Cyraksha Cyber Club', 'Participation In CTF workshop.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CTF Workshop</div><div class="cert-issuer">Cyber Club</div></div></div>
-                 <div class="cert-card" onclick="openCert('(CEH) V13ai', 'EC-Council', 'Certified Ethical Hacker', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai</div><div class="cert-issuer">EC-Council</div></div></div>
-                 <div class="cert-card" onclick="openCert('Cryptoquest Participation', 'CTF Event', 'Participation in Cryptoquest.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cryptoquest</div><div class="cert-issuer">CTF Event</div></div></div>
-                 <div class="cert-card" onclick="openCert('GroundZero WB Hackathon', 'ISOEH', 'GroundZero West Bengal Hackathon.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">GroundZero</div><div class="cert-issuer">ISOEH</div></div></div>
-                <div class="cert-card" onclick="openCert('CTIGA Certification', 'ISOEH', 'Certified Threat Intelligence & Gathering Analyst.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai EXAM TRANSCRIPT</div><div class="cert-issuer">CEH V13ai SCORE: 93.6%</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Infocom Hackstar 2023', 'ABP & ISOEH', 'CTF Participation', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Hackstar '23</div><div class="cert-issuer">CTF Event</div></div></div>
+                <div class="cert-reel-card" onclick="openCert('(CEH) v13ai EXAM TRANSCRIPT ', 'EC-Council', '(CEH) v13ai SCORE : 93.6%', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai EXAM TRANSCRIPT</div><div class="cert-issuer">EC-Council</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Infocom Hackstar 2024', 'ABP & ISOEH', 'Certificate of Participation for Infocom Hackstar CTF 2024.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Hackstar '24</div><div class="cert-issuer">CTF Event</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('CTIGA Certification', 'ISOEH', 'Certified Threat Intelligence & Gathering Analyst.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CTIGA</div><div class="cert-issuer">Threat Intel</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('CRTOM Certification', 'Certified Red Team', 'Red Team Operations.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CRTOM</div><div class="cert-issuer">Red Team Ops</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('CCEP Certification', 'Certified Expert', 'Cybersecurity Expert Professional.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CCEP</div><div class="cert-issuer">Expert Professional</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('CPPS Certification', 'Python Specialist', 'Certified Python Programming Specialist.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CPPS</div><div class="cert-issuer">Python Specialist</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Deloitte Cyber Sim', 'Forage', 'Deloitte Australia Cyber Job Simulation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Deloitte Sim</div><div class="cert-issuer">Forage</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Cyber Security CoE', 'Govt. of West Bengal', 'Certificate from Cyber Security Centre of Excellence Govt. of West Bengal', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cyber Security CoE</div><div class="cert-issuer">Govt. WB</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Core Python', 'Course Completion', 'Completion of Core Python Programming Course.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Core Python</div><div class="cert-issuer">Course</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Mastercard Cyber Job Sim', 'Forage', 'Mastercard & New York Jobs CEO Council Cybersecurity Job Simulation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Mastercard Sim</div><div class="cert-issuer">Forage</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('MAKAUT CTF Participation', 'MAKAUT University', 'CTF Organised by MAKAUT.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">MAKAUT CTF</div><div class="cert-issuer">University Event</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Cyraksha CTF Hackathon 2', 'Cyraksha Cyber Club', 'Participation in CTF of Cyraksha.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cyraksha Hackathon</div><div class="cert-issuer">Cyber Club</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Cyraksha CTF Workshop', 'Cyraksha Cyber Club', 'Participation In CTF workshop.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CTF Workshop</div><div class="cert-issuer">Cyber Club</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('(CEH) v13ai', 'EC-Council', 'Certified Ethical Hacker', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai</div><div class="cert-issuer">EC-Council</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('Cryptoquest Participation', 'CTF Event', 'Participation in Cryptoquest.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cryptoquest</div><div class="cert-issuer">CTF Event</div></div></div>
+                 <div class="cert-reel-card" onclick="openCert('GroundZero WB Hackathon', 'ISOEH', 'GroundZero West Bengal Hackathon.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">GroundZero</div><div class="cert-issuer">ISOEH</div></div></div>
+                <div class="cert-reel-card" onclick="openCert('CTIGA Certification', 'ISOEH', 'Certified Threat Intelligence & Gathering Analyst.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai EXAM TRANSCRIPT</div><div class="cert-issuer">CEH V13ai SCORE: 93.6%</div></div></div>
             </div>
         </div>
     </section>
 
+    <!-- TIMELINE -->
     <section class="hidden">
         <h2 class="section-title hyper-text">TIMELINE</h2>
-       
-    <div class="timeline">
-        <div class="timeline-item">
-            <span class="timeline-date">2023 - 2026 (Pursuing)</span>
-            <h3 class="timeline-title">B.Sc. Digital Forensics</h3>
-            <span class="timeline-sub">
-                Indian School of Ethical Hacking (ISOEH),Kolkata <strong>under</strong> Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India.
-            </span>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="timeline-date">2023 - 2026 (Pursuing)</span>
+                <h3 class="timeline-title">B.Sc. Digital Forensics</h3>
+                <span class="timeline-sub">
+                    Indian School of Ethical Hacking (ISOEH),Kolkata <strong>under</strong> Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India.
+                </span>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-date">2026</span>
+                <h3 class="timeline-title">(CEH) v13 AI Certified</h3>
+                <span class="timeline-sub">EC-Council.</span>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-date">2015 - 2023</span>
+                <h3 class="timeline-title">ICSE & ISC (with pure science)</h3>
+                <span class="timeline-sub">St. Thomas' High School, Howrah, West Bengal,India.</span>
+            </div>
         </div>
-
-        <div class="timeline-item">
-            <span class="timeline-date">2026</span>
-            <h3 class="timeline-title">(CEH) v13 AI Certified</h3>
-            <span class="timeline-sub">EC-Council.</span>
-        </div>
-
-
-        <div class="timeline-item">
-            <span class="timeline-date">2015 - 2023</span>
-            <h3 class="timeline-title">ICSE & ISC (with pure science)</h3>
-            <span class="timeline-sub">St. Thomas' High School, Howrah, West Bengal,India.</span>
-        </div>
-</section>
     </section>
 
+    <!-- TRYHACKME CORNER REEL -->
     <section id="thm-badges" class="hidden">
         <h2 class="section-title hyper-text">TRYHACKME BADGES</h2>
         <div class="thm-scene">
             <div class="thm-ring">
-                <!-- THM Items -->
-                <div class="thm-item" style="transform: rotateY(0deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/hashcracker.png" alt="Hash Cracker"></div>
-                <div class="thm-item" style="transform: rotateY(27.7deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/linux.png" alt="Linux"></div>
-                <div class="thm-item" style="transform: rotateY(55.4deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/securityawareness.png" alt="Security Awareness"></div>
-                <div class="thm-item" style="transform: rotateY(83.1deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/mrrobot.png" alt="Mr Robot"></div>
-                <div class="thm-item" style="transform: rotateY(110.8deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/league-bronze.png" alt="Bronze League"></div>
-                <div class="thm-item" style="transform: rotateY(138.5deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/streak3.png" alt="Streak"></div>
-                <div class="thm-item" style="transform: rotateY(166.2deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/webbed.png" alt="Webbed"></div>
-                <div class="thm-item" style="transform: rotateY(193.9deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/howthewebworks.png" alt="Web Fundamentals"></div>
-                <div class="thm-item" style="transform: rotateY(221.6deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/introtosecurityengineering.png" alt="Security Engineering"></div>
-                <div class="thm-item" style="transform: rotateY(249.3deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/introtodevsecops.png" alt="DevSecOps"></div>
-                <div class="thm-item" style="transform: rotateY(277deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/league-gold.png" alt="Gold League"></div>
-                <div class="thm-item" style="transform: rotateY(304.7deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/injection.png" alt="Injection"></div>
-                <div class="thm-item" style="transform: rotateY(332.4deg) translateZ(500px);"><img src="https://assets.tryhackme.com/img/badges/advent-of-cyber-2025.png" alt="AoC 2025"></div>
+                <!-- THM Items with precise rotation depth -->
+                <div class="thm-item" style="transform: rotateY(0deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/hashcracker.png" alt="Hash Cracker"></div>
+                <div class="thm-item" style="transform: rotateY(27.7deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/linux.png" alt="Linux"></div>
+                <div class="thm-item" style="transform: rotateY(55.4deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/securityawareness.png" alt="Security Awareness"></div>
+                <div class="thm-item" style="transform: rotateY(83.1deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/mrrobot.png" alt="Mr Robot"></div>
+                <div class="thm-item" style="transform: rotateY(110.8deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/league-bronze.png" alt="Bronze League"></div>
+                <div class="thm-item" style="transform: rotateY(138.5deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/streak3.png" alt="Streak"></div>
+                <div class="thm-item" style="transform: rotateY(166.2deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/webbed.png" alt="Webbed"></div>
+                <div class="thm-item" style="transform: rotateY(193.9deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/howthewebworks.png" alt="Web Fundamentals"></div>
+                <div class="thm-item" style="transform: rotateY(221.6deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/introtosecurityengineering.png" alt="Security Engineering"></div>
+                <div class="thm-item" style="transform: rotateY(249.3deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/introtodevsecops.png" alt="DevSecOps"></div>
+                <div class="thm-item" style="transform: rotateY(277deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/league-gold.png" alt="Gold League"></div>
+                <div class="thm-item" style="transform: rotateY(304.7deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/injection.png" alt="Injection"></div>
+                <div class="thm-item" style="transform: rotateY(332.4deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/advent-of-cyber-2025.png" alt="AoC 2025"></div>
             </div>
         </div>
-        <div class="cert-display-case">
-    <div class="cert-display-header">TryHackMe Profile : Top 5%</div>
-    <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/assets/Tryhackme.jpg"
-         alt="TryHackMe Profile"
-         class="cert-display-img">
-</div>
+        
+        <div class="thm-profile-case">
+            <div class="cert-label">TryHackMe Profile : Top 5%</div>
+            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/assets/Tryhackme.jpg" alt="TryHackMe Profile" class="thm-profile-img">
+        </div>
     </section>
 
+    <!-- CONTACT UPLINK -->
     <section id="contact" class="hidden">
         <h2 class="section-title hyper-text">SECURE UPLINK</h2>
         <div class="contact-box">
-           <section id="contact" style="display:flex; justify-content:center; align-items:center; min-height:100vh; background-color:#121212; color:#fff;">
-    <div style="width:100%; max-width:600px; padding:30px; background-color:#1e1e1e; border-radius:15px; box-shadow:0 4px 20px rgba(0,0,0,0.5); text-align:center;">
-
-       
-
-        <!-- Contact Description -->
-       <div style="width: 100%; max-width: 100vw; overflow-x: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 0; margin: 0 auto;">
-  
-  <div style="width: 90%; max-content: 500px; text-align: center;">
-    
-    <h2 class="section-title">Contact</h2>
-
-    <div style="display: block; width: 100%; margin: 0 auto; word-wrap: break-word;">
-       <p style="font-family: monospace; font-size: 14px; color: #00ffd5; display: inline-block; text-align: left; max-width: 100%;">
-         <strong style="color: #ff00ff;">> root@sayani:~#</strong> execute contact_protocol<br>
-         Inquiries: [Forensics | Research | Collaboration]<br>
-         Status: Open for connection.
-       </p>
-    </div>
-
-    </div>
-</div>
-        <!-- Email Display -->
-        <p style="font-size:16px; margin-bottom:20px; color:#00ff66; font-weight:bold;">
-            sayanimaity78@gmail.com
-        </p>
-
-        <!-- Social Links -->
-        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:25px;">
-            <a href="https://linkedin.com/in/sayanimaity" target="_blank" style="padding:8px 12px; background:#0077b5; border-radius:6px; text-decoration:none; color:#fff;">LinkedIn</a>
-            <a href="https://github.com/isayani-78" target="_blank" style="padding:8px 12px; background:#24292f; border-radius:6px; text-decoration:none; color:#fff;">GitHub</a>
-            <a href="https://medium.com/@isayani-78" target="_blank" style="padding:8px 12px; background:#000000; border-radius:6px; text-decoration:none; color:#fff;">Medium</a>
-            <a href="https://x.com/isayani78" target="_blank" style="padding:8px 12px; background:#1DA1F2; border-radius:6px; text-decoration:none; color:#fff;">Twitter</a>
-            <a href="https://www.facebook.com/isayani78" target="_blank" style="padding:8px 12px; background:#1877F2; border-radius:6px; text-decoration:none; color:#fff;">Facebook</a>
-            <a href="https://discord.com/invite/isayani_78" target="_blank" style="padding:8px 12px; background:#5865F2; border-radius:6px; text-decoration:none; color:#fff;">Discord</a>
-            <a href="https://t.me/isayani_78" target="_blank" style="padding:8px 12px; background:#0088cc; border-radius:6px; text-decoration:none; color:#fff;">Telegram</a>
-        </div>
-
-       <!-- Contact Form (CONNECTED TO YOUR FORMSPREE) -->
-                <form action="https://formspree.io/f/xnjbaapy" method="POST" style="display:flex; flex-direction:column; gap:15px;">
-                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                        <input type="text" name="name" placeholder="Your Name *" required style="flex:1; padding:10px; border-radius:6px; border:none; color:#000;">
-                        <input type="email" name="email" placeholder="Your Email *" required style="flex:1; padding:10px; border-radius:6px; border:none; color:#000;">
+           <section id="contact" style="display:flex; justify-content:center; align-items:center; min-height:100vh; background-color:transparent; color:#fff;">
+                <div style="width:100%; max-width:600px; padding:30px; background-color:rgba(15,15,15,0.85); border-radius:15px; box-shadow:0 4px 20px rgba(0,0,0,0.5); text-align:center; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
+                    <div style="width: 100%; max-width: 100vw; overflow-x: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 0; margin: 0 auto;">
+                        <div style="width: 90%; max-content: 500px; text-align: center;">
+                            <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 1.5rem;">Contact</h2>
+                            <div style="display: block; width: 100%; margin: 0 auto; word-wrap: break-word;">
+                               <p style="font-family: monospace; font-size: 14px; color: #00ffd5; display: inline-block; text-align: left; max-width: 100%;">
+                                 <strong style="color: #ff00ff;">> root@sayani:~#</strong> execute contact_protocol<br>
+                                 Inquiries: [Forensics | Research | Collaboration]<br>
+                                 Status: Open for connection.
+                               </p>
+                            </div>
+                        </div>
                     </div>
-                    <input type="text" name="subject" placeholder="Your Subject.." style="padding:10px; border-radius:6px; border:none; color:#000;">
-                    <textarea name="message" placeholder="Your Message..." rows="6" style="padding:10px; border-radius:6px; border:none; color:#000;"></textarea>
-                    
-                    <button type="submit" style="padding:10px 20px; background:#ff4d4d; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight: bold;">Send Message</button>
-                </form>
-
-            </div>
-        </section>
-    </div>
-</section>
-
+                    <p style="font-size:16px; margin-bottom:20px; color:#00ff66; font-weight:bold; font-family: var(--font-mono);">
+                        sayanimaity78@gmail.com
+                    </p>
+                    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:25px; font-family: var(--font-mono); font-size: 0.85rem;">
+                        <a href="https://linkedin.com/in/sayanimaity" target="_blank" style="padding:8px 12px; background:#0077b5; border-radius:6px; text-decoration:none; color:#fff;">LinkedIn</a>
+                        <a href="https://github.com/isayani-78" target="_blank" style="padding:8px 12px; background:#24292f; border-radius:6px; text-decoration:none; color:#fff;">GitHub</a>
+                        <a href="https://medium.com/@isayani-78" target="_blank" style="padding:8px 12px; background:#000000; border-radius:6px; text-decoration:none; color:#fff;">Medium</a>
+                        <a href="https://x.com/isayani78" target="_blank" style="padding:8px 12px; background:#1DA1F2; border-radius:6px; text-decoration:none; color:#fff;">Twitter</a>
+                        <a href="https://www.facebook.com/isayani78" target="_blank" style="padding:8px 12px; background:#1877F2; border-radius:6px; text-decoration:none; color:#fff;">Facebook</a>
+                        <a href="https://discord.com/invite/isayani_78" target="_blank" style="padding:8px 12px; background:#5865F2; border-radius:6px; text-decoration:none; color:#fff;">Discord</a>
+                        <a href="https://t.me/isayani_78" target="_blank" style="padding:8px 12px; background:#0088cc; border-radius:6px; text-decoration:none; color:#fff;">Telegram</a>
+                    </div>
+                    <form action="https://formspree.io/f/xnjbaapy" method="POST" style="display:flex; flex-direction:column; gap:15px; font-family: var(--font-mono);">
+                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                            <input type="text" name="name" placeholder="Your Name *" required style="flex:1; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); color:#fff; background: rgba(5,5,5,0.5);">
+                            <input type="email" name="email" placeholder="Your Email *" required style="flex:1; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); color:#fff; background: rgba(5,5,5,0.5);">
+                        </div>
+                        <input type="text" name="subject" placeholder="Your Subject.." style="padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); color:#fff; background: rgba(5,5,5,0.5);">
+                        <textarea name="message" placeholder="Your Message..." rows="5" style="padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); color:#fff; background: rgba(5,5,5,0.5);"></textarea>
+                        <button type="submit" style="padding:12px 24px; background:#ff4d4d; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight: bold; letter-spacing: 1px;">Send Message</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </section>
 
     <footer>
         <p>SYSTEM STATUS: OPTIMAL | © 2026 SAYANI MAITY | System online 💻</p>
     </footer>
 
-
     <script>
         // --- SECURITY: ANTI-DEBUG & ANTI-INSPECT ---
         document.onkeydown = function(e) {
-            if(e.keyCode == 123) return false; // Block F12
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Block Ctrl+Shift+I
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; // Block Ctrl+Shift+C
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Block Ctrl+Shift+J
-            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Block Ctrl+U (Source)
+            if(e.keyCode == 123) return false; 
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; 
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; 
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; 
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; 
         };
         
-        // Anti-Console-Log message
         setInterval(() => {
             console.clear();
             console.log("%c[SECURITY NOTICE]", "color: red; font-size: 20px; font-weight: bold;");
             console.log("Unauthorized debugging attempt detected. Uplink encrypted.");
         }, 2000);
 
-        // --- MOBILE MENU ---
+        // --- MOBILE NAV INTERFACE ---
         function toggleMenu() {
             const nav = document.getElementById('nav-menu');
             const burger = document.querySelector('.hamburger');
@@ -971,7 +875,7 @@
             burger.classList.toggle('active');
         }
 
-        // --- DECRYPTION ---
+        // --- CRYPTOGRAPHIC TEXT DECRYPTION ---
         const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?";
         document.querySelectorAll('.hyper-text').forEach(el => { el.dataset.value = el.innerText; });
         const decryptText = (element) => {
@@ -990,17 +894,18 @@
         }
         const triggerDecryption = (el) => { if (el && !el.classList.contains('decrypting')) { el.classList.add('decrypting'); decryptText(el); setTimeout(() => el.classList.remove('decrypting'), 2000); } }
 
-        // --- INTERACTION ---
+        // --- INTERACTIVE CURSOR CONTROLLERS ---
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
-        const hoverElements = document.querySelectorAll('a, .project-card, .skill-category, .cta-btn, .contact-btn, .cert-card');
+        const hoverElements = document.querySelectorAll('a, .project-card, .skill-category, .cta-btn, .contact-btn, .cert-card, .cert-reel-card, .thm-profile-case');
         hoverElements.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
         });
+        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1011,87 +916,8 @@
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
-        
-        // --- PARTICLES & RIPPLES ---
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        const rCanvas = document.getElementById('canvas-ripple');
-        const rCtx = rCanvas.getContext('2d');
-        let particlesArray = [], ripples = [];
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            rCanvas.width = window.innerWidth; rCanvas.height = window.innerHeight;
-            initParticles();
-        }
-        window.addEventListener('resize', resizeCanvas);
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = Math.random() * 2 - 1;
-                this.speedY = Math.random() * 2 - 1;
-            }
-            update() {
-                this.x += this.speedX; this.y += this.speedY;
-                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-            }
-            draw() {
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fillStyle = '#00ffcc'; ctx.fill();
-            }
-        }
-        function initParticles() {
-            particlesArray = [];
-            for (let i = 0; i < 50; i++) particlesArray.push(new Particle());
-        }
-
-        class Ripple {
-            constructor(x, y) { this.x = x; this.y = y; this.radius = 0; this.alpha = 0.8; }
-            update() { this.radius += 2; this.alpha -= 0.015; }
-            draw() {
-                if(this.alpha > 0) {
-                    rCtx.beginPath(); rCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    rCtx.strokeStyle = `rgba(0, 255, 204, ${this.alpha})`; rCtx.stroke();
-                }
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            rCtx.clearRect(0, 0, rCanvas.width, rCanvas.height);
-            
-            particlesArray.forEach(p => {
-                p.update(); p.draw();
-                particlesArray.forEach(p2 => {
-                    const dx = p.x - p2.x, dy = p.y - p2.y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < 100) {
-                        ctx.beginPath(); ctx.strokeStyle = `rgba(0,255,204,${1 - dist/100})`;
-                        ctx.lineWidth = 0.5; ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
-                    }
-                });
-            });
-
-            ripples.forEach((r, index) => {
-                r.update(); r.draw();
-                if (r.alpha <= 0) ripples.splice(index, 1);
-            });
-            requestAnimationFrame(animate);
-        }
-
-        document.addEventListener('mousemove', (e) => { if(Math.random() > 0.6) ripples.push(new Ripple(e.clientX, e.clientY)); });
-        document.addEventListener('touchmove', (e) => { 
-            let touch = e.touches[0];
-            if(Math.random() > 0.6) ripples.push(new Ripple(touch.clientX, touch.clientY)); 
-        });
-
-        initParticles();
-        animate();
-
-        // --- MODAL ---
+        // --- MODAL ENGINE MANAGEMENT ---
         function openCert(title, issuer, desc, imgUrl = null) {
             document.getElementById('modal-title').innerText = title;
             document.getElementById('modal-issuer').innerText = issuer;
@@ -1107,17 +933,13 @@
         }
         function closeModal() { document.getElementById('cert-modal').style.display = 'none'; }
         document.getElementById('cert-modal').addEventListener('click', (e) => { if (e.target.id === 'cert-modal') closeModal(); });
-    </script>
-    <script>
-document.querySelectorAll(".project-card").forEach(card => {
-    card.addEventListener("click", () => {
-        const link = card.getAttribute("data-link");
-        if (link) {
-            window.open(link, "_blank");
-        }
-    });
-});
-</script>
 
+        document.querySelectorAll(".project-card").forEach(card => {
+            card.addEventListener("click", () => {
+                const link = card.getAttribute("data-link");
+                if (link) { window.open(link, "_blank"); }
+            });
+        });
+    </script>
 </body>
 </html>
