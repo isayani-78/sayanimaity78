@@ -11,13 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- ... (baki meta tags) -->
     
-    <title>Sayani Maity -- Digital Forensics Analyst || Penetration Tester</title>
+   <title>Sayani Maity -- Digital Forensics Analyst || Penetration Tester</title>
+<link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/sitelogo.jpg">
     
-    <!-- Favicon Add korar line -->
-    <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/assets/sitelogo.jpg">
-
-    <!-- ... (baki script ar style) -->
-</head>
     
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.54/build/spline-viewer.js"></script>
     
@@ -305,12 +301,12 @@
         
         /* --- HERO --- */
         .hero { 
-            min-height: 100dvh; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            text-align: center; padding: 7rem 1.5rem 3rem; 
-            position: relative; 
-            animation: hero-fade-in 2s ease forwards; 
-        }
+    min-height: 100dvh; 
+    display: flex; flex-direction: column; justify-content: center; align-items: center; 
+    text-align: center; padding: 2rem 1.5rem 3rem; /* padding-top 7rem theke komiye 2rem kora holo */
+    position: relative; 
+    animation: hero-fade-in 2s ease forwards; 
+}
         .hero-avatar-container { width: 165px; height: 165px; margin-bottom: 2rem; position: relative; display: flex; justify-content: center; align-items: center; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .hero-avatar-container:hover { transform: scale(1.08); }
         .hero-avatar-glow { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary)); filter: blur(16px); opacity: 0.4; animation: pulse-glow 3s infinite alternate; }
@@ -574,28 +570,22 @@
     </div>
 
     <nav>
-    <div class="logo" style="display: flex; align-items: center; gap: 10px;">
-        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/assets/sitelogo.jpg" 
-             alt="Sayani Logo" 
-             style="width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--accent-primary); filter: drop-shadow(0 0 5px var(--accent-primary));">
-        <span>&lt;whoami /&gt; sayani</span>
+    <div class="logo">&lt;whoami /&gt; sayani</div> 
+    
+    <div class="hamburger" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
     </div>
-    <!-- Baki menu items... -->
+    <div class="nav-links" id="nav-menu">
+        <a href="#about" class="nav-link" onclick="toggleMenu()">FILE: PROFILE</a>
+        <a href="#skills" class="nav-link" onclick="toggleMenu()">ARSENAL</a>
+        <a href="#projects" class="nav-link" onclick="toggleMenu()">PROJECTS</a>
+        <a href="#credentials" class="nav-link" onclick="toggleMenu()">CREDENTIALS</a>
+        <a href="#thm-badges" class="nav-link" onclick="toggleMenu()">BADGES</a>
+        <a href="#contact" class="nav-link" onclick="toggleMenu()">UPLINK</a>
+    </div>
 </nav>
-       <div class="logo">&lt;whoami /&gt; sayani</div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-        <div class="nav-links" id="nav-menu">
-            <a href="#about" class="nav-link" onclick="toggleMenu()">FILE: PROFILE</a>
-            <a href="#skills" class="nav-link" onclick="toggleMenu()">ARSENAL</a>
-            <a href="#projects" class="nav-link" onclick="toggleMenu()">PROJECTS</a>
-            <a href="#credentials" class="nav-link" onclick="toggleMenu()">CREDENTIALS</a>
-            <a href="#thm-badges" class="nav-link" onclick="toggleMenu()">BADGES</a>
-            <a href="#contact" class="nav-link" onclick="toggleMenu()">UPLINK</a>
-        </div>
 
     <header class="hero">
         <div class="hero-avatar-container">
