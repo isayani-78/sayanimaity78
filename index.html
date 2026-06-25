@@ -10,922 +10,477 @@
     <title>Sayani Maity -- Digital Forensics Analyst || Penetration Tester</title>
     <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/sitelogo.jpg">
     
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        accentPrimary: '#00ffcc',
+                        accentSecondary: '#ff00ff',
+                        glassBg: 'rgba(10, 10, 10, 0.75)',
+                    },
+                    fontFamily: {
+                        mono: ['Courier New', 'Courier', 'monospace'],
+                        sans: ['Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.54/build/spline-viewer.js"></script>
     
     <style>
-        /* --- 3D CANVAS SPLINE BACKDROP STYLING --- */
-        .spline-background-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -3; 
-            pointer-events: auto; 
-            content-visibility: auto; /* Optimizes off-screen render bounds */
-        }
+        /* --- CORE CYBERPUNK ANIMATIONS & FX --- */
+        spline-viewer { filter: brightness(1.4) contrast(1.25) saturate(1.1); }
         
-        spline-viewer {
-            width: 100%;
-            height: 100%;
-            filter: brightness(1.4) contrast(1.25) saturate(1.1);
-        }
-        
-        .github-hint-tag { 
-            text-align: center; 
-            font-size: 10px; 
-            color: #fff; 
-            font-family: var(--font-mono); 
-            margin-top: 15px; 
-            padding: 6px; 
-            border: 1px solid #fff; 
-            border-radius: 4px;
-            width: 100%;
-        }
-
-        /* --- FORENSIC SCANLINE LAYER --- */
         .forensic-scanline {
-            width: 100%;
-            height: 10px;
-            z-index: 999;
-            background: rgba(0, 255, 204, 0.02);
-            position: fixed;
-            bottom: 100%;
-            animation: scanline 8s linear infinite; /* Performance save: slowed down interpolation loops */
-            pointer-events: none;
+            animation: scanline 8s linear infinite;
             box-shadow: 0 0 10px rgba(0, 255, 204, 0.08);
-            will-change: bottom; /* Forces GPU hardware acceleration layers */
+            will-change: bottom;
         }
+        @keyframes scanline { 0% { bottom: 100%; } 100% { bottom: -100%; } }
 
-        @keyframes scanline {
-            0% { bottom: 100%; }
-            100% { bottom: -100%; }
-        }
+        /* 3D Cards Mechanics */
+        .cert-card, .project-card { perspective: 1000px; }
+        .cert-inner, .project-card-inner { transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .cert-card:hover .cert-inner, .project-card:hover .project-card-inner { transform: rotateY(180deg); }
+        .cert-front, .cert-back, .project-card-front, .project-card-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .cert-back, .project-card-back { transform: rotateY(180deg); }
 
-        /* --- HARMONIZED THEME DESIGN MATRIX & FIXES --- */
-        .cert-display-case {
-            display: flex;
-            justify-content: center;
-            padding: 20px 0;
-            perspective: 1000px;
-            width: 100%;
-            max-width: 440px; 
-            margin: 0 auto 3rem auto;
-        }
-
-        .cert-card {
-            width: 100%; 
-            height: 300px; 
-            background: rgba(5, 5, 5, 0.85);
-            cursor: pointer;
-            position: relative;
-            border: 2px solid var(--accent-primary);
-            border-radius: 8px;
-            overflow: hidden; 
-            backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            transition: all 0.4s ease;
-        }
-
-        .cert-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-        }
-
-        .cert-card:hover .cert-inner {
-            transform: rotateY(180deg);
-        }
-
-        .cert-front, .cert-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            background: #050505;
-        }
-
-        .cert-back {
-            transform: rotateY(180deg);
-        }
-
-        .cert-front img, .cert-back img {
-            width: 100%;
-            height: 100%;
-            object-fit: fill; 
-            display: block;
-        }
-
-        .cert-label {
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: var(--accent-primary);
-            color: #000;
-            padding: 4px 10px;
-            font-size: 0.65rem; 
-            font-weight: bold;
-            z-index: 10;
-            border-bottom-right-radius: 8px;
-            text-transform: uppercase;
-            font-family: var(--font-mono);
-            letter-spacing: 1px;
-        }
-
-        .cert-card:hover {
-            box-shadow: 0 0 25px rgba(0, 255, 204, 0.3);
-            border-color: var(--accent-secondary);
-        }
-
-        /* --- TRYHACKME BADGES LAYOUT STRUCTURE --- */
-        .thm-scene { 
-            width: 100%; 
-            height: 450px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            perspective: 1200px; 
-            overflow: hidden; 
-            position: relative; 
-            margin-top: 1rem; 
-            margin-bottom: 1rem;
-        }
-        
-        .thm-ring { 
-            position: relative; 
-            width: 160px; 
-            height: 100px; 
-            transform-style: preserve-3d; 
-            animation: thm-spin 35s linear infinite; /* Stabilized 3D rotation steps */
-        }
-        
+        /* TryHackMe 3D Ring Structure */
+        .thm-scene { perspective: 1200px; }
+        .thm-ring { transform-style: preserve-3d; animation: thm-spin 35s linear infinite; }
         .thm-ring:hover { animation-play-state: paused; }
-        
-        .thm-item { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            backface-visibility: visible;
-        }
-        
-        .thm-item img { 
-            width: 110px; 
-            height: auto; 
-            object-fit: contain; 
-            filter: drop-shadow(0 0 8px var(--accent-primary)); 
-            transition: transform 0.3s ease, filter 0.3s; 
-        }
-        
-        .thm-item:hover img { 
-            transform: scale(1.1); 
-            filter: drop-shadow(0 0 16px var(--accent-secondary)); 
-        }
+        .thm-item { backface-visibility: visible; }
+        @keyframes thm-spin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
 
-        .thm-profile-case {
-            position: relative;
-            border: 2px solid #333;
-            padding: 5px;
-            background: rgba(8, 8, 8, 0.9);
-            overflow: hidden;
-            transition: 0.3s;
-            width: 100%;
-            max-width: 440px;
-            margin: 2rem auto;
-            backdrop-filter: blur(10px);
-            border-radius: 6px;
-        }
-        .thm-profile-case:hover { border-color: var(--accent-primary); box-shadow: 0 0 25px rgba(0, 255, 204, 0.2); }
-        .thm-profile-img { width: 100%; height: auto; display: block; filter: contrast(1.1); }
-
-        /* --- BASE STYLES & LAYERING --- */
-        :root {
-            --bg-color: transparent; 
-            --text-color: #b0b3b8;
-            --accent-primary: #00ffcc; 
-            --accent-secondary: #ff00ff; 
-            --horror-red: #8a0000;      
-            --horror-bright: #ff0000;   
-            --terminal-amber: #ffb000;  
-            --glass: rgba(10, 10, 10, 0.75);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --font-mono: 'Courier New', Courier, monospace;
-            --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            cursor: none; 
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html, body {
-            width: 100%;
-            overflow-x: hidden;
-            background-color: #050505;
-            color: var(--text-color);
-            font-family: var(--font-sans);
-            line-height: 1.6;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            /* Optimized transition state handlers across cross-platform systems */
-            animation: color-cycle 30s infinite alternate ease-in-out;
-        }
-
+        /* General Background Color Cycle Engine */
+        body { animation: color-cycle 25s infinite alternate ease-in-out; }
         @keyframes color-cycle {
-            0% { background-color: rgba(5, 5, 5, 0.3); }      
-            25% { background-color: rgba(12, 5, 5, 0.3); }     
-            50% { background-color: rgba(5, 0, 12, 0.3); }     
-            75% { background-color: rgba(0, 8, 12, 0.3); }     
-            100% { background-color: rgba(5, 5, 5, 0.3); }    
+            0%, 100% { background-color: rgba(5, 5, 5, 0.3); }      
+            25% { background-color: rgba(15, 5, 5, 0.35); }     
+            50% { background-color: rgba(5, 0, 15, 0.35); }     
+            75% { background-color: rgba(0, 10, 15, 0.35); }     
         }
 
-        a { text-decoration: none; color: inherit; cursor: none; }
-
-        .profession-box {
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            padding: 15px 25px;
-            border-radius: 8px;
-            margin: 15px auto;
-            max-width: 600px;
-            text-align: center;
-        }
-
-        .profession-box p {
-            font-family: var(--font-mono);
-            color: #b0b3b8;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin: 0;
-        }
-        
-        /* --- CUSTOM CURSOR --- */
-        #cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--accent-primary);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            mix-blend-mode: difference;
-            will-change: left, top;
-        }
-        #cursor.hovered {
-            width: 45px;
-            height: 45px;
-            background: rgba(0, 255, 204, 0.15);
-            border-color: var(--accent-secondary);
-        }
-
-        @media (hover: none) and (pointer: coarse) {
-            #cursor { display: none !important; }
-            * { cursor: auto !important; }
-            /* Massive optimization: disable 3D renderer on sluggish mobile CPUs */
-            .spline-background-container { display: none !important; }
-            body { background-color: #050505 !important; }
-        }
-        
-        /* --- NAVIGATION --- */
-        nav { 
-            position: fixed; top: 0; width: 100%; 
-            padding: 1.2rem 2.5rem; 
-            display: flex; justify-content: space-between; align-items: center; 
-            z-index: 1000; backdrop-filter: blur(14px); 
-            background: rgba(4, 4, 4, 0.8); 
-            border-bottom: 1px solid var(--glass-border); 
-        }
-        .logo { font-family: var(--font-mono); font-size: 1.25rem; font-weight: bold; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 2px; }
-        .nav-links { display: flex; gap: 2.2rem; }
-        .nav-links a { font-family: var(--font-mono); font-size: 0.85rem; color: #d0d0d0; position: relative; transition: color 0.3s; }
-        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--accent-secondary); transition: width 0.3s ease; }
-        .nav-links a:hover { color: var(--accent-primary); }
-        .nav-links a:hover::after { width: 100%; }
-
-        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
-        .bar { width: 25px; height: 3px; background-color: var(--accent-primary); transition: 0.3s; }
-        
-        /* --- HERO --- */
-        .hero { 
-            min-height: 100dvh; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            text-align: center; padding: 5rem 1.5rem 3rem; /* Adjusted top padding values */
-            position: relative; 
-            animation: hero-fade-in 1.5s ease forwards; 
-        }
-        .hero-avatar-container { width: 165px; height: 165px; margin-bottom: 2rem; position: relative; display: flex; justify-content: center; align-items: center; transition: transform 0.3s ease; }
-        .hero-avatar-container:hover { transform: scale(1.05); }
-        .hero-avatar-glow { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary)); filter: blur(16px); opacity: 0.4; }
-        .hero-avatar-ring { position: absolute; width: 112%; height: 112%; border-radius: 50%; border: 2px dashed var(--accent-primary); animation: spin-ring 20s linear infinite; }
-        .hero-avatar-ring::before { content: ''; position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; background: var(--accent-secondary); border-radius: 50%; }
-        .hero-scan-line { position: absolute; width: 100%; height: 4px; background: rgba(255, 255, 255, 0.7); box-shadow: 0 0 15px var(--accent-primary); top: -10%; left: 0; z-index: 10; opacity: 0; border-radius: 50%; }
-        .hero-avatar-container:hover .hero-scan-line { animation: scan-avatar 1.5s ease-in-out infinite; opacity: 1; }
-        .hero-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.1); position: relative; z-index: 2; background-color: #0b0b0b; }
-        
-        .hero-tag { font-family: var(--font-mono); color: var(--accent-secondary); margin-bottom: 1.5rem; border: 1px solid var(--accent-secondary); padding: 0.5rem 1.2rem; border-radius: 50px; font-size: 0.75rem; background: rgba(5, 5, 5, 0.7); backdrop-filter: blur(8px); }
-        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; text-transform: uppercase; line-height: 1.1; color: #fff; margin-bottom: 1rem; letter-spacing: -1px; }
-        .glitch { position: relative; }
-        
-        /* Optimizing micro-jitters during scrolling */
-        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; }
-        .glitch::before { left: 2px; text-shadow: -1px 0 var(--accent-secondary); clip: rect(44px, 450px, 56px, 0); animation: glitch-anim 6s infinite linear alternate-reverse; }
-        .glitch::after { left: -2px; text-shadow: -1px 0 var(--accent-primary); clip: rect(44px, 450px, 56px, 0); animation: glitch-anim2 6s infinite linear alternate-reverse; }
-        
-        .hero p { margin-top: 0.5rem; font-size: 1.05rem; max-width: 650px; color: #d0d2d6; text-shadow: 0 2px 8px rgba(0,0,0,0.8); font-family: var(--font-mono); }
-        .hero-btns { display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; margin-top: 2.5rem; }
-        
-        .cta-btn { 
-            padding: 0.9rem 2.2rem; background: rgba(5, 5, 5, 0.6); border: 2px solid var(--accent-primary); 
-            color: var(--accent-primary); font-family: var(--font-mono); font-weight: bold; font-size: 0.9rem; 
-            transition: 0.3s; position: relative; overflow: hidden; z-index: 1; display: inline-block;
-            backdrop-filter: blur(8px); border-radius: 4px;
-        }
-        .cta-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--accent-primary); z-index: -1; transition: 0.3s; }
-        .cta-btn:hover { color: #000; }
-        .cta-btn:hover::before { left: 0; }
-        .download-btn { border-color: var(--accent-secondary); color: var(--accent-secondary); }
-        .download-btn::before { background: var(--accent-secondary); }
-
-        /* --- CORE CONTENT PANELS --- */
-        section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 5; }
-        .section-title { font-size: 2.4rem; font-weight: 800; margin-bottom: 3rem; position: relative; display: inline-block; font-family: var(--font-mono); color: #fff; letter-spacing: 1px; }
-        .section-title::after { content: ''; position: absolute; bottom: 4px; right: -15px; width: 45px; height: 4px; background: var(--accent-secondary); }
-        
-        .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center; }
-        .about-text { background: rgba(10, 10, 10, 0.7); padding: 2rem; border-radius: 8px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); color: #e1e3e6; }
-        .about-text p { margin-bottom: 1.2rem; font-size: 0.98rem; }
-        
-        .stats-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
-        .stat-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 1.5rem; text-align: center; border-radius: 6px; backdrop-filter: blur(10px); transition: all 0.3s ease; }
-        .stat-card:hover { transform: translateY(-4px); border-color: var(--accent-primary); background: rgba(0, 255, 204, 0.03); }
-        .stat-number { font-size: 1.8rem; font-weight: bold; color: var(--accent-primary); display: block; font-family: var(--font-mono); }
-        .stat-label { font-family: var(--font-mono); font-size: 0.8rem; color: #a2a5a9; }
-        
-        .ceh-badge-img { width: 80px; height: auto; margin: 0 auto 0.6rem; display: block; transition: transform 0.6s ease; }
-        .stat-card:hover .ceh-badge-img { transform: scale(1.05); }
-
-        /* --- CAROUSEL REELS & HIGHLIGHTS --- */
-        .carousel-wrapper { margin-bottom: 4rem; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: rgba(4, 4, 4, 0.8); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); padding: 1.5rem 0; transform: rotate(-1.5deg); backdrop-filter: blur(8px); }
-        .carousel-track { display: flex; width: max-content; animation: scroll 30s linear infinite; }
-        
-        .carousel-item { 
-            font-family: var(--font-mono); 
-            font-size: 1.8rem; 
-            font-weight: bold; 
-            color: var(--text-color); 
-            margin: 0 2.2rem; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            opacity: 0.6; 
-            padding: 2px 12px;
-            border-radius: 4px;
-            transition: color 0.2s, opacity 0.2s;
-        }
-        .carousel-item:hover {
-            color: var(--accent-primary);
-            opacity: 1;
-        }
-        
-        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
-        .skill-category { background: rgba(8, 8, 8, 0.8); border: 1px solid var(--glass-border); padding: 1.8rem; border-radius: 6px; backdrop-filter: blur(12px); transition: 0.3s; }
-        .skill-category:hover { border-color: var(--accent-secondary); box-shadow: 0 0 20px rgba(255, 0, 255, 0.12); }
-        .skill-category h3 { font-family: var(--font-mono); color: var(--accent-primary); margin-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; font-size: 1.05rem; }
-        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.65rem; }
-        .tag { background: rgba(30, 30, 30, 0.6); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.82rem; color: #d0d2d6; border: 1px solid rgba(255,255,255,0.03); }
-
-        /* --- PROJECTS --- */
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 2rem; }
-        .project-card { background-color: transparent; perspective: 1000px; height: 380px; border: none; }
-        .project-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); transform-style: preserve-3d; }
-        .project-card:hover .project-card-inner { transform: rotateY(180deg); }
-        .project-card-front, .project-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 8, 8, 0.85); backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 1.8rem; overflow: hidden; }
-        .project-card-front { border-top: 4px solid var(--accent-primary); justify-content: flex-start; }
-        .project-card-back { transform: rotateY(180deg); background: rgba(15, 15, 15, 0.95); border-color: var(--accent-secondary); align-items: flex-start; text-align: left; }
-        .project-date { font-family: var(--font-mono); font-size: 0.8rem; color: #72767d; margin-bottom: 0.4rem; }
-        .project-title { font-size: 1.35rem; margin-bottom: 0.8rem; color: #fff; font-weight: 700; }
-        .project-desc { font-size: 0.9rem; color: #b1b4b9; margin-bottom: 1.2rem; }
-        .project-tech { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-secondary); margin-top: auto; }
-
-        .github-hint-tag { 
-            text-align: center; font-size: 10px; color: #fff; font-family: var(--font-mono); 
-            margin-top: auto; padding: 8px; border: 1px solid #fff; border-radius: 4px;
-            width: 100%; background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* --- CERTIFICATE SLICK REEL --- */
-        .cert-container { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; overflow: hidden; padding: 2.5rem 0; mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); }
-        .cert-track { display: flex; width: max-content; animation: cert-scroll 85s linear infinite; gap: 2.5rem; }
-        .cert-track:hover { animation-play-state: paused; }
-        
-        .cert-reel-card { width: 310px; height: 245px; background: rgba(8, 8, 8, 0.85); border: 1px solid var(--glass-border); border-radius: 6px; display: flex; flex-direction: column; transition: border-color 0.3s; position: relative; cursor: pointer; overflow: hidden; backdrop-filter: blur(10px); }
-        .cert-reel-card:hover { border-color: var(--accent-primary); }
-        .cert-img-wrapper { width: 100%; height: 165px; background-color: #000; position: relative; overflow: hidden; }
-        .cert-img-thumb { width: 100%; height: 100%; background-size: cover; background-position: center; filter: grayscale(100%) contrast(1.1) brightness(0.7); }
-        .cert-reel-card:hover .cert-img-thumb { filter: grayscale(0%) contrast(1.1); }
-        .cert-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.2s; }
-        .cert-reel-card:hover .cert-overlay { opacity: 1; }
-        .cert-overlay span { color: var(--accent-primary); border: 1px solid var(--accent-primary); padding: 0.5rem 1.2rem; font-family: var(--font-mono); font-size: 0.8rem; background: #050505; }
-        .cert-content { padding: 1rem; background: linear-gradient(180deg, rgba(15,15,15,0.6) 0%, rgba(5,5,5,0.9) 100%); }
-        .cert-name { font-family: var(--font-mono); font-size: 0.88rem; font-weight: 700; color: #e1e3e6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .cert-issuer { font-size: 0.72rem; color: #72767d; display: flex; align-items: center; gap: 0.4rem; text-transform: uppercase; margin-top: 0.2rem; }
-        .cert-issuer::before { content: ''; display: inline-block; width: 5px; height: 5px; background: var(--accent-secondary); border-radius: 50%; }
-
-        /* Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 3, 3, 0.92); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
-        .modal-content { background: #070707; border: 1px solid var(--accent-primary); width: 92%; max-width: 780px; max-height: 88dvh; overflow-y: auto; padding: 2rem; position: relative; border-radius: 8px; }
-        .modal-close { position: absolute; top: 1rem; right: 1.5rem; font-family: var(--font-mono); color: var(--horror-bright); font-size: 1.8rem; cursor: pointer; }
-        .modal-header { border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; margin-bottom: 1.5rem; }
-        .modal-title { font-family: var(--font-mono); color: var(--accent-primary); font-size: 1.4rem; }
-        .modal-subtitle { font-size: 0.85rem; color: #72767d; font-family: var(--font-mono); }
-        .modal-body p { margin-bottom: 1rem; color: #ccced2; }
-        .modal-stamp { border: 2px solid var(--accent-secondary); color: var(--accent-secondary); display: inline-block; padding: 0.4rem 1.2rem; font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem; transform: rotate(-5deg); margin-top: 1rem; }
-        #modal-img-container { margin: 1.2rem 0; background: #000; border: 1px solid rgba(255,255,255,0.05); padding: 4px; }
-        #modal-img-container img { display: block; width: 100%; height: auto; }
-
-        /* --- BOXED TIMELINE STRUCTURE PANELS --- */
-        .timeline { position: relative; margin-left: 0; display: flex; flex-direction: column; gap: 1.6rem; width: 100%; }
-        .timeline-item { 
-            position: relative; 
-            background: rgba(10, 10, 10, 0.72); 
-            border: 1px solid var(--glass-border); 
-            padding: 1.6rem; 
-            border-radius: 8px; 
-            backdrop-filter: blur(12px); 
-            transition: border-color 0.3s, background-color 0.3s;
-            width: 100%;
-        }
-        .timeline-item:hover {
-            border-color: var(--accent-secondary);
-            background: rgba(255, 0, 255, 0.02);
-        }
-        .timeline-date { font-family: var(--font-mono); color: var(--accent-secondary); margin-bottom: 0.4rem; display: block; font-size: 0.9rem; font-weight: bold; }
-        .timeline-title { font-size: 1.25rem; font-weight: bold; color: #fff; margin-bottom: 0.3rem; }
-        .timeline-sub { color: #ccced2; font-size: 0.95rem; line-height: 1.5; }
-
-        /* --- CONTACT & UPLINK MOBILE OPTIMIZED LAYOUTS --- */
-        .contact-box { background: rgba(8, 8, 8, 0.7); border: 1px solid var(--accent-primary); padding: 2.5rem 1.5rem; text-align: center; max-width: 800px; margin: 0 auto; position: relative; border-radius: 8px; backdrop-filter: blur(12px); width: 100%; }
-        .contact-box::before { content: 'ENCRYPTED CHANNEL'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #050505; padding: 0 1rem; font-family: var(--font-mono); color: var(--accent-primary); font-size: 0.8rem; letter-spacing: 1px; white-space: nowrap; }
-        
-        .contact-container-shell {
-            width: 100%;
-            max-width: 600px;
-            padding: 24px 16px;
-            background-color: rgba(15,15,15,0.85);
-            border-radius: 12px;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.5);
-            text-align: center;
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(10px);
-            margin: 0 auto;
-        }
-
-        footer { text-align: center; padding: 2.5rem; font-family: var(--font-mono); font-size: 0.8rem; color: #52565d; border-top: 1px solid rgba(255,255,255,0.03); position: relative; z-index: 5; }
-
-        /* --- COMPREHENSIVE RESPONSIVE DECK LAYERS (MOBILE FIX) --- */
-        @media (max-width: 768px) {
-            nav { padding: 1rem 1.5rem; }
-            .logo { font-size: 1.1rem; }
-            .hero h1 { font-size: 2.8rem; }
-            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .about-text { padding: 1.5rem; }
-            .stats-container { grid-template-columns: 1fr; gap: 1rem; width: 100%; }
-            
-            .cert-display-case { 
-                width: 90%; 
-                max-width: 340px; 
-                margin: 0 auto 2.5rem auto; 
-            }
-            .cert-card { 
-                height: 240px; 
-            }
-
-            .nav-links { 
-                position: fixed; top: 0; right: -100%; width: 75%; height: 100vh;
-                background: rgba(8, 8, 8, 0.98); flex-direction: column; align-items: center; justify-content: center;
-                transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); border-left: 2px solid var(--accent-primary); z-index: 1001;
-                backdrop-filter: blur(20px); gap: 2.5rem;
-            }
-            .nav-links.active { right: 0; }
-            .hamburger { display: flex; z-index: 1002; }
-            .hamburger.active .bar:nth-child(2) { opacity: 0; }
-            .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-            .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-            .thm-scene { 
-                transform: scale(0.6); 
-                height: 280px; 
-                margin: 0 auto; 
-            }
-            .thm-ring { width: 120px; }
-            .thm-item img { width: 90px; }
-            .thm-profile-case { width: 95%; margin: 1.5rem auto; }
-
-            form div { flex-direction: column; gap: 12px !important; }
-            .contact-container-shell { padding: 20px 12px; }
-        }
-
-        @keyframes cert-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        @keyframes hero-fade-in { to { opacity: 1; } }
+        /* Continuous Ribbon Tickers */
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        @keyframes spin-ring { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes scan-avatar { 0% { top: 0%; opacity: 0; } 50% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
-        @keyframes glitch-anim { 0% { clip: rect(20px, 9999px, 15px, 0); } 50% { clip: rect(10px, 9999px, 5px, 0); } 100% { clip: rect(50px, 9999px, 20px, 0); } }
-        @keyframes glitch-anim2 { 0% { clip: rect(60px, 9999px, 70px, 0); } 50% { clip: rect(30px, 9999px, 10px, 0); } 100% { clip: rect(10px, 9999px, 20px, 0); } }
-        @keyframes thm-spin { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+        .animate-ticker-scroll { animation: scroll 30s linear infinite; }
+        @keyframes cert-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-cert-scroll { animation: cert-scroll 85s linear infinite; }
 
-        .hidden { opacity: 0; transform: translateY(20px); transition: 0.4s all ease-out; }
-        .show { opacity: 1; transform: translateY(0); }
+        /* Glitch Layer FX */
+        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; }
+        .glitch::before { left: 2px; text-shadow: -1px 0 #ff00ff; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim 6s infinite linear alternate-reverse; }
+        .glitch::after { left: -2px; text-shadow: -1px 0 #00ffcc; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim2 6s infinite linear alternate-reverse; }
+        @keyframes glitch-anim { 0% { clip: rect(20px, 9999px, 15px, 0); } 50% { clip: rect(10px, 9999px, 80px, 0); } 100% { clip: rect(40px, 9999px, 30px, 0); } }
+        @keyframes glitch-anim2 { 0% { clip: rect(25px, 9999px, 5px, 0); } 50% { clip: rect(30px, 9999px, 55px, 0); } 100% { clip: rect(15px, 9999px, 85px, 0); } }
+
+        /* Interactive Details */
+        @keyframes pulse-glow { 0% { opacity: 0.2; transform: scale(0.96); } 100% { opacity: 0.5; transform: scale(1.04); } }
+        .animate-pulse-glow { animation: pulse-glow 3s infinite alternate; }
+        @keyframes spin-ring { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .animate-spin-ring { animation: spin-ring 14s linear infinite; }
+        .hover-spin-fast:hover .animate-spin-ring { animation-duration: 4s; }
+        @keyframes scan-avatar { 0% { top: 0%; opacity: 0; } 50% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        .avatar-container:hover .scan-line-element { animation: scan-avatar 1.5s ease-in-out infinite; opacity: 1; }
+
+        /* Observer Animation Triggers */
+        .hidden-panel { opacity: 0; transform: translateY(20px); transition: 0.5s all ease-out; }
+        .show-panel { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body class="w-full overflow-x-hidden bg-[#050505] text-[#b0b3b8] font-sans leading-relaxed scroll-smooth" oncontextmenu="return false;">
 
-    <div class="spline-background-container">
-        <!-- Added loading="lazy" metadata wrapper to stop memory-leaks inside weak GPU drivers -->
+    <div class="fixed top-0 left-0 w-full h-full -z-50 pointer-events-auto block md:block">
         <spline-viewer url="https://prod.spline.design/Slk6b8kz3LRlKiyk/scene.splinecode" loading="lazy"></spline-viewer>
     </div>
 
-    <div class="forensic-scanline"></div>
+    <div class="forensic-scanline fixed bottom-full left-0 w-full h-[10px] z-[999] bg-[rgba(0,255,204,0.02)] pointer-events-none"></div>
 
-    <div id="cursor"></div>
+    <div id="cursor" class="fixed w-5 h-5 border-2 border-accentPrimary rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-all duration-200 mix-blend-difference hidden md:block will-change-transform"></div>
 
-    <div class="modal-overlay" id="cert-modal">
-        <div class="modal-content">
-            <div class="modal-close" onclick="closeModal()">X</div>
-            <div class="modal-header">
-                <h3 class="modal-title" id="modal-title">Certificate Name</h3>
-                <span class="modal-subtitle" id="modal-issuer">Issuer Name</span>
+    <div class="modal-overlay fixed inset-0 bg-[#030303]/92 z-[2000] hidden justify-center items-center backdrop-blur-md" id="cert-modal">
+        <div class="modal-content bg-[#070707] border border-accentPrimary w-11/12 max-w-3xl max-h-[88vh] overflow-y-auto p-8 relative rounded-lg">
+            <div class="modal-close absolute top-4 right-6 font-mono text-red-600 text-3xl cursor-pointer hover:text-red-500" onclick="closeModal()">X</div>
+            <div class="modal-header border-b border-white/5 pb-4 mb-6">
+                <h3 class="modal-title font-mono text-accentPrimary text-2xl" id="modal-title">Certificate Name</h3>
+                <span class="modal-subtitle text-xs font-mono text-[#72767d]" id="modal-issuer">Issuer Name</span>
             </div>
-            <div class="modal-body">
-                <p><strong>DETAILS:</strong> <span id="modal-desc">Description of the certification.</span></p>
-                <div id="modal-img-container"></div>
-                <p><strong>STATUS:</strong> <span id="modal-status" style="color:var(--accent-primary)">VERIFIED</span></p>
-                <div class="modal-stamp" id="modal-stamp">EVIDENCE LOGGED</div>
+            <div class="modal-body text-[#ccced2]">
+                <p class="mb-4"><strong>DETAILS:</strong> <span id="modal-desc">Description of the certification.</span></p>
+                <div id="modal-img-container" class="my-5 bg-black border border-white/5 p-1"><img src="" alt="" class="block w-full h-auto"></div>
+                <p><strong>STATUS:</strong> <span id="modal-status" class="text-accentPrimary">VERIFIED</span></p>
+                <div class="modal-stamp border-2 border-accentSecondary text-accentSecondary inline-block px-5 py-1.5 font-mono font-bold text-lg -rotate-6 mt-4">EVIDENCE LOGGED</div>
             </div>
         </div>
     </div>
 
-    <nav>
-        <div class="logo">&lt;whoami /&gt; sayani</div> 
-        
-        <div class="hamburger" onclick="toggleMenu()">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
+    <nav class="fixed top-0 left-0 w-full px-6 md:px-10 py-5 flex justify-between items-center z-[1000] backdrop-blur-md bg-black/80 border-b border-white/10">
+        <div class="logo font-mono text-lg font-bold text-accentPrimary uppercase tracking-[2px]">&lt;whoami /&gt; sayani</div>
+        <div class="nav-links hidden md:flex items-center gap-9 font-mono text-xs text-[#d0d0d0]" id="nav-menu">
+            <a href="#about" class="hover:text-accentPrimary relative group transition-colors">FILE: PROFILE<span class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-accentSecondary transition-all group-hover:w-full"></span></a>
+            <a href="#skills" class="hover:text-accentPrimary relative group transition-colors">ARSENAL<span class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-accentSecondary transition-all group-hover:w-full"></span></a>
+            <a href="#projects" class="hover:text-accentPrimary relative group transition-colors">PROJECTS<span class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-accentSecondary transition-all group-hover:w-full"></span></a>
+            <a href="#credentials" class="hover:text-accentPrimary relative group transition-colors">CREDENTIALS<span class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-accentSecondary transition-all group-hover:w-full"></span></a>
+            <a href="#thm-badges" class="hover:text-accentPrimary relative group transition-colors">BADGES<span class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-accentSecondary transition-all group-hover:w-full"></span></a>
+            <a href="#contact" class="hover:text-accentPrimary relative group transition-colors">UPLINK<span class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-accentSecondary transition-all group-hover:w-full"></span></a>
         </div>
-        <div class="nav-links" id="nav-menu">
-            <a href="#about" class="nav-link" onclick="toggleMenu()">FILE: PROFILE</a>
-            <a href="#skills" class="nav-link" onclick="toggleMenu()">ARSENAL</a>
-            <a href="#projects" class="nav-link" onclick="toggleMenu()">PROJECTS</a>
-            <a href="#credentials" class="nav-link" onclick="toggleMenu()">CREDENTIALS</a>
-            <a href="#thm-badges" class="nav-link" onclick="toggleMenu()">BADGES</a>
-            <a href="#contact" class="nav-link" onclick="toggleMenu()">UPLINK</a>
+        <div class="hamburger flex md:hidden flex-col gap-1.5 cursor-pointer z-[1002]" onclick="toggleMenu()">
+            <span class="bar w-6 h-[3px] bg-accentPrimary transition-transform duration-300"></span>
+            <span class="bar w-6 h-[3px] bg-accentPrimary transition-opacity duration-300"></span>
+            <span class="bar w-6 h-[3px] bg-accentPrimary transition-transform duration-300"></span>
         </div>
     </nav>
 
-    <header class="hero">
-        <div class="hero-avatar-container">
-            <div class="hero-avatar-glow"></div>
-            <div class="hero-avatar-ring"></div>
-            <div class="hero-scan-line"></div>
-            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/sayanipfp%201.jpg" alt="Sayani Maity" class="hero-img">
+    <div id="mobile-drawer" class="fixed top-0 right-[-100%] w-3/4 h-screen bg-[#080808]/98 flex flex-col items-center justify-center gap-10 border-l-2 border-accentPrimary z-[1001] backdrop-blur-xl transition-all duration-500 ease-in-out font-mono md:hidden">
+        <a href="#about" onclick="toggleMenu()" class="text-lg hover:text-accentPrimary">FILE: PROFILE</a>
+        <a href="#skills" onclick="toggleMenu()" class="text-lg hover:text-accentPrimary">ARSENAL</a>
+        <a href="#projects" onclick="toggleMenu()" class="text-lg hover:text-accentPrimary">PROJECTS</a>
+        <a href="#credentials" onclick="toggleMenu()" class="text-lg hover:text-accentPrimary">CREDENTIALS</a>
+        <a href="#thm-badges" onclick="toggleMenu()" class="text-lg hover:text-accentPrimary">BADGES</a>
+        <a href="#contact" onclick="toggleMenu()" class="text-lg hover:text-accentPrimary">UPLINK</a>
+    </div>
+
+    <header class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-28 pb-12 relative">
+        <div class="avatar-container hover-spin-fast w-[165px] h-[165px] mb-8 relative flex justify-center items-center transition-transform duration-300 hover:scale-105">
+            <div class="animate-pulse-glow absolute w-full h-full rounded-full bg-gradient-to-r from-accentPrimary to-accentSecondary filter blur-md opacity-40"></div>
+            <div class="animate-spin-ring absolute w-[112%] h-[112%] rounded-full border-2 border-dashed border-accentPrimary"></div>
+            <div class="scan-line-element absolute w-full h-1 bg-white/70 shadow-[0_0_15px_#00ffcc] top-[-10%] left-0 z-10 opacity-0 rounded-full"></div>
+            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/sayanipfp%201.jpg" alt="Sayani Maity" class="w-full h-full object-cover rounded-full border-3 border-white/10 relative z-10 bg-[#0b0b0b]">
         </div>
-        <div class="hero-tag">STATUS: ONLINE // SCANNING FOR MORE OPPORTUNITIES</div>
-        <div class="glitch-wrapper">
-            <h1 class="glitch" data-text="SAYANI MAITY">SAYANI MAITY</h1>
+        
+        <span class="font-mono text-accentSecondary border border-accentSecondary px-5 py-2 rounded-full text-xs bg-[#050505]/70 backdrop-blur-sm mb-6 uppercase tracking-wider">STATUS: ONLINE // SCANNING FOR MORE OPPORTUNITIES</span>
+        <h1 class="glitch text-4xl md:text-7xl font-black uppercase tracking-tight text-white mb-4 relative" data-text="SAYANI MAITY">SAYANI MAITY</h1>
+        
+        <div class="profession-box bg-[#0a0a0a] border border-[#1a1a1a] px-6 py-4 rounded-lg my-6 max-w-xl w-full">
+            <p class="font-mono text-sm text-[#b0b3b8]">(CEH) v13 AI Certified || Digital Forensics Analyst || Penetration Tester || Exploring AI-Driven Security</p>
+        </div>
 
-            <div class="profession-box">
-                <p>(CEH) v13 AI Certified || Digital Forensics Analyst || Penetration Tester || Exploring AI-Driven Security<br></p>
-            </div>
-
-            <div class="hero-btns">
-                <a href="#contact" class="cta-btn">INITIALIZE CONTACT</a>
-                <a href="https://github.com/isayani-78/sayanimaity78/raw/main/Sayani%20Maity%20Resume.pdf" class="cta-btn download-btn">DOWNLOAD RESUME</a>
-            </div>
+        <div class="flex flex-wrap gap-5 justify-center mt-6 font-mono text-sm">
+            <a href="#contact" class="px-8 py-3.5 border-2 border-accentPrimary text-accentPrimary font-bold rounded relative overflow-hidden group transition-colors backdrop-blur-sm z-10">
+                <span class="absolute inset-0 bg-accentPrimary translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 -z-10"></span>
+                INITIALIZE CONTACT
+            </a>
+            <a href="https://github.com/isayani-78/sayanimaity78/raw/main/Sayani%20Maity%20Resume.pdf" target="_blank" class="px-8 py-3.5 border-2 border-accentSecondary text-accentSecondary font-bold rounded relative overflow-hidden group transition-colors backdrop-blur-sm z-10">
+                <span class="absolute inset-0 bg-accentSecondary translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 -z-10"></span>
+                DOWNLOAD RESUME
+            </a>
         </div>
     </header>
 
-    <section id="about" class="hidden">
-        <h2 class="section-title hyper-text">FILE: PROFILE</h2>
-        <p style="color: #00ffd5; font-family: monospace; font-size: 14px; margin-top: -10px; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase;">
-             ( REVERSE SIDE [CLICK] )
-        </p>
-
-        <div class="cert-display-case">
-            <div class="cert-card">
-                <div class="cert-inner">
-                    <div class="cert-front">
-                        <div class="cert-label">(CEH) v13ai</div>
-                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg" alt="CEH Certificate">
+    <section id="about" class="hidden-panel py-20 px-6 max-w-6xl mx-auto relative z-10">
+        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-2 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">FILE: PROFILE</h2>
+        <p class="text-xs font-mono text-[#00ffd5] tracking-wider uppercase mb-12 block">( REVERSE SIDE [CLICK] )</p>
+        
+        <div class="cert-display-case flex justify-center max-w-[440px] w-full mx-auto mb-12">
+            <div class="cert-card w-full h-[280px] border-2 border-accentPrimary rounded-lg overflow-hidden relative backdrop-blur-md transition-all duration-300 hover:shadow-[0_0_25px_rgba(0,255,204,0.3)] hover:border-accentSecondary">
+                <div class="cert-inner w-full h-full relative">
+                    <div class="cert-front absolute inset-0 bg-[#050505]">
+                        <div class="absolute top-0 left-0 bg-accentPrimary text-black text-[11px] font-bold font-mono px-2.5 py-1 uppercase tracking-wider rounded-br-lg z-10">(CEH) v13ai</div>
+                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg" alt="CEH Certificate" class="w-full h-full object-fill">
                     </div>
-                    <div class="cert-back">
-                        <div class="cert-label">EXAM TRANSCRIPT</div>
-                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg" alt="Exam Transcript">
+                    <div class="cert-back absolute inset-0 bg-[#050505]">
+                        <div class="absolute top-0 left-0 bg-accentPrimary text-black text-[11px] font-bold font-mono px-2.5 py-1 uppercase tracking-wider rounded-br-lg z-10">EXAM TRANSCRIPT</div>
+                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg" alt="Exam Transcript" class="w-full h-full object-fill">
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+            <div class="md:col-span-7 bg-black/70 p-8 rounded-lg border border-white/10 backdrop-blur-md text-[#e1e3e6] text-sm leading-relaxed">
+                <p class="mb-4"><strong>Identity:</strong> Sayani Maity <br><strong>Role:</strong> B.Sc. Digital Forensics Student</p>
+                <p class="mb-4">I am <strong>Sayani Maity</strong>, currently pursuing a <strong>B.Sc. in Digital Forensics (2023–2026)</strong> at <strong>Indian School of Ethical Hacking (ISOEH), Kolkata,</strong> under <strong>Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India</strong>.</p>
+                <p class="mb-4">As a <strong>(CEH) v13 AI Certified professional</strong>, I specialize in bridging the gap between theoretical security and real-world defense using engineering matrices deployed across advanced target landscapes.</p>
+                <p class="mb-4">I specialize in <strong>Digital Forensics, Penetration Testing, OSINT, and cybersecurity tooling</strong> while actively exploring <strong>AI-Driven Security</strong> parameters to optimize threat tracking layers and containment system telemetry.</p>
+                <p class="mb-4">Proficient in <strong>automating complex security workflows using Python and Bash</strong>, ensuring optimal precision and thread execution latency reduction across technical architectural operations.</p>
+                <p class="text-accentPrimary font-mono font-semibold mt-4">>_ Investigating. Exploiting. Securing.</p>
+            </div>
+            
+            <div class="md:col-span-5 grid grid-cols-2 gap-4 w-full">
+                <div class="bg-glassBg border border-white/10 p-4 text-center rounded-md backdrop-blur-md transition-all hover:-translate-y-1 hover:border-accentPrimary hover:bg-accentPrimary/5 flex flex-col justify-center items-center">
+                    <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH%20badge.jpg" alt="CEH Badge" class="w-16 h-auto mb-2 filter drop-shadow-[0_0_8px_#00ffcc]">
+                    <span class="font-mono text-[10px] text-[#a2a5a9] uppercase tracking-wider">(CEH) v13 AI Certified</span>
+                </div>
+                <div class="bg-glassBg border border-white/10 p-6 text-center rounded-md backdrop-blur-md transition-all hover:-translate-y-1 hover:border-accentPrimary hover:bg-accentPrimary/5 flex flex-col justify-center">
+                    <span class="block font-mono text-3xl font-bold text-accentPrimary">3+</span>
+                    <span class="font-mono text-[11px] text-[#a2a5a9] uppercase tracking-wider">Major Projects</span>
+                </div>
+                <div class="bg-glassBg border border-white/10 p-6 text-center rounded-md backdrop-blur-md transition-all hover:-translate-y-1 hover:border-accentPrimary hover:bg-accentPrimary/5 flex flex-col justify-center">
+                    <span class="block font-mono text-2xl font-bold text-accentPrimary">ISOEH</span>
+                    <span class="font-mono text-[11px] text-[#a2a5a9] uppercase tracking-wider">Student</span>
+                </div>
+                <div class="bg-glassBg border border-white/10 p-6 text-center rounded-md backdrop-blur-md transition-all hover:-translate-y-1 hover:border-accentPrimary hover:bg-accentPrimary/5 flex flex-col justify-center">
+                    <span class="block font-mono text-3xl font-bold text-accentPrimary">20+</span>
+                    <span class="font-mono text-[11px] text-[#a2a5a9] uppercase tracking-wider">Tools Mastered</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-black/80 border-y border-white/10 py-5 -rotate-1 backdrop-blur-sm overflow-hidden mb-16 z-10">
+        <div class="flex w-max animate-ticker-scroll font-mono text-2xl font-bold uppercase tracking-wider">
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">WIRESHARK</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">FTK IMAGER</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">METASPLOIT</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">BURPSUITE</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">AUTOPSY</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">MAGNET AXIOM</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">NMAP</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">LINUX</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">WIRESHARK</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">FTK IMAGER</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">METASPLOIT</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">BURPSUITE</span>
+        </div>
+    </div>
+
+    <section id="skills" class="hidden-panel py-16 px-6 max-w-6xl mx-auto relative z-10">
+        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">THE ARSENAL</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            <div class="bg-black/80 border border-white/10 p-7 rounded-md backdrop-blur-xl transition-all duration-300 hover:border-accentSecondary hover:shadow-[0_0_20px_rgba(255,0,255,0.12)]">
+                <h3 class="font-mono text-accentPrimary font-semibold text-base mb-4 border-b border-white/5 pb-2">// LANGUAGES & SCRIPTING</h3>
+                <div class="flex flex-wrap gap-2.5"><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Python</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Matplotlib</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Bash</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Shell Scripting</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">HTML</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">NumPy</span></div>
+            </div>
+            <div class="bg-black/80 border border-white/10 p-7 rounded-md backdrop-blur-xl transition-all duration-300 hover:border-accentSecondary hover:shadow-[0_0_20px_rgba(255,0,255,0.12)]">
+                <h3 class="font-mono text-accentPrimary font-semibold text-base mb-4 border-b border-white/5 pb-2">// SECURITY & PENTESTING</h3>
+                <div class="flex flex-wrap gap-2.5"><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">VAPT</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">WAPT</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Threat Management</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Burp Suite</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Nmap</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Internet Security</span></div>
+            </div>
+            <div class="bg-black/80 border border-white/10 p-7 rounded-md backdrop-blur-xl transition-all duration-300 hover:border-accentSecondary hover:shadow-[0_0_20px_rgba(255,0,255,0.12)]">
+                <h3 class="font-mono text-accentPrimary font-semibold text-base mb-4 border-b border-white/5 pb-2">// FORENSIC & OSINT</h3>
+                <div class="flex flex-wrap gap-2.5"><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Digital Forensic</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Computer Forensic</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Mobile Forensic</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Network Forensic</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">OSINT</span></div>
+            </div>
+            <div class="bg-black/80 border border-white/10 p-7 rounded-md backdrop-blur-xl transition-all duration-300 hover:border-accentSecondary hover:shadow-[0_0_20px_rgba(255,0,255,0.12)]">
+                <h3 class="font-mono text-accentPrimary font-semibold text-base mb-4 border-b border-white/5 pb-2">// OPERATING SYSTEMS</h3>
+                <div class="flex flex-wrap gap-2.5"><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Unix</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">GNU/Linux</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Ubuntu</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Kali Linux</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Black Arch</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Windows</span></div>
+            </div>
+            <div class="bg-black/80 border border-white/10 p-7 rounded-md backdrop-blur-xl transition-all duration-300 hover:border-accentSecondary hover:shadow-[0_0_20px_rgba(255,0,255,0.12)]">
+                <h3 class="font-mono text-accentPrimary font-semibold text-base mb-4 border-b border-white/5 pb-2">// TOOLS ARSENAL</h3>
+                <div class="flex flex-wrap gap-2.5"><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Autopsy</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Magnet AXIOM</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">FTK Imager</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">OWASP ZAP</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Wireshark</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">OpenVAS</span></div>
+            </div>
+            <div class="bg-black/80 border border-white/10 p-7 rounded-md backdrop-blur-xl transition-all duration-300 hover:border-accentSecondary hover:shadow-[0_0_20px_rgba(255,0,255,0.12)]">
+                <h3 class="font-mono text-accentPrimary font-semibold text-base mb-4 border-b border-white/5 pb-2">// AI & PROTECTION MATRIX</h3>
+                <div class="flex flex-wrap gap-2.5"><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">AI Prompting</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Cryptography</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Steganography</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Obfuscation</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="hidden-panel py-16 px-6 max-w-6xl mx-auto relative z-10">
+        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">PROJECTS</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="project-card h-[400px] group" data-link="https://github.com/isayani-78/forensic-analyzer">
+                <div class="project-card-inner w-full h-full relative">
+                    <div class="project-card-front absolute w-full h-full border border-white/10 rounded-lg bg-[#080808]/85 backdrop-blur-md flex flex-col p-6 border-t-4 border-t-accentPrimary justify-between">
+                        <div>
+                            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project1.png" alt="Forensic Analyzer" class="w-full h-36 object-cover rounded mb-4">
+                            <h3 class="text-lg font-bold text-white mb-2">Forensic Analyzer</h3>
+                            <p class="text-xs text-[#b1b4b9] line-clamp-3">Web-based Digital Forensic Learning Tool implementing advanced hashing and cipher encoding methodologies.</p>
+                        </div>
+                        <div class="text-center text-[10px] text-white font-mono py-2 border border-white/20 rounded bg-white/5 tracking-wider uppercase">CLICK TO INSPECT GITHUB</div>
+                    </div>
+                    <div class="project-card-back absolute w-full h-full border border-accentSecondary rounded-lg bg-[#0f0f0f]/95 backdrop-blur-md flex flex-col p-6 justify-between items-start">
+                        <div>
+                            <span class="font-mono text-xs text-[#72767d] mb-1 block">Nov 2025 - Present</span>
+                            <h3 class="text-xl font-bold text-white mb-3">Forensic Analyzer.</h3>
+                            <p class="text-xs text-[#b0b3b8] space-y-1">
+                                • Hash generation (MD5/SHA) & Base64 tools.<br>
+                                • Caesar Cipher with auto-key tracing.<br>
+                                • Modular dashboard architecture for quick triage.
+                            </p>
+                        </div>
+                        <span class="font-mono text-xs text-accentSecondary">PYTHON // WEB // CRYPTO</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card h-[400px] group" data-link="https://github.com/isayani-78/CMTL">
+                <div class="project-card-inner w-full h-full relative">
+                    <div class="project-card-front absolute w-full h-full border border-white/10 rounded-lg bg-[#080808]/85 backdrop-blur-md flex flex-col p-6 border-t-4 border-t-accentPrimary justify-between">
+                        <div>
+                            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project2.png" alt="CMTL" class="w-full h-36 object-cover rounded mb-4">
+                            <h3 class="text-lg font-bold text-white mb-2">Cyber Security Multi-Tool Launcher</h3>
+                            <p class="text-xs text-[#b1b4b9] line-clamp-3">GUI/CLI ecosystem framework built to streamline active security sweeps, scanning protocols and VAPT operations.</p>
+                        </div>
+                        <div class="text-center text-[10px] text-white font-mono py-2 border border-white/20 rounded bg-white/5 tracking-wider uppercase">CLICK TO INSPECT GITHUB</div>
+                    </div>
+                    <div class="project-card-back absolute w-full h-full border border-accentSecondary rounded-lg bg-[#0f0f0f]/95 backdrop-blur-md flex flex-col p-6 justify-between items-start">
+                        <div>
+                            <span class="font-mono text-xs text-[#72767d] mb-1 block">Aug 2025 - Present</span>
+                            <h3 class="text-xl font-bold text-white mb-3">CMTL Launcher</h3>
+                            <p class="text-xs text-[#b0b3b8] space-y-1">
+                                • Integrates legacy network wrappers & binary tools.<br>
+                                • One-click execution matrix with structured JSON output.<br>
+                                • Built-in sub-domain parsing & multi-port tracing array.
+                            </p>
+                        </div>
+                        <span class="font-mono text-xs text-accentSecondary">PYTHON // VAPT // GUI // AUTOMATION</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card h-[400px] group" data-link="https://github.com/isayani-78/AI-Powered-Phishing-Email-Detector">
+                <div class="project-card-inner w-full h-full relative">
+                    <div class="project-card-front absolute w-full h-full border border-white/10 rounded-lg bg-[#080808]/85 backdrop-blur-md flex flex-col p-6 border-t-4 border-t-accentPrimary justify-between">
+                        <div>
+                            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project3.png" alt="Phishing Detector" class="w-full h-36 object-cover rounded mb-4">
+                            <h3 class="text-lg font-bold text-white mb-2">AI-Powered Phishing Detector</h3>
+                            <p class="text-xs text-[#b1b4b9] line-clamp-3">Autonomous classification engine intercepting deceptive headers, anomalies and phishing vectors.</p>
+                        </div>
+                        <div class="text-center text-[10px] text-white font-mono py-2 border border-white/20 rounded bg-white/5 tracking-wider uppercase">CLICK TO INSPECT GITHUB</div>
+                    </div>
+                    <div class="project-card-back absolute w-full h-full border border-accentSecondary rounded-lg bg-[#0f0f0f]/95 backdrop-blur-md flex flex-col p-6 justify-between items-start">
+                        <div>
+                            <span class="font-mono text-xs text-[#72767d] mb-1 block">June 2025 - Present</span>
+                            <h3 class="text-xl font-bold text-white mb-3">AI Phishing Guard</h3>
+                            <p class="text-xs text-[#b0b3b8] space-y-1">
+                                • Advanced text parsing evaluating body content risk vector tags.<br>
+                                • Statistical ML logic models delivering classification scores.<br>
+                                • High accuracy scanning matching active threat intelligence feeds.
+                            </p>
+                        </div>
+                        <span class="font-mono text-xs text-accentSecondary">AI // NLP // ML // THREAT INTEL</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="credentials" class="hidden-panel py-16 px-6 max-w-6xl mx-auto relative z-10">
+        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">CREDENTIALS</h2>
+        <div class="cert-container w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden py-6 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
+            <div class="cert-track flex w-max gap-8 animate-cert-scroll hover:[animation-play-state:paused]">
+                
+                <div class="cert-reel-card w-[310px] h-[245px] bg-[#080808]/85 border border-white/10 rounded-lg flex flex-col overflow-hidden backdrop-blur-md hover:border-accentPrimary transition-all" onclick="openCert('Infocom Hackstar 2023', 'ABP & ISOEH', 'CTF Participation log token extracted.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')">
+                    <div class="w-full h-[165px] bg-black relative group"><div class="absolute inset-0 bg-cover bg-center filter grayscale contrast-125 brightness-75 transition-all group-hover:grayscale-0" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"></div><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity">
+                    <span class="font-mono text-xs text-accentPrimary border border-accentPrimary px-4 py-1.5 bg-[#050505]">VIEW MATRIX</span></div></div>
+                    <div class="p-4 bg-[#0a0a0a] flex-1"><div class="font-mono text-sm font-bold text-[#e1e3e6] truncate">Hackstar '23</div><div class="text-[11px] text-[#72767d] uppercase mt-1 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accentSecondary"></span>CTF Event</div></div>
+                </div>
+
+                <div class="cert-reel-card w-[310px] h-[245px] bg-[#080808]/85 border border-white/10 rounded-lg flex flex-col overflow-hidden backdrop-blur-md hover:border-accentPrimary transition-all" onclick="openCert('(CEH) v13ai EXAM TRANSCRIPT', 'EC-Council', '(CEH) v13ai SCORE : 93.6% Verified transcript parameters.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')">
+                    <div class="w-full h-[165px] bg-black relative group"><div class="absolute inset-0 bg-cover bg-center filter grayscale contrast-125 brightness-75 transition-all group-hover:grayscale-0" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"></div><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity">
+                    <span class="font-mono text-xs text-accentPrimary border border-accentPrimary px-4 py-1.5 bg-[#050505]">VIEW MATRIX</span></div></div>
+                    <div class="p-4 bg-[#0a0a0a] flex-1"><div class="font-mono text-sm font-bold text-[#e1e3e6] truncate">CEH v13ai Transcript</div><div class="text-[11px] text-[#72767d] uppercase mt-1 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accentSecondary"></span>EC-Council</div></div>
+                </div>
+
+                <div class="cert-reel-card w-[310px] h-[245px] bg-[#080808]/85 border border-white/10 rounded-lg flex flex-col overflow-hidden backdrop-blur-md hover:border-accentPrimary transition-all" onclick="openCert('Infocom Hackstar 2024', 'ABP & ISOEH', 'Certificate of Participation for Infocom Hackstar CTF 2024 operation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')">
+                    <div class="w-full h-[165px] bg-black relative group"><div class="absolute inset-0 bg-cover bg-center filter grayscale contrast-125 brightness-75 transition-all group-hover:grayscale-0" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"></div><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity">
+                    <span class="font-mono text-xs text-accentPrimary border border-accentPrimary px-4 py-1.5 bg-[#050505]">VIEW MATRIX</span></div></div>
+                    <div class="p-4 bg-[#0a0a0a] flex-1"><div class="font-mono text-sm font-bold text-[#e1e3e6] truncate">Hackstar '24</div><div class="text-[11px] text-[#72767d] uppercase mt-1 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accentSecondary"></span>CTF Event</div></div>
+                </div>
+
+                <div class="cert-reel-card w-[310px] h-[245px] bg-[#080808]/85 border border-white/10 rounded-lg flex flex-col overflow-hidden backdrop-blur-md hover:border-accentPrimary transition-all" onclick="openCert('CTIGA Certification', 'ISOEH', 'Certified Threat Intelligence & Gathering Analyst credential parameters.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')">
+                    <div class="w-full h-[165px] bg-black relative group"><div class="absolute inset-0 bg-cover bg-center filter grayscale contrast-125 brightness-75 transition-all group-hover:grayscale-0" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"></div><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity">
+                    <span class="font-mono text-xs text-accentPrimary border border-accentPrimary px-4 py-1.5 bg-[#050505]">VIEW MATRIX</span></div></div>
+                    <div class="p-4 bg-[#0a0a0a] flex-1"><div class="font-mono text-sm font-bold text-[#e1e3e6] truncate">CTIGA</div><div class="text-[11px] text-[#72767d] uppercase mt-1 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accentSecondary"></span>Threat Intel</div></div>
+                </div>
+
+                <div class="cert-reel-card w-[310px] h-[245px] bg-[#080808]/85 border border-white/10 rounded-lg flex flex-col overflow-hidden backdrop-blur-md hover:border-accentPrimary transition-all" onclick="openCert('CRTOM Certification', 'Certified Red Team', 'Red Team Operations mapping structural bypass simulations.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')">
+                    <div class="w-full h-[165px] bg-black relative group"><div class="absolute inset-0 bg-cover bg-center filter grayscale contrast-125 brightness-75 transition-all group-hover:grayscale-0" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"></div><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity">
+                    <span class="font-mono text-xs text-accentPrimary border border-accentPrimary px-4 py-1.5 bg-[#050505]">VIEW MATRIX</span></div></div>
+                    <div class="p-4 bg-[#0a0a0a] flex-1"><div class="font-mono text-sm font-bold text-[#e1e3e6] truncate">CRTOM</div><div class="text-[11px] text-[#72767d] uppercase mt-1 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accentSecondary"></span>Red Team Ops</div></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="hidden-panel py-16 px-6 max-w-4xl mx-auto relative z-10">
+        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">TIMELINE</h2>
+        <div class="flex flex-col gap-6 w-full">
+            <div class="bg-glassBg border border-white/10 p-6 rounded-lg backdrop-blur-md transition-all duration-300 hover:border-accentSecondary hover:bg-accentSecondary/[0.02]">
+                <span class="font-mono text-accentSecondary font-bold text-sm mb-1 block">(March 2026 - June 2026)</span>
+                <h3 class="text-xl font-bold text-white mb-1">VAPT Internship</h3>
+                <p class="text-sm text-[#ccced2]">ISOAH Data Securities Pvt. Ltd.</p>
+            </div>
+            <div class="bg-glassBg border border-white/10 p-6 rounded-lg backdrop-blur-md transition-all duration-300 hover:border-accentSecondary hover:bg-accentSecondary/[0.02]">
+                <span class="font-mono text-accentSecondary font-bold text-sm mb-1 block">2023 - 2026 (Pursuing)</span>
+                <h3 class="text-xl font-bold text-white mb-1">B.Sc. Digital Forensics</h3>
+                <p class="text-sm text-[#ccced2]">Indian School of Ethical Hacking (ISOEH), Kolkata under Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India.</p>
+            </div>
+            <div class="bg-glassBg border border-white/10 p-6 rounded-lg backdrop-blur-md transition-all duration-300 hover:border-accentSecondary hover:bg-accentSecondary/[0.02]">
+                <span class="font-mono text-accentSecondary font-bold text-sm mb-1 block">2026</span>
+                <h3 class="text-xl font-bold text-white mb-1">(CEH) v13 AI Certified</h3>
+                <p class="text-sm text-[#ccced2]">EC-Council.</p>
+            </div>
+            <div class="bg-glassBg border border-white/10 p-6 rounded-lg backdrop-blur-md transition-all duration-300 hover:border-accentSecondary hover:bg-accentSecondary/[0.02]">
+                <span class="font-mono text-accentSecondary font-bold text-sm mb-1 block">2015 - 2023</span>
+                <h3 class="text-xl font-bold text-white mb-1">ICSE & ISC (PCMB)</h3>
+                <p class="text-sm text-[#ccced2]">St. Thomas' High School, Howrah, West Bengal, India.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="thm-badges" class="hidden-panel py-16 px-6 max-w-6xl mx-auto relative z-10">
+        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">TRYHACKME BADGES</h2>
+        <div class="thm-scene w-full h-[450px] md:h-[450px] flex justify-center items-center overflow-hidden relative mt-4 max-w-full scale-75 md:scale-100 mx-auto">
+            <div class="thm-ring relative w-40 h-[100px]">
+                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(0deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/hashcracker.png" alt="Hash Cracker" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
+                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(30deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/linux.png" alt="Linux" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
+                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(60deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/securityawareness.png" alt="Security Awareness" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
+                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(90deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/mrrobot.png" alt="Mr Robot" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
+                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(120deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/league-bronze.png" alt="Bronze League" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
+                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(150deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/streak3.png" alt="Streak" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
+                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(180deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/webbed.png" alt="Webbed" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
+                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(210deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/howthewebworks.png" alt="Web Fundamentals" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
+                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(240deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/introtosecurityengineering.png" alt="Security Engineering" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
+                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(270deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/introtodevsecops.png" alt="DevSecOps" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
+                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(300deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/league-gold.png" alt="Gold League" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
+                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(330deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/injection.png" alt="Injection" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
             </div>
         </div>
         
-        <div class="about-grid">
-            <div class="about-text">
-                <p> <strong>Identity:</strong> Sayani Maity<br>
-                  <strong>Role:</strong> B.Sc. Digital Forensics Student<br>
-                </p>
+        <div class="thm-profile-case relative border-2 border-[#333] p-1.5 bg-[#080808]/90 max-w-[440px] w-full mx-auto backdrop-blur-md rounded-md transition-all hover:border-accentPrimary hover:shadow-[0_0_25px_rgba(0,255,204,0.2)] mt-8">
+            <div class="absolute top-0 left-0 bg-accentPrimary text-black text-[10px] font-bold font-mono px-2 py-0.5 uppercase tracking-wider rounded-br">TryHackMe Profile : Top 5%</div>
+            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/assets/Tryhackme.jpg" alt="TryHackMe Profile" class="w-full h-auto block filter contrast-125">
+        </div>
+    </section>
 
-                <p>I am <strong>Sayani Maity</strong>, currently pursuing a <strong>B.Sc. in Digital Forensics (2023–2026)</strong> at <strong>Indian School of Ethical Hacking (ISOEH), Kolkata,</strong> under <strong>Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India</strong>.</p>
-                <p>As a <strong>(CEH) v13 AI Certified professional</strong>, I specialize in bridging the gap between theoretical security and real-world defense.</p>
-                <p>I specialize in <strong>Digital Forensics, Penetration Testing, OSINT, and cybersecurity tooling</strong>.</p>
-                <p>Exploring <strong>AI-Driven Security</strong> to strengthen threat detection, analysis, and cyber resilience.</p>
-                <p>My expertise lies in <strong>Penetration Testing (WAPT/VAPT), OSINT research</strong>, and the development of <strong>AI-assisted detection tools</strong>.</p>
-                <p>I am proficient in <strong>automating security workflows using Python and Bash</strong>, ensuring efficiency and precision in technical operations.</p>
-                <p>I thrive on solving <strong>complex CTF challenges and conducting deep-dive threat analysis</strong>, with a constant focus on <strong>automation and proactive defense</strong>.</p>
-                <p>My technical arsenal includes hands-on experience with industry-standard tools like <strong>Nmap, Burp Suite, Autopsy, and advanced OSINT research</strong> frameworks.</p>
-                <p>I am passionate about <strong>leveraging my technical skill set to help organizations build resilient, proactive security postures</strong> and contributing to a safer digital ecosystem.</p>
-                <p style="color: var(--accent-primary); font-family: var(--font-mono);">>_ Investigating. Exploiting. Securing.</p>
-            </div>
-            <div class="stats-container">
-                <div class="stat-card">
-                    <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH%20badge.jpg" alt="CEH Badge" class="ceh-badge-img">
-                    <span class="stat-label">(CEH) v13 AI Certified</span>
+    <section id="contact" class="hidden-panel py-16 px-6 max-w-4xl mx-auto relative z-10">
+        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">SECURE UPLINK</h2>
+        <div class="contact-box bg-[#080808]/70 border border-accentPrimary p-8 text-center relative rounded-lg backdrop-blur-md w-full max-w-3xl mx-auto">
+            <div class="w-full max-w-xl p-6 bg-[#0f0f0f]/85 rounded-xl border border-white/10 backdrop-blur-md mx-auto">
+                <h3 class="text-xl font-mono font-bold text-white mb-4">Contact Gateway</h3>
+                <div class="block w-full text-left font-mono text-xs text-[#00ffd5] mb-6 border-l-2 border-accentSecondary pl-3 space-y-1">
+                    <p><span class="text-[#ff00ff]">> root@sayani:~#</span> execute contact_protocol</p>
+                    <p>Inquiries: [Forensics | Research | Collaboration]</p>
+                    <p>Status: Open for connection matrix initialization.</p>
                 </div>
-                <div class="stat-card">
-                    <span class="stat-number">3+</span>
-                    <span class="stat-label">Major Projects</span>
+                
+                <p class="text-base md:text-lg font-bold font-mono text-[#00ff66] mb-6 tracking-wide break-all selection:bg-accentSecondary">sayanimaity78@gmail.com</p>
+                
+                <div class="flex flex-wrap justify-center gap-2 mb-8 font-mono text-xs">
+                    <a href="https://linkedin.com/in/sayanimaity" target="_blank" class="px-3 py-1.5 bg-[#0077b5] text-white rounded hover:opacity-90 transition-opacity">LinkedIn</a>
+                    <a href="https://github.com/isayani-78" target="_blank" class="px-3 py-1.5 bg-[#24292f] text-white rounded hover:opacity-90 transition-opacity">GitHub</a>
+                    <a href="https://medium.com/@isayani-78" target="_blank" class="px-3 py-1.5 bg-black text-white border border-white/10 rounded hover:opacity-90 transition-opacity">Medium</a>
+                    <a href="https://x.com/isayani78" target="_blank" class="px-3 py-1.5 bg-[#1DA1F2] text-white rounded hover:opacity-90 transition-opacity">Twitter</a>
+                    <a href="https://discord.com/invite/isayani_78" target="_blank" class="px-3 py-1.5 bg-[#5865F2] text-white rounded hover:opacity-90 transition-opacity">Discord</a>
+                    <a href="https://t.me/isayani_78" target="_blank" class="px-3 py-1.5 bg-[#0088cc] text-white rounded hover:opacity-90 transition-opacity">Telegram</a>
                 </div>
-                <div class="stat-card">
-                    <span class="stat-number">ISOEH</span>
-                    <span class="stat-label">Student</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">20+</span>
-                    <span class="stat-label">Tools Mastered</span>
-                </div>
+
+                <form action="https://formspree.io/f/xnjbaapy" method="POST" class="flex flex-col gap-4 font-mono text-xs text-left">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="text" name="name" placeholder="Your Name *" required class="flex-1 w-full p-3 rounded border border-white/10 text-white bg-[#050505]/50 focus:border-accentPrimary focus:outline-none">
+                        <input type="email" name="email" placeholder="Your Email *" required class="flex-1 w-full p-3 rounded border border-white/10 text-white bg-[#050505]/50 focus:border-accentPrimary focus:outline-none">
+                    </div>
+                    <input type="text" name="subject" placeholder="Your Subject.." class="w-full p-3 rounded border border-white/10 text-white bg-[#050505]/50 focus:border-accentPrimary focus:outline-none">
+                    <textarea name="message" placeholder="Your Message..." rows="4" class="w-full p-3 rounded border border-white/10 text-white bg-[#050505]/50 focus:border-accentPrimary focus:outline-none"></textarea>
+                    <button type="submit" class="w-full py-3 bg-[#ff4d4d] text-white rounded font-bold uppercase tracking-wider hover:bg-red-500 transition-colors">Send Message</button>
+                </form>
             </div>
         </div>
     </section>
 
-    <section id="skills" class="hidden">
-        <h2 class="section-title hyper-text">THE ARSENAL</h2>
-        <div class="carousel-wrapper">
-            <div class="carousel-track">
-                <div class="carousel-item">WIRESHARK</div>
-                <div class="carousel-item">FTK IMAGER</div>
-                <div class="carousel-item">EASEUS DATA RECOVERY</div>
-                <div class="carousel-item">METASPLOIT</div>
-                <div class="carousel-item">PYTHON</div>
-                <div class="carousel-item">AUTOPSY</div>
-                <div class="carousel-item">MAGNET AXIOM</div>
-                <div class="carousel-item">LINUX</div>
-                <div class="carousel-item">OPENVAS</div>
-                <div class="carousel-item">OXYGEN FORENSIC</div>
-                <div class="carousel-item">CRYPTOGRAPHY</div>
-                <div class="carousel-item">ZAP</div>
-                <div class="carousel-item">NMAP</div>
-                <div class="carousel-item">BURP SUITE</div>
-                <div class="carousel-item">METASPLOIT</div>
-                <div class="carousel-item">BASH SCRIPTING</div>
-                <div class="carousel-item">SHELL SCRIPTING</div>
-                <div class="carousel-item">MAGNET AXIOM</div>
-                <div class="carousel-item">LINUX</div>
-                <div class="carousel-item">UBUNTU</div>
-                <div class="carousel-item">CELLEBRITE</div>
-                <div class="carousel-item">CRYPTOGRAPHY</div>
-            </div>
-         </div>
-        <div class="skills-container">
-            <div class="skill-category"><h3>// LANGUAGES & SCRIPTING</h3><div class="skill-tags"><span class="tag">Python</span><span class="tag">Matplotlib</span><span class="tag">Bash</span><span class="tag">Shell Scripting</span><span class="tag">HTML</span><span class="tag">NumPy</span></div></div>
-            <div class="skill-category"><h3>// SECURITY & PENTESTING</h3><div class="skill-tags"><span class="tag">VAPT</span><span class="tag">WAPT</span><span class="tag">Threat Management</span><span class="tag">Burp</span><span class="tag">Nmap</span><span class="tag">Internet Security</span><span class="tag">Network Security</span></div></div>
-            <div class="skill-category"><h3>// FORENSIC & OSINT</h3><div class="skill-tags"><span class="tag">Digital Forensic</span><span class="tag">Computer Forensic</span><span class="tag">Mobile Forensic</span><span class="tag">Network Forensic</span><span class="tag">Information Gathering</span><span class="tag">Blue Teaming</span></div></div>
-            <div class="skill-category"><h3>// OPERATING SYSTEMS</h3><div class="skill-tags"><span class="tag">Unix</span><span class="tag">GNU/Linux</span><span class="tag">Ubuntu</span><span class="tag">Kali Linux</span><span class="tag">Black Arch</span><span class="tag">Parrot</span><span class="tag">Windows</span></div></div>
-            <div class="skill-category"><h3>// TOOLS</h3><div class="skill-tags"><span class="tag">Nmap</span><span class="tag">Autopsy</span><span class="tag">Magnet AXIOM</span><span class="tag">FTK Imager</span><span class="tag">ZAP</span><span class="tag">Wireshark</span><span class="tag">WhatWeb / Wappalyzer</span><span class="tag">OpenVAS</span><span class="tag">Nikto</span><span class="tag">Netcat</span><span class="tag">Cellebrite</span><span class="tag">EaseUS Data Recovery Wizard</span></div></div>
-            <div class="skill-category"><h3>// AI & MACHINE LEARNING</h3><div class="skill-tags"><span class="tag">AI Prompting</span><span class="tag">Machine Learning (ML)</span><span class="tag">Deep Learning</span><span class="tag">Agentic AI</span><span class="tag">NLP</span><span class="tag">Recommender Systems</span></div></div>
-            <div class="skill-category"><h3>// DATA PROTECTION & INFO HIDING</h3><div class="skill-tags"><span class="tag">Cryptography</span><span class="tag">Steganography</span><span class="tag">Steganalysis</span><span class="tag">Obfuscation</span><span class="tag">Encoding</span><span class="tag">Decoding</span><span class="tag">Quantum Cryptography</span></div></div>
-        </div>
-    </section>
-
-    <section id="projects" class="hidden">
-        <h2 class="section-title hyper-text">PROJECTS</h2>
-        <div class="projects-grid">
-            
-            <div class="project-card" data-link="https://github.com/isayani-78/forensic-analyzer">
-                <div class="project-card-inner">
-                    <div class="project-card-front">
-                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project1.png" alt="Forensic Analyzer" style="width: 100%; height: 160px; object-fit: cover; border-radius: 6px; margin-bottom: 10px;">
-                        <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">Forensic Analyzer</h3>
-                        <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
-                            Web-based Digital Forensic Learning Tool implementing hashing and encoding techniques.
-                        </p>
-                        <div class="github-hint-tag">CLICK & VIEW ON GITHUB</div>
-                    </div>
-                    <div class="project-card-back">
-                        <span class="project-date">Nov 2025 - Present</span>
-                        <h3 class="project-title">Forensic Analyzer.</h3>
-                        <p class="project-desc" style="font-size: 13px; line-height: 1.6; color: #b0b3b8; text-align: left; margin-bottom: 15px;">
-                            A web-based digital forensic learning tool for security analysis.<br><br>
-                            • <strong>Core Utilities:</strong> Hash generation (MD5/SHA) & Base64 encoding/decoding.<br>
-                            • <strong>Forensic Focus:</strong> Caesar Cipher (Encrypt/Decrypt) & Auto-key detection.<br>
-                            • <strong>Dynamic Workflow:</strong> Fast, browser-based execution with modular design.
-                        </p>
-                        <div class="project-tech">PYTHON // WEB // HASHING</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card" data-link="https://github.com/isayani-78/CMTL">
-                <div class="project-card-inner">
-                    <div class="project-card-front">
-                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project2.png" alt="CMTL" style="width: 100%; height: 160px; object-fit: cover; border-radius: 6px; margin-bottom: 10px;">
-                        <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">Cyber Security Multi-Tool Launcher</h3>
-                        <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
-                            GUI platform for VAPT, Pen Testing, and Network Scanning.
-                        </p>
-                        <div class="github-hint-tag">CLICK & VIEW ON GITHUB</div>
-                    </div>
-                    <div class="project-card-back">
-                        <span class="project-date">Aug 2025 - Present</span>
-                        <h3 class="project-title">CMTL</h3>
-                        <p class="project-desc" style="font-size: 13px; line-height: 1.6; color: #b0b3b8; text-align: left; margin-bottom: 15px;">
-                            A unified Python CLI/GUI launcher to streamline VAPT workflows.<br><br>
-                            • <strong>Unified Control:</strong> Integrates external tools & internal scanners.<br>
-                            • <strong>Automation:</strong> One-click sequential execution & JSON reporting.<br>
-                            • <strong>Built-in Tools:</strong> Integrated port, packet, and subdomain scanners.
-                        </p>
-                        <div class="project-tech">GUI // VAPT // AUTOMATION</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card" data-link="https://github.com/isayani-78/AI-Powered-Phishing-Email-Detector">
-                <div class="project-card-inner">
-                    <div class="project-card-front">
-                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project3.png" alt="Phishing Detector" style="width: 100%; height: 160px; object-fit: cover; border-radius: 6px; margin-bottom: 10px;">
-                        <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">AI-Powered Phishing Detector</h3>
-                        <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
-                            Detects phishing emails using AI analysis of headers and content.
-                        </p>
-                        <div class="github-hint-tag">CLICK & VIEW ON GITHUB</div>
-                    </div>
-                    <div class="project-card-back">
-                        <span class="project-date">June 2025 - Present</span>
-                        <h3 class="project-title">AI-Powered Phishing Detector</h3>
-                        <p class="project-desc" style="font-size: 13px; line-height: 1.6; color: #b0b3b8; text-align: left; margin-bottom: 15px;">
-                            An AI-driven security tool for real-time phishing threat detection.<br><br>
-                            • <strong>Multi-Layer Analysis:</strong> Deep inspection of email headers, content, and URLs.<br>
-                            • <strong>Smart Classification:</strong> ML-based phishing risk scoring & instant alerts.<br>
-                            • <strong>Data-Driven:</strong> Utilizes NLP & advanced pattern recognition for high accuracy.
-                        </p>
-                        <div class="project-tech">AI // EMAIL SEC // THREAT INTEL</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="credentials" class="hidden">
-        <h2 class="section-title hyper-text">CREDENTIALS</h2>
-        <div class="cert-container">
-            <div class="cert-track">
-                 <div class="cert-reel-card" onclick="openCert('Infocom Hackstar 2023', 'ABP & ISOEH', 'CTF Participation', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Hackstar '23</div><div class="cert-issuer">CTF Event</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('(CEH) v13ai EXAM TRANSCRIPT ', 'EC-Council', '(CEH) v13ai SCORE : 93.6%', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai EXAM TRANSCRIPT</div><div class="cert-issuer">EC-Council</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Infocom Hackstar 2024', 'ABP & ISOEH', 'Certificate of Participation for Infocom Hackstar CTF 2024.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Hackstar '24</div><div class="cert-issuer">CTF Event</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('CTIGA Certification', 'ISOEH', 'Certified Threat Intelligence & Gathering Analyst.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CTIGA</div><div class="cert-issuer">Threat Intel</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('CRTOM Certification', 'Certified Red Team', 'Red Team Operations.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CRTOM</div><div class="cert-issuer">Red Team Ops</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('CCEP Certification', 'Certified Expert', 'Cybersecurity Expert Professional.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CCEP</div><div class="cert-issuer">Expert Professional</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('CPPS Certification', 'Phishing prevention Specialist', 'Certified Phishing Prevention Specialist.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CPPS</div><div class="cert-issuer">Phishing prevention Specialist</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Deloitte Cyber Sim', 'Forage', 'Deloitte Australia Cyber Job Simulation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Deloitte Sim</div><div class="cert-issuer">Forage</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Cyber Security CoE', 'Govt. of West Bengal', 'Certificate from Cyber Security Centre of Excellence Govt. of West Bengal', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cyber Security CoE</div><div class="cert-issuer">Govt. WB</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Core Python', 'Course Completion', 'Completion of Core Python Programming Course.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Core Python</div><div class="cert-issuer">Course</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Mastercard Cyber Job Sim', 'Forage', 'Mastercard & New York Jobs CEO Council Cybersecurity Job Simulation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Mastercard Sim</div><div class="cert-issuer">Forage</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('MAKAUT CTF Participation', 'MAKAUT University', 'CTF Organised by MAKAUT.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">MAKAUT CTF</div><div class="cert-issuer">University Event</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Cyraksha CTF Hackathon 2', 'Cyraksha Cyber Club', 'Participation in CTF of Cyraksha.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cyraksha Hackathon</div><div class="cert-issuer">Cyber Club</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Cyraksha CTF Workshop', 'Cyraksha Cyber Club', 'Participation In CTF workshop.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CTF Workshop</div><div class="cert-issuer">Cyber Club</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('(CEH) v13ai', 'EC-Council', 'Certified Ethical Hacker', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai</div><div class="cert-issuer">EC-Council</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Cryptoquest Participation', 'CTF Event', 'Participation in Cryptoquest.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cryptoquest</div><div class="cert-issuer">CTF Event</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('GroundZero WB Hackathon', 'ISOEH', 'GroundZero West Bengal Hackathon.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">GroundZero</div><div class="cert-issuer">ISOEH</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('CTIGA Certification', 'ISOEH', 'Certified Threat Intelligence & Gathering Analyst.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai EXAM TRANSCRIPT</div><div class="cert-issuer">CEH V13ai SCORE: 93.6%</div></div></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="hidden">
-        <h2 class="section-title hyper-text">TIMELINE</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <span class="timeline-date">(March 2026 - June 2026)</span>
-                <h3 class="timeline-title">VAPT Internship</h3>
-                <span class="timeline-sub">ISOAH Data Securities Pvt. Ltd.</span>
-            </div>
-
-            <div class="timeline-item">
-                <span class="timeline-date">2023 - 2026 (Pursuing)</span>
-                <h3 class="timeline-title">B.Sc. Digital Forensics</h3>
-                <span class="timeline-sub">
-                    Indian School of Ethical Hacking (ISOEH), Kolkata <strong>under</strong> Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India.
-                </span>
-            </div>
-            
-            <div class="timeline-item">
-                <span class="timeline-date">2026</span>
-                <h3 class="timeline-title">(CEH) v13 AI Certified</h3>
-                <span class="timeline-sub">EC-Council.</span>
-            </div>
-            
-            <div class="timeline-item">
-                <span class="timeline-date">2015 - 2023</span>
-                <h3 class="timeline-title">ICSE & ISC (PCMB)</h3>
-                <span class="timeline-sub">St. Thomas' High School, Howrah, West Bengal, India.</span>
-            </div>
-        </div>
-    </section>
-
-    <section id="thm-badges" class="hidden">
-        <h2 class="section-title hyper-text">TRYHACKME BADGES</h2>
-        <div class="thm-scene">
-            <div class="thm-ring">
-                <div class="thm-item" style="transform: rotateY(0deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/hashcracker.png" alt="Hash Cracker"></div>
-                <div class="thm-item" style="transform: rotateY(27.7deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/linux.png" alt="Linux"></div>
-                <div class="thm-item" style="transform: rotateY(55.4deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/securityawareness.png" alt="Security Awareness"></div>
-                <div class="thm-item" style="transform: rotateY(83.1deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/mrrobot.png" alt="Mr Robot"></div>
-                <div class="thm-item" style="transform: rotateY(110.8deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/league-bronze.png" alt="Bronze League"></div>
-                <div class="thm-item" style="transform: rotateY(138.5deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/streak3.png" alt="Streak"></div>
-                <div class="thm-item" style="transform: rotateY(166.2deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/webbed.png" alt="Webbed"></div>
-                <div class="thm-item" style="transform: rotateY(193.9deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/howthewebworks.png" alt="Web Fundamentals"></div>
-                <div class="thm-item" style="transform: rotateY(221.6deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/introtosecurityengineering.png" alt="Security Engineering"></div>
-                <div class="thm-item" style="transform: rotateY(249.3deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/introtodevsecops.png" alt="DevSecOps"></div>
-                <div class="thm-item" style="transform: rotateY(277deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/league-gold.png" alt="Gold League"></div>
-                <div class="thm-item" style="transform: rotateY(304.7deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/injection.png" alt="Injection"></div>
-                <div class="thm-item" style="transform: rotateY(332.4deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/advent-of-cyber-2025.png" alt="AoC 2025"></div>
-            </div>
-        </div>
-        
-        <div class="thm-profile-case">
-            <div class="cert-label">TryHackMe Profile : Top 5%</div>
-            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/assets/Tryhackme.jpg" alt="TryHackMe Profile" class="thm-profile-img">
-        </div>
-    </section>
-
-    <section id="contact" class="hidden">
-        <h2 class="section-title hyper-text">SECURE UPLINK</h2>
-        <div class="contact-box">
-           <section style="display:flex; justify-content:center; align-items:center; min-height:auto; background-color:transparent; color:#fff; padding: 0;">
-                <div class="contact-container-shell">
-                    <div style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 0; margin: 0 auto;">
-                        <div style="width: 100%; text-align: center;">
-                            <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 1.5rem;">Contact</h2>
-                            <div style="display: block; width: 100%; margin: 0 auto; word-wrap: break-word;">
-                               <p style="font-family: monospace; font-size: 14px; color: #00ffd5; display: inline-block; text-align: left; max-width: 100%; line-height: 1.5;">
-                                 <strong style="color: #ff00ff;">> root@sayani:~#</strong> execute contact_protocol<br>
-                                 Inquiries: [Forensics | Research | Collaboration]<br>
-                                 Status: Open for connection.
-                               </p>
-                            </div>
-                        </div>
-                    </div>
-                    <p style="font-size:16px; margin-bottom:20px; color:#00ff66; font-weight:bold; font-family: var(--font-mono); word-break: break-all;">
-                        sayanimaity78@gmail.com
-                    </p>
-                    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:25px; font-family: var(--font-mono); font-size: 0.8rem;">
-                        <a href="https://linkedin.com/in/sayanimaity" target="_blank" style="padding:6px 10px; background:#0077b5; border-radius:6px; text-decoration:none; color:#fff;">LinkedIn</a>
-                        <a href="https://github.com/isayani-78" target="_blank" style="padding:6px 10px; background:#24292f; border-radius:6px; text-decoration:none; color:#fff;">GitHub</a>
-                        <a href="https://medium.com/@isayani-78" target="_blank" style="padding:6px 10px; background:#000000; border-radius:6px; text-decoration:none; color:#fff;">Medium</a>
-                        <a href="https://x.com/isayani78" target="_blank" style="padding:6px 10px; background:#1DA1F2; border-radius:6px; text-decoration:none; color:#fff;">Twitter</a>
-                        <a href="https://www.facebook.com/isayani78" target="_blank" style="padding:6px 10px; background:#1877F2; border-radius:6px; text-decoration:none; color:#fff;">Facebook</a>
-                        <a href="https://discord.com/invite/isayani_78" target="_blank" style="padding:6px 10px; background:#5865F2; border-radius:6px; text-decoration:none; color:#fff;">Discord</a>
-                        <a href="https://t.me/isayani_78" target="_blank" style="padding:6px 10px; background:#0088cc; border-radius:6px; text-decoration:none; color:#fff;">Telegram</a>
-                    </div>
-                    <form action="https://formspree.io/f/xnjbaapy" method="POST" style="display:flex; flex-direction:column; gap:15px; font-family: var(--font-mono);">
-                        <div style="display:flex; gap:10px;">
-                            <input type="text" name="name" placeholder="Your Name *" required style="flex:1; width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); color:#fff; background: rgba(5,5,5,0.5);">
-                            <input type="email" name="email" placeholder="Your Email *" required style="flex:1; width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); color:#fff; background: rgba(5,5,5,0.5);">
-                        </div>
-                        <input type="text" name="subject" placeholder="Your Subject.." style="padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); color:#fff; background: rgba(5,5,5,0.5);">
-                        <textarea name="message" placeholder="Your Message..." rows="5" style="padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); color:#fff; background: rgba(5,5,5,0.5);"></textarea>
-                        <button type="submit" style="padding:12px 24px; background:#ff4d4d; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight: bold; letter-spacing: 1px;">Send Message</button>
-                    </form>
-                </div>
-           </section>
-        </div>
-    </section>
-
-    <footer>
+    <footer class="text-center p-10 font-mono text-xs text-[#52565d] border-t border-white/5 relative z-10">
         <p>SYSTEM STATUS: OPTIMAL | © 2026 SAYANI MAITY | System online 💻</p>
     </footer>
 
     <script>
-        // --- SECURITY: ANTI-DEBUG & ANTI-INSPECT ---
+        // --- SECURITY LOGS: ANTI-DEBUG & INSPECTION INHIBITOR ---
         document.onkeydown = function(e) {
             if(e.keyCode == 123) return false; 
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; 
@@ -934,40 +489,45 @@
             if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; 
         };
 
-        // --- MOBILE NAV INTERFACE ---
+        // --- INTERFACE CONTROL MENU ---
         function toggleMenu() {
-            const nav = document.getElementById('nav-menu');
+            const drawer = document.getElementById('mobile-drawer');
             const burger = document.querySelector('.hamburger');
-            nav.classList.toggle('active');
+            drawer.classList.toggle('right-0');
+            drawer.classList.toggle('right-[-100%]');
             burger.classList.toggle('active');
+            
+            const bars = burger.querySelectorAll('.bar');
+            bars[1].classList.toggle('opacity-0');
+            bars[0].classList.toggle('translate-y-[9px]');
+            bars[0].classList.toggle('rotate-45');
+            bars[2].classList.toggle('-translate-y-[9px]');
+            bars[2].classList.toggle('-rotate-45');
         }
 
-        // --- CRYPTOGRAPHIC TEXT DECRYPTION ---
+        // --- CRYPTOGRAPHIC STRING DECRYPTION LOGIC ---
         const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?";
         document.querySelectorAll('.hyper-text').forEach(el => { el.dataset.value = el.innerText; });
         
         const decryptText = (element) => {
             if(!element) return;
             const originalText = element.dataset.value || element.innerText; 
-            element.dataset.value = originalText; 
             let iterations = 0;
-            // Optimized interval timing parameters
             const interval = setInterval(() => {
                 element.innerText = originalText.split("").map((letter, index) => {
                     if(index < iterations) return originalText[index];
                     return chars[Math.floor(Math.random() * chars.length)];
                 }).join("");
                 if(iterations >= originalText.length) { clearInterval(interval); element.innerText = originalText; }
-                iterations += 1; /* Accelerated compilation steps to clear threads fast */
-            }, 40);
+                iterations += 1;
+            }, 30);
         }
         const triggerDecryption = (el) => { if (el && !el.classList.contains('decrypting')) { el.classList.add('decrypting'); decryptText(el); setTimeout(() => el.classList.remove('decrypting'), 2000); } }
 
-        // --- INTERACTIVE CURSOR CONTROLLERS ---
+        // --- INTERACTIVE MOUSE LAYER (RAF SPEED FIX) ---
         const cursor = document.getElementById('cursor');
         let transformBuffer = false;
         
-        // Massive performance optimize: requestAnimationFrame stops mouse lagging layout shifts
         document.addEventListener('mousemove', (e) => {
             if(!transformBuffer) {
                 window.requestAnimationFrame(() => {
@@ -979,24 +539,24 @@
             }
         });
         
-        const hoverElements = document.querySelectorAll('a, .project-card, .skill-category, .cta-btn, .contact-btn, .cert-card, .cert-reel-card, .thm-profile-case, .timeline-item');
-        hoverElements.forEach(el => {
+        document.querySelectorAll('a, .project-card, .skill-category, .cta-btn, .cert-card, .cert-reel-card, .thm-profile-case').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
         });
         
+        // --- INTERSECTION OBSERVER DEPLOYMENT ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
+                    entry.target.classList.add('show-panel');
                     if (entry.target.classList.contains('hyper-text')) triggerDecryption(entry.target);
                     else { const child = entry.target.querySelector('.hyper-text'); if(child) triggerDecryption(child); }
                 }
             });
-        }, { threshold: 0.05 }); /* Lowered bounds to reduce background scroll recalculations */
-        document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
+        }, { threshold: 0.05 });
+        document.querySelectorAll('.hidden-panel').forEach((el) => observer.observe(el));
 
-        // --- MODAL ENGINE MANAGEMENT ---
+        // --- MODAL PORT MANAGEMENT MATRIX ---
         function openCert(title, issuer, desc, imgUrl = null) {
             document.getElementById('modal-title').innerText = title;
             document.getElementById('modal-issuer').innerText = issuer;
@@ -1006,6 +566,7 @@
             if(imgUrl) {
                 const img = document.createElement('img');
                 img.src = imgUrl;
+                img.className = "block w-full h-auto rounded";
                 imgContainer.appendChild(img);
             }
             document.getElementById('cert-modal').style.display = 'flex';
@@ -1013,6 +574,7 @@
         function closeModal() { document.getElementById('cert-modal').style.display = 'none'; }
         document.getElementById('cert-modal').addEventListener('click', (e) => { if (e.target.id === 'cert-modal') closeModal(); });
 
+        // --- PROJECT TARGET LINKS DECK ---
         document.querySelectorAll(".project-card").forEach(card => {
             card.addEventListener("click", () => {
                 const link = card.getAttribute("data-link");
