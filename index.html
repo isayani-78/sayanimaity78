@@ -32,32 +32,30 @@
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.54/build/spline-viewer.js"></script>
     
     <style>
-        /* --- CORE CYBERPUNK ANIMATIONS & FX --- */
+        /* --- HIGHLY COMPACT CUSTOM 3D ANIMATIONS & CORE FX --- */
         spline-viewer { filter: brightness(1.4) contrast(1.25) saturate(1.1); }
         
         .forensic-scanline {
-            animation: scanline 8s linear infinite;
+            animation: scanline 6s linear infinite;
             box-shadow: 0 0 10px rgba(0, 255, 204, 0.08);
-            will-change: bottom;
         }
         @keyframes scanline { 0% { bottom: 100%; } 100% { bottom: -100%; } }
 
-        /* 3D Cards Mechanics */
-        .cert-card, .project-card { perspective: 1000px; }
+        /* 3D Flips & Custom Mechanics */
+        .cert-card { perspective: 1000px; }
         .cert-inner, .project-card-inner { transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
         .cert-card:hover .cert-inner, .project-card:hover .project-card-inner { transform: rotateY(180deg); }
         .cert-front, .cert-back, .project-card-front, .project-card-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
         .cert-back, .project-card-back { transform: rotateY(180deg); }
 
         /* TryHackMe 3D Ring Structure */
-        .thm-scene { perspective: 1200px; }
-        .thm-ring { transform-style: preserve-3d; animation: thm-spin 35s linear infinite; }
+        .thm-ring { transform-style: preserve-3d; animation: thm-spin 30s linear infinite; }
         .thm-ring:hover { animation-play-state: paused; }
         .thm-item { backface-visibility: visible; }
         @keyframes thm-spin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
 
         /* General Background Color Cycle Engine */
-        body { animation: color-cycle 25s infinite alternate ease-in-out; }
+        body { animation: color-cycle 25s infinite alternate ease-in-out; cursor: none; }
         @keyframes color-cycle {
             0%, 100% { background-color: rgba(5, 5, 5, 0.3); }      
             25% { background-color: rgba(15, 5, 5, 0.35); }     
@@ -67,18 +65,19 @@
 
         /* Continuous Ribbon Tickers */
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .animate-ticker-scroll { animation: scroll 30s linear infinite; }
-        @keyframes cert-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .animate-cert-scroll { animation: cert-scroll 85s linear infinite; }
+        .animate-ticker-scroll { animation: scroll 22s linear infinite; }
+
+        /* Grid Layout for Credentials Fix (Eliminated Lazy Slow Reel) */
+        .credentials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; width: 100%; }
 
         /* Glitch Layer FX */
-        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; }
+        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         .glitch::before { left: 2px; text-shadow: -1px 0 #ff00ff; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim 6s infinite linear alternate-reverse; }
         .glitch::after { left: -2px; text-shadow: -1px 0 #00ffcc; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim2 6s infinite linear alternate-reverse; }
         @keyframes glitch-anim { 0% { clip: rect(20px, 9999px, 15px, 0); } 50% { clip: rect(10px, 9999px, 80px, 0); } 100% { clip: rect(40px, 9999px, 30px, 0); } }
         @keyframes glitch-anim2 { 0% { clip: rect(25px, 9999px, 5px, 0); } 50% { clip: rect(30px, 9999px, 55px, 0); } 100% { clip: rect(15px, 9999px, 85px, 0); } }
 
-        /* Interactive Details */
+        /* Interactive Pulse Ring Details */
         @keyframes pulse-glow { 0% { opacity: 0.2; transform: scale(0.96); } 100% { opacity: 0.5; transform: scale(1.04); } }
         .animate-pulse-glow { animation: pulse-glow 3s infinite alternate; }
         @keyframes spin-ring { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -87,69 +86,52 @@
         @keyframes scan-avatar { 0% { top: 0%; opacity: 0; } 50% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
         .avatar-container:hover .scan-line-element { animation: scan-avatar 1.5s ease-in-out infinite; opacity: 1; }
 
-        /* Observer Animation Triggers */
-        .hidden-panel { opacity: 0; transform: translateY(20px); transition: 0.5s all ease-out; }
-        .show-panel { opacity: 1; transform: translateY(0); }
+        @media (max-width: 768px) {
+            body { cursor: auto !important; }
+            #cursor { display: none !important; }
+            .project-card, .cert-card { height: auto !important; }
+        }
     </style>
 </head>
 <body class="w-full overflow-x-hidden bg-[#050505] text-[#b0b3b8] font-sans leading-relaxed scroll-smooth" oncontextmenu="return false;">
 
-    <div class="fixed top-0 left-0 w-full h-full -z-50 pointer-events-auto block md:block">
-        <spline-viewer url="https://prod.spline.design/Slk6b8kz3LRlKiyk/scene.splinecode" loading="lazy"></spline-viewer>
+    <div class="fixed top-0 left-0 w-full h-full -z-50 pointer-events-auto">
+        <spline-viewer url="https://prod.spline.design/Slk6b8kz3LRlKiyk/scene.splinecode"></spline-viewer>
     </div>
 
     <div class="forensic-scanline fixed bottom-full left-0 w-full h-[10px] z-[999] bg-[rgba(0,255,204,0.02)] pointer-events-none"></div>
 
-    <div id="cursor" class="fixed w-5 h-5 border-2 border-accentPrimary rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-all duration-200 mix-blend-difference hidden md:block will-change-transform"></div>
-
-    <div class="modal-overlay fixed inset-0 bg-[#030303]/92 z-[2000] hidden justify-center items-center backdrop-blur-md" id="cert-modal">
-        <div class="modal-content bg-[#070707] border border-accentPrimary w-11/12 max-w-3xl max-h-[88vh] overflow-y-auto p-8 relative rounded-lg">
-            <div class="modal-close absolute top-4 right-6 font-mono text-red-600 text-3xl cursor-pointer hover:text-red-500" onclick="closeModal()">X</div>
-            <div class="modal-header border-b border-white/5 pb-4 mb-6">
-                <h3 class="modal-title font-mono text-accentPrimary text-2xl" id="modal-title">Certificate Name</h3>
-                <span class="modal-subtitle text-xs font-mono text-[#72767d]" id="modal-issuer">Issuer Name</span>
-            </div>
-            <div class="modal-body text-[#ccced2]">
-                <p class="mb-4"><strong>DETAILS:</strong> <span id="modal-desc">Description of the certification.</span></p>
-                <div id="modal-img-container" class="my-5 bg-black border border-white/5 p-1"><img src="" alt="" class="block w-full h-auto"></div>
-                <p><strong>STATUS:</strong> <span id="modal-status" class="text-accentPrimary">VERIFIED</span></p>
-                <div class="modal-stamp border-2 border-accentSecondary text-accentSecondary inline-block px-5 py-1.5 font-mono font-bold text-lg -rotate-6 mt-4">EVIDENCE LOGGED</div>
-            </div>
-        </div>
-    </div>
+    <div id="cursor" class="fixed w-5 h-5 border-2 border-accentPrimary rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-all duration-200 mix-blend-difference hidden md:block"></div>
 
     <nav class="fixed top-0 left-0 w-full px-6 md:px-10 py-5 flex justify-between items-center z-[1000] backdrop-blur-md bg-black/80 border-b border-white/10">
         <div class="logo font-mono text-lg font-bold text-accentPrimary uppercase tracking-[2px]">&lt;whoami /&gt; sayani</div>
-        <div class="nav-links hidden md:flex items-center gap-9 font-mono text-xs text-[#d0d0d0]" id="nav-menu">
+        <div class="nav-links hidden md:flex items-center gap-9 font-mono text-xs text-[#d0d0d0]">
             <a href="#about" class="hover:text-accentPrimary relative group transition-colors">FILE: PROFILE<span class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-accentSecondary transition-all group-hover:w-full"></span></a>
             <a href="#skills" class="hover:text-accentPrimary relative group transition-colors">ARSENAL<span class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-accentSecondary transition-all group-hover:w-full"></span></a>
             <a href="#projects" class="hover:text-accentPrimary relative group transition-colors">PROJECTS<span class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-accentSecondary transition-all group-hover:w-full"></span></a>
             <a href="#credentials" class="hover:text-accentPrimary relative group transition-colors">CREDENTIALS<span class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-accentSecondary transition-all group-hover:w-full"></span></a>
-            <a href="#thm-badges" class="hover:text-accentPrimary relative group transition-colors">BADGES<span class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-accentSecondary transition-all group-hover:w-full"></span></a>
             <a href="#contact" class="hover:text-accentPrimary relative group transition-colors">UPLINK<span class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-accentSecondary transition-all group-hover:w-full"></span></a>
         </div>
-        <div class="hamburger flex md:hidden flex-col gap-1.5 cursor-pointer z-[1002]" onclick="toggleMenu()">
+        <div class="hamburger flex md:hidden flex-col gap-1.5 cursor-pointer z-[1002]" onclick="toggleMobileMenu(this)">
             <span class="bar w-6 h-[3px] bg-accentPrimary transition-transform duration-300"></span>
             <span class="bar w-6 h-[3px] bg-accentPrimary transition-opacity duration-300"></span>
             <span class="bar w-6 h-[3px] bg-accentPrimary transition-transform duration-300"></span>
         </div>
-    </nav>
-
-    <div id="mobile-drawer" class="fixed top-0 right-[-100%] w-3/4 h-screen bg-[#080808]/98 flex flex-col items-center justify-center gap-10 border-l-2 border-accentPrimary z-[1001] backdrop-blur-xl transition-all duration-500 ease-in-out font-mono md:hidden">
-        <a href="#about" onclick="toggleMenu()" class="text-lg hover:text-accentPrimary">FILE: PROFILE</a>
-        <a href="#skills" onclick="toggleMenu()" class="text-lg hover:text-accentPrimary">ARSENAL</a>
-        <a href="#projects" onclick="toggleMenu()" class="text-lg hover:text-accentPrimary">PROJECTS</a>
-        <a href="#credentials" onclick="toggleMenu()" class="text-lg hover:text-accentPrimary">CREDENTIALS</a>
-        <a href="#thm-badges" onclick="toggleMenu()" class="text-lg hover:text-accentPrimary">BADGES</a>
-        <a href="#contact" onclick="toggleMenu()" class="text-lg hover:text-accentPrimary">UPLINK</a>
+    </nav>nav>
+    <div id="mobile-drawer" class="fixed top-0 right-[-100%] w-3/4 h-screen bg-[#080808]/98 flex flex-col items-center justify-center gap-10 border-l-2 border-accentPrimary z-[1001] backdrop-blur-xl transition-all duration-500 ease-in-out font-mono">
+        <a href="#about" onclick="closeMobileMenu()" class="text-lg hover:text-accentPrimary">FILE: PROFILE</a>
+        <a href="#skills" onclick="closeMobileMenu()" class="text-lg hover:text-accentPrimary">ARSENAL</a>
+        <a href="#projects" onclick="closeMobileMenu()" class="text-lg hover:text-accentPrimary">PROJECTS</a>
+        <a href="#credentials" onclick="closeMobileMenu()" class="text-lg hover:text-accentPrimary">CREDENTIALS</a>
+        <a href="#contact" onclick="closeMobileMenu()" class="text-lg hover:text-accentPrimary">UPLINK</a>
     </div>
 
     <header class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-28 pb-12 relative">
-        <div class="avatar-container hover-spin-fast w-[165px] h-[165px] mb-8 relative flex justify-center items-center transition-transform duration-300 hover:scale-105">
+        <div class="avatar-container hover-spin-fast w-[165px] h-[165px] mb-8 relative flex justify-center items-center transition-transform duration-300 hover:scale-105 cursor-none">
             <div class="animate-pulse-glow absolute w-full h-full rounded-full bg-gradient-to-r from-accentPrimary to-accentSecondary filter blur-md opacity-40"></div>
             <div class="animate-spin-ring absolute w-[112%] h-[112%] rounded-full border-2 border-dashed border-accentPrimary"></div>
             <div class="scan-line-element absolute w-full h-1 bg-white/70 shadow-[0_0_15px_#00ffcc] top-[-10%] left-0 z-10 opacity-0 rounded-full"></div>
-            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/sayanipfp%201.jpg" alt="Sayani Maity" class="w-full h-full object-cover rounded-full border-3 border-white/10 relative z-10 bg-[#0b0b0b]">
+            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/sayanipfp%201.jpg" alt="Avatar" class="w-full h-full object-cover rounded-full border-3 border-white/10 relative z-10 bg-[#0b0b0b]">
         </div>
         
         <span class="font-mono text-accentSecondary border border-accentSecondary px-5 py-2 rounded-full text-xs bg-[#050505]/70 backdrop-blur-sm mb-6 uppercase tracking-wider">STATUS: ONLINE // SCANNING FOR MORE OPPORTUNITIES</span>
@@ -171,19 +153,18 @@
         </div>
     </header>
 
-    <section id="about" class="hidden-panel py-20 px-6 max-w-6xl mx-auto relative z-10">
-        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-2 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">FILE: PROFILE</h2>
+    <!-- File: Profile -->
+    <section id="about" class="py-20 px-6 max-w-6xl mx-auto relative z-10">
+        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-2 relative inline-block after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">FILE: PROFILE</h2>
         <p class="text-xs font-mono text-[#00ffd5] tracking-wider uppercase mb-12 block">( REVERSE SIDE [CLICK] )</p>
         
-        <div class="cert-display-case flex justify-center max-w-[440px] w-full mx-auto mb-12">
+        <div class="flex justify-center max-w-[440px] w-full mx-auto mb-12">
             <div class="cert-card w-full h-[280px] border-2 border-accentPrimary rounded-lg overflow-hidden relative backdrop-blur-md transition-all duration-300 hover:shadow-[0_0_25px_rgba(0,255,204,0.3)] hover:border-accentSecondary">
                 <div class="cert-inner w-full h-full relative">
                     <div class="cert-front absolute inset-0 bg-[#050505]">
-                        <div class="absolute top-0 left-0 bg-accentPrimary text-black text-[11px] font-bold font-mono px-2.5 py-1 uppercase tracking-wider rounded-br-lg z-10">(CEH) v13ai</div>
                         <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg" alt="CEH Certificate" class="w-full h-full object-fill">
                     </div>
                     <div class="cert-back absolute inset-0 bg-[#050505]">
-                        <div class="absolute top-0 left-0 bg-accentPrimary text-black text-[11px] font-bold font-mono px-2.5 py-1 uppercase tracking-wider rounded-br-lg z-10">EXAM TRANSCRIPT</div>
                         <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg" alt="Exam Transcript" class="w-full h-full object-fill">
                     </div>
                 </div>
@@ -192,28 +173,27 @@
 
         <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
             <div class="md:col-span-7 bg-black/70 p-8 rounded-lg border border-white/10 backdrop-blur-md text-[#e1e3e6] text-sm leading-relaxed">
-                <p class="mb-4"><strong>Identity:</strong> Sayani Maity <br><strong>Role:</strong> B.Sc. Digital Forensics Student</p>
+                <p class="mb-4"><strong>Identity:</strong> Sayani Maity<br><strong>Role:</strong> B.Sc. Digital Forensics Student</p>
                 <p class="mb-4">I am <strong>Sayani Maity</strong>, currently pursuing a <strong>B.Sc. in Digital Forensics (2023–2026)</strong> at <strong>Indian School of Ethical Hacking (ISOEH), Kolkata,</strong> under <strong>Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India</strong>.</p>
-                <p class="mb-4">As a <strong>(CEH) v13 AI Certified professional</strong>, I specialize in bridging the gap between theoretical security and real-world defense using engineering matrices deployed across advanced target landscapes.</p>
-                <p class="mb-4">I specialize in <strong>Digital Forensics, Penetration Testing, OSINT, and cybersecurity tooling</strong> while actively exploring <strong>AI-Driven Security</strong> parameters to optimize threat tracking layers and containment system telemetry.</p>
-                <p class="mb-4">Proficient in <strong>automating complex security workflows using Python and Bash</strong>, ensuring optimal precision and thread execution latency reduction across technical architectural operations.</p>
+                <p class="mb-4">As a <strong>(CEH) v13 AI Certified professional</strong>, I specialize in bridging the gap between theoretical security and real-world defense.</p>
+                <p class="mb-4">I specialize in <strong>Digital Forensics, Penetration Testing, OSINT, and cybersecurity tooling</strong> while actively exploring AI-Driven Security ecosystems.</p>
+                <p class="mb-4">Proficient in <strong>automating security workflows using Python and Bash</strong>, ensuring maximum alignment and speed during live deployment phases.</p>
                 <p class="text-accentPrimary font-mono font-semibold mt-4">>_ Investigating. Exploiting. Securing.</p>
             </div>
-            
-            <div class="md:col-span-5 grid grid-cols-2 gap-4 w-full">
-                <div class="bg-glassBg border border-white/10 p-4 text-center rounded-md backdrop-blur-md transition-all hover:-translate-y-1 hover:border-accentPrimary hover:bg-accentPrimary/5 flex flex-col justify-center items-center">
-                    <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH%20badge.jpg" alt="CEH Badge" class="w-16 h-auto mb-2 filter drop-shadow-[0_0_8px_#00ffcc]">
-                    <span class="font-mono text-[10px] text-[#a2a5a9] uppercase tracking-wider">(CEH) v13 AI Certified</span>
+            <div class="md:col-span-5 grid grid-cols-2 gap-5 w-full">
+                <div class="bg-glassBg border border-white/10 p-6 text-center rounded-md backdrop-blur-md transition-all hover:-translate-y-1 hover:border-accentPrimary hover:bg-accentPrimary/5 flex flex-col items-center justify-center">
+                    <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH%20badge.jpg" alt="CEH Badge" class="w-16 h-auto mb-2">
+                    <span class="font-mono text-[10px] text-[#a2a5a9] uppercase tracking-wider">CEH Certified</span>
                 </div>
-                <div class="bg-glassBg border border-white/10 p-6 text-center rounded-md backdrop-blur-md transition-all hover:-translate-y-1 hover:border-accentPrimary hover:bg-accentPrimary/5 flex flex-col justify-center">
+                <div class="bg-glassBg border border-white/10 p-6 text-center rounded-md backdrop-blur-md transition-all hover:-translate-y-1 hover:border-accentPrimary hover:bg-accentPrimary/5 group">
                     <span class="block font-mono text-3xl font-bold text-accentPrimary">3+</span>
                     <span class="font-mono text-[11px] text-[#a2a5a9] uppercase tracking-wider">Major Projects</span>
                 </div>
-                <div class="bg-glassBg border border-white/10 p-6 text-center rounded-md backdrop-blur-md transition-all hover:-translate-y-1 hover:border-accentPrimary hover:bg-accentPrimary/5 flex flex-col justify-center">
+                <div class="bg-glassBg border border-white/10 p-6 text-center rounded-md backdrop-blur-md transition-all hover:-translate-y-1 hover:border-accentPrimary hover:bg-accentPrimary/5 group">
                     <span class="block font-mono text-2xl font-bold text-accentPrimary">ISOEH</span>
                     <span class="font-mono text-[11px] text-[#a2a5a9] uppercase tracking-wider">Student</span>
                 </div>
-                <div class="bg-glassBg border border-white/10 p-6 text-center rounded-md backdrop-blur-md transition-all hover:-translate-y-1 hover:border-accentPrimary hover:bg-accentPrimary/5 flex flex-col justify-center">
+                <div class="bg-glassBg border border-white/10 p-6 text-center rounded-md backdrop-blur-md transition-all hover:-translate-y-1 hover:border-accentPrimary hover:bg-accentPrimary/5 group">
                     <span class="block font-mono text-3xl font-bold text-accentPrimary">20+</span>
                     <span class="font-mono text-[11px] text-[#a2a5a9] uppercase tracking-wider">Tools Mastered</span>
                 </div>
@@ -221,128 +201,119 @@
         </div>
     </section>
 
-    <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-black/80 border-y border-white/10 py-5 -rotate-1 backdrop-blur-sm overflow-hidden mb-16 z-10">
+    <!-- Ribbon Ticker -->
+    <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-black/80 border-y border-white/10 py-5 -rotate-1 backdrop-blur-sm overflow-hidden mb-16">
         <div class="flex w-max animate-ticker-scroll font-mono text-2xl font-bold uppercase tracking-wider">
-            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">WIRESHARK</span>
-            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">FTK IMAGER</span>
-            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">METASPLOIT</span>
-            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">BURPSUITE</span>
-            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">AUTOPSY</span>
-            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">MAGNET AXIOM</span>
-            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">NMAP</span>
-            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">LINUX</span>
-            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">WIRESHARK</span>
-            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">FTK IMAGER</span>
-            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">METASPLOIT</span>
-            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary transition-all">BURPSUITE</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary">WIRESHARK</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary">FTK IMAGER</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary">METASPLOIT</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary">BURPSUITE</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary">AUTOPSY</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary">MAGNET AXIOM</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary">NMAP</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary">LINUX</span>
+            <!-- Anchor Loop Duplication -->
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary">WIRESHARK</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary">FTK IMAGER</span>
+            <span class="mx-8 text-[#b0b3b8]/60 px-3 py-1 rounded hover:text-accentPrimary">METASPLOIT</span>
         </div>
     </div>
 
-    <section id="skills" class="hidden-panel py-16 px-6 max-w-6xl mx-auto relative z-10">
-        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">THE ARSENAL</h2>
+    <!-- Arsenal Matrix -->
+    <section id="skills" class="py-16 px-6 max-w-6xl mx-auto relative z-10">
+        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">THE ARSENAL</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             <div class="bg-black/80 border border-white/10 p-7 rounded-md backdrop-blur-xl transition-all duration-300 hover:border-accentSecondary hover:shadow-[0_0_20px_rgba(255,0,255,0.12)]">
                 <h3 class="font-mono text-accentPrimary font-semibold text-base mb-4 border-b border-white/5 pb-2">// LANGUAGES & SCRIPTING</h3>
-                <div class="flex flex-wrap gap-2.5"><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Python</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Matplotlib</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Bash</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Shell Scripting</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">HTML</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">NumPy</span></div>
+                <div class="flex flex-wrap gap-2.5"><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">Python</span><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">Matplotlib</span><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">Bash</span><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">Shell Scripting</span><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">HTML</span></div>
             </div>
             <div class="bg-black/80 border border-white/10 p-7 rounded-md backdrop-blur-xl transition-all duration-300 hover:border-accentSecondary hover:shadow-[0_0_20px_rgba(255,0,255,0.12)]">
                 <h3 class="font-mono text-accentPrimary font-semibold text-base mb-4 border-b border-white/5 pb-2">// SECURITY & PENTESTING</h3>
-                <div class="flex flex-wrap gap-2.5"><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">VAPT</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">WAPT</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Threat Management</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Burp Suite</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Nmap</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Internet Security</span></div>
+                <div class="flex flex-wrap gap-2.5"><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">VAPT</span><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">WAPT</span><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">Threat Management</span><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">Burp Suite</span><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">Nmap</span></div>
             </div>
             <div class="bg-black/80 border border-white/10 p-7 rounded-md backdrop-blur-xl transition-all duration-300 hover:border-accentSecondary hover:shadow-[0_0_20px_rgba(255,0,255,0.12)]">
                 <h3 class="font-mono text-accentPrimary font-semibold text-base mb-4 border-b border-white/5 pb-2">// FORENSIC & OSINT</h3>
-                <div class="flex flex-wrap gap-2.5"><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Digital Forensic</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Computer Forensic</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Mobile Forensic</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Network Forensic</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">OSINT</span></div>
-            </div>
-            <div class="bg-black/80 border border-white/10 p-7 rounded-md backdrop-blur-xl transition-all duration-300 hover:border-accentSecondary hover:shadow-[0_0_20px_rgba(255,0,255,0.12)]">
-                <h3 class="font-mono text-accentPrimary font-semibold text-base mb-4 border-b border-white/5 pb-2">// OPERATING SYSTEMS</h3>
-                <div class="flex flex-wrap gap-2.5"><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Unix</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">GNU/Linux</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Ubuntu</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Kali Linux</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Black Arch</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Windows</span></div>
-            </div>
-            <div class="bg-black/80 border border-white/10 p-7 rounded-md backdrop-blur-xl transition-all duration-300 hover:border-accentSecondary hover:shadow-[0_0_20px_rgba(255,0,255,0.12)]">
-                <h3 class="font-mono text-accentPrimary font-semibold text-base mb-4 border-b border-white/5 pb-2">// TOOLS ARSENAL</h3>
-                <div class="flex flex-wrap gap-2.5"><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Autopsy</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Magnet AXIOM</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">FTK Imager</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">OWASP ZAP</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Wireshark</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">OpenVAS</span></div>
-            </div>
-            <div class="bg-black/80 border border-white/10 p-7 rounded-md backdrop-blur-xl transition-all duration-300 hover:border-accentSecondary hover:shadow-[0_0_20px_rgba(255,0,255,0.12)]">
-                <h3 class="font-mono text-accentPrimary font-semibold text-base mb-4 border-b border-white/5 pb-2">// AI & PROTECTION MATRIX</h3>
-                <div class="flex flex-wrap gap-2.5"><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">AI Prompting</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Cryptography</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Steganography</span><span class="tag bg-white/5 px-2.5 py-1 rounded text-xs border border-white/5">Obfuscation</span></div>
+                <div class="flex flex-wrap gap-2.5"><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">Digital Forensic</span><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">Computer Forensic</span><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">Mobile Forensic</span><span class="bg-white/5 px-3 py-1.5 rounded text-xs border border-white/5">OSINT</span></div>
             </div>
         </div>
     </section>
 
-    <section id="projects" class="hidden-panel py-16 px-6 max-w-6xl mx-auto relative z-10">
-        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">PROJECTS</h2>
+    <!-- Projects Grid Layout (Fixed 3 Projects Front and Back Matrix Alignment) -->
+    <section id="projects" class="py-16 px-6 max-w-6xl mx-auto relative z-10">
+        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">PROJECTS</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            <div class="project-card h-[400px] group" data-link="https://github.com/isayani-78/forensic-analyzer">
+            <div class="project-card h-[390px] group" data-link="https://github.com/isayani-78/forensic-analyzer">
                 <div class="project-card-inner w-full h-full relative">
                     <div class="project-card-front absolute w-full h-full border border-white/10 rounded-lg bg-[#080808]/85 backdrop-blur-md flex flex-col p-6 border-t-4 border-t-accentPrimary justify-between">
                         <div>
                             <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project1.png" alt="Forensic Analyzer" class="w-full h-36 object-cover rounded mb-4">
                             <h3 class="text-lg font-bold text-white mb-2">Forensic Analyzer</h3>
-                            <p class="text-xs text-[#b1b4b9] line-clamp-3">Web-based Digital Forensic Learning Tool implementing advanced hashing and cipher encoding methodologies.</p>
+                            <p class="text-xs text-[#b1b4b9]">Web-based Digital Forensic Learning Tool implementing hashing and encoding techniques.</p>
                         </div>
-                        <div class="text-center text-[10px] text-white font-mono py-2 border border-white/20 rounded bg-white/5 tracking-wider uppercase">CLICK TO INSPECT GITHUB</div>
+                        <div class="w-full text-center text-[10px] text-white font-mono py-2 border border-white/20 rounded bg-white/5 tracking-wider uppercase">CLICK & VIEW ON GITHUB</div>
                     </div>
                     <div class="project-card-back absolute w-full h-full border border-accentSecondary rounded-lg bg-[#0f0f0f]/95 backdrop-blur-md flex flex-col p-6 justify-between items-start">
                         <div>
                             <span class="font-mono text-xs text-[#72767d] mb-1 block">Nov 2025 - Present</span>
                             <h3 class="text-xl font-bold text-white mb-3">Forensic Analyzer.</h3>
                             <p class="text-xs text-[#b0b3b8] space-y-1">
-                                • Hash generation (MD5/SHA) & Base64 tools.<br>
-                                • Caesar Cipher with auto-key tracing.<br>
-                                • Modular dashboard architecture for quick triage.
+                                • Hash generation (MD5/SHA) & Base64.<br>
+                                • Caesar Cipher with tracing mechanisms.<br>
+                                • Fast browser execution metrics.
                             </p>
                         </div>
-                        <span class="font-mono text-xs text-accentSecondary">PYTHON // WEB // CRYPTO</span>
+                        <span class="font-mono text-xs text-accentSecondary">PYTHON // CRYPTO // SECURITY</span>
                     </div>
                 </div>
             </div>
 
-            <div class="project-card h-[400px] group" data-link="https://github.com/isayani-78/CMTL">
+            <div class="project-card h-[390px] group" data-link="https://github.com/isayani-78/CMTL">
                 <div class="project-card-inner w-full h-full relative">
                     <div class="project-card-front absolute w-full h-full border border-white/10 rounded-lg bg-[#080808]/85 backdrop-blur-md flex flex-col p-6 border-t-4 border-t-accentPrimary justify-between">
                         <div>
                             <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project2.png" alt="CMTL" class="w-full h-36 object-cover rounded mb-4">
                             <h3 class="text-lg font-bold text-white mb-2">Cyber Security Multi-Tool Launcher</h3>
-                            <p class="text-xs text-[#b1b4b9] line-clamp-3">GUI/CLI ecosystem framework built to streamline active security sweeps, scanning protocols and VAPT operations.</p>
+                            <p class="text-xs text-[#b1b4b9]">GUI platform environment engineered for structured VAPT and target network diagnostics scans.</p>
                         </div>
-                        <div class="text-center text-[10px] text-white font-mono py-2 border border-white/20 rounded bg-white/5 tracking-wider uppercase">CLICK TO INSPECT GITHUB</div>
+                        <div class="w-full text-center text-[10px] text-white font-mono py-2 border border-white/20 rounded bg-white/5 tracking-wider uppercase">CLICK & VIEW ON GITHUB</div>
                     </div>
                     <div class="project-card-back absolute w-full h-full border border-accentSecondary rounded-lg bg-[#0f0f0f]/95 backdrop-blur-md flex flex-col p-6 justify-between items-start">
                         <div>
                             <span class="font-mono text-xs text-[#72767d] mb-1 block">Aug 2025 - Present</span>
                             <h3 class="text-xl font-bold text-white mb-3">CMTL Launcher</h3>
                             <p class="text-xs text-[#b0b3b8] space-y-1">
-                                • Integrates legacy network wrappers & binary tools.<br>
-                                • One-click execution matrix with structured JSON output.<br>
-                                • Built-in sub-domain parsing & multi-port tracing array.
+                                • Automation workflows mapping execution scripts.<br>
+                                • Embedded custom network sweep architecture rules.<br>
+                                • Standard JSON reporting.
                             </p>
                         </div>
-                        <span class="font-mono text-xs text-accentSecondary">PYTHON // VAPT // GUI // AUTOMATION</span>
+                        <span class="font-mono text-xs text-accentSecondary">PYTHON // VAPT // DEV // AUTOMATION</span>
                     </div>
                 </div>
             </div>
 
-            <div class="project-card h-[400px] group" data-link="https://github.com/isayani-78/AI-Powered-Phishing-Email-Detector">
+            <div class="project-card h-[390px] group" data-link="https://github.com/isayani-78/AI-Powered-Phishing-Email-Detector">
                 <div class="project-card-inner w-full h-full relative">
                     <div class="project-card-front absolute w-full h-full border border-white/10 rounded-lg bg-[#080808]/85 backdrop-blur-md flex flex-col p-6 border-t-4 border-t-accentPrimary justify-between">
                         <div>
                             <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project3.png" alt="Phishing Detector" class="w-full h-36 object-cover rounded mb-4">
-                            <h3 class="text-lg font-bold text-white mb-2">AI-Powered Phishing Detector</h3>
-                            <p class="text-xs text-[#b1b4b9] line-clamp-3">Autonomous classification engine intercepting deceptive headers, anomalies and phishing vectors.</p>
+                            <h3 class="text-lg font-bold text-white mb-2">AI Phishing Detector</h3>
+                            <p class="text-xs text-[#b1b4b9]">Detects phishing vectors utilizing intelligent ML parsing of deceptive data headers and message layouts.</p>
                         </div>
-                        <div class="text-center text-[10px] text-white font-mono py-2 border border-white/20 rounded bg-white/5 tracking-wider uppercase">CLICK TO INSPECT GITHUB</div>
+                        <div class="w-full text-center text-[10px] text-white font-mono py-2 border border-white/20 rounded bg-white/5 tracking-wider uppercase">CLICK & VIEW ON GITHUB</div>
                     </div>
                     <div class="project-card-back absolute w-full h-full border border-accentSecondary rounded-lg bg-[#0f0f0f]/95 backdrop-blur-md flex flex-col p-6 justify-between items-start">
                         <div>
                             <span class="font-mono text-xs text-[#72767d] mb-1 block">June 2025 - Present</span>
-                            <h3 class="text-xl font-bold text-white mb-3">AI Phishing Guard</h3>
+                            <h3 class="text-xl font-bold text-white mb-3">Phishing Core Guard</h3>
                             <p class="text-xs text-[#b0b3b8] space-y-1">
-                                • Advanced text parsing evaluating body content risk vector tags.<br>
-                                • Statistical ML logic models delivering classification scores.<br>
-                                • High accuracy scanning matching active threat intelligence feeds.
+                                • NLP content vector evaluation loops.<br>
+                                • Statistical models scoring inbound risks.<br>
+                                • High accuracy scanning parameters.
                             </p>
                         </div>
-                        <span class="font-mono text-xs text-accentSecondary">AI // NLP // ML // THREAT INTEL</span>
+                        <span class="font-mono text-xs text-accentSecondary">AI // NLP // DATA INTEL // ML</span>
                     </div>
                 </div>
             </div>
@@ -350,235 +321,133 @@
         </div>
     </section>
 
-    <section id="credentials" class="hidden-panel py-16 px-6 max-w-6xl mx-auto relative z-10">
-        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">CREDENTIALS</h2>
-        <div class="cert-container w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden py-6 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
-            <div class="cert-track flex w-max gap-8 animate-cert-scroll hover:[animation-play-state:paused]">
-                
-                <div class="cert-reel-card w-[310px] h-[245px] bg-[#080808]/85 border border-white/10 rounded-lg flex flex-col overflow-hidden backdrop-blur-md hover:border-accentPrimary transition-all" onclick="openCert('Infocom Hackstar 2023', 'ABP & ISOEH', 'CTF Participation log token extracted.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')">
-                    <div class="w-full h-[165px] bg-black relative group"><div class="absolute inset-0 bg-cover bg-center filter grayscale contrast-125 brightness-75 transition-all group-hover:grayscale-0" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"></div><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity">
-                    <span class="font-mono text-xs text-accentPrimary border border-accentPrimary px-4 py-1.5 bg-[#050505]">VIEW MATRIX</span></div></div>
-                    <div class="p-4 bg-[#0a0a0a] flex-1"><div class="font-mono text-sm font-bold text-[#e1e3e6] truncate">Hackstar '23</div><div class="text-[11px] text-[#72767d] uppercase mt-1 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accentSecondary"></span>CTF Event</div></div>
+    <!-- Credentials Static Responsive Grid (Fixed lagging side reel scrolling errors completely) -->
+    <section id="credentials" class="py-16 px-6 max-w-6xl mx-auto relative z-10">
+        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">CREDENTIALS</h2>
+        <div class="credentials-grid">
+            
+            <div class="bg-[#080808]/85 border border-white/10 rounded-lg p-4 backdrop-blur-md hover:border-accentPrimary transition-colors flex flex-col gap-3">
+                <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg" alt="CEH Certificate" class="w-full h-40 object-cover rounded">
+                <div>
+                    <h4 class="font-mono text-sm font-bold text-[#e1e3e6]">CEH v13ai</h4>
+                    <span class="text-[10px] font-mono text-[#72767d] block mt-1">EC-COUNCIL // VERIFIED</span>
                 </div>
-
-                <div class="cert-reel-card w-[310px] h-[245px] bg-[#080808]/85 border border-white/10 rounded-lg flex flex-col overflow-hidden backdrop-blur-md hover:border-accentPrimary transition-all" onclick="openCert('(CEH) v13ai EXAM TRANSCRIPT', 'EC-Council', '(CEH) v13ai SCORE : 93.6% Verified transcript parameters.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')">
-                    <div class="w-full h-[165px] bg-black relative group"><div class="absolute inset-0 bg-cover bg-center filter grayscale contrast-125 brightness-75 transition-all group-hover:grayscale-0" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"></div><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity">
-                    <span class="font-mono text-xs text-accentPrimary border border-accentPrimary px-4 py-1.5 bg-[#050505]">VIEW MATRIX</span></div></div>
-                    <div class="p-4 bg-[#0a0a0a] flex-1"><div class="font-mono text-sm font-bold text-[#e1e3e6] truncate">CEH v13ai Transcript</div><div class="text-[11px] text-[#72767d] uppercase mt-1 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accentSecondary"></span>EC-Council</div></div>
-                </div>
-
-                <div class="cert-reel-card w-[310px] h-[245px] bg-[#080808]/85 border border-white/10 rounded-lg flex flex-col overflow-hidden backdrop-blur-md hover:border-accentPrimary transition-all" onclick="openCert('Infocom Hackstar 2024', 'ABP & ISOEH', 'Certificate of Participation for Infocom Hackstar CTF 2024 operation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')">
-                    <div class="w-full h-[165px] bg-black relative group"><div class="absolute inset-0 bg-cover bg-center filter grayscale contrast-125 brightness-75 transition-all group-hover:grayscale-0" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"></div><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity">
-                    <span class="font-mono text-xs text-accentPrimary border border-accentPrimary px-4 py-1.5 bg-[#050505]">VIEW MATRIX</span></div></div>
-                    <div class="p-4 bg-[#0a0a0a] flex-1"><div class="font-mono text-sm font-bold text-[#e1e3e6] truncate">Hackstar '24</div><div class="text-[11px] text-[#72767d] uppercase mt-1 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accentSecondary"></span>CTF Event</div></div>
-                </div>
-
-                <div class="cert-reel-card w-[310px] h-[245px] bg-[#080808]/85 border border-white/10 rounded-lg flex flex-col overflow-hidden backdrop-blur-md hover:border-accentPrimary transition-all" onclick="openCert('CTIGA Certification', 'ISOEH', 'Certified Threat Intelligence & Gathering Analyst credential parameters.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')">
-                    <div class="w-full h-[165px] bg-black relative group"><div class="absolute inset-0 bg-cover bg-center filter grayscale contrast-125 brightness-75 transition-all group-hover:grayscale-0" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"></div><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity">
-                    <span class="font-mono text-xs text-accentPrimary border border-accentPrimary px-4 py-1.5 bg-[#050505]">VIEW MATRIX</span></div></div>
-                    <div class="p-4 bg-[#0a0a0a] flex-1"><div class="font-mono text-sm font-bold text-[#e1e3e6] truncate">CTIGA</div><div class="text-[11px] text-[#72767d] uppercase mt-1 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accentSecondary"></span>Threat Intel</div></div>
-                </div>
-
-                <div class="cert-reel-card w-[310px] h-[245px] bg-[#080808]/85 border border-white/10 rounded-lg flex flex-col overflow-hidden backdrop-blur-md hover:border-accentPrimary transition-all" onclick="openCert('CRTOM Certification', 'Certified Red Team', 'Red Team Operations mapping structural bypass simulations.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')">
-                    <div class="w-full h-[165px] bg-black relative group"><div class="absolute inset-0 bg-cover bg-center filter grayscale contrast-125 brightness-75 transition-all group-hover:grayscale-0" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"></div><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity">
-                    <span class="font-mono text-xs text-accentPrimary border border-accentPrimary px-4 py-1.5 bg-[#050505]">VIEW MATRIX</span></div></div>
-                    <div class="p-4 bg-[#0a0a0a] flex-1"><div class="font-mono text-sm font-bold text-[#e1e3e6] truncate">CRTOM</div><div class="text-[11px] text-[#72767d] uppercase mt-1 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accentSecondary"></span>Red Team Ops</div></div>
-                </div>
-
             </div>
+
+            <div class="bg-[#080808]/85 border border-white/10 rounded-lg p-4 backdrop-blur-md hover:border-accentPrimary transition-colors flex flex-col gap-3">
+                <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg" alt="Exam Transcript" class="w-full h-40 object-cover rounded">
+                <div>
+                    <h4 class="font-mono text-sm font-bold text-[#e1e3e6]">CEH Transcript (93.6%)</h4>
+                    <span class="text-[10px] font-mono text-[#72767d] block mt-1">EC-COUNCIL // SCORE MATRIX</span>
+                </div>
+            </div>
+
+            <div class="bg-[#080808]/85 border border-white/10 rounded-lg p-4 backdrop-blur-md hover:border-accentPrimary transition-colors flex flex-col gap-3">
+                <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg" alt="Hackstar 24" class="w-full h-40 object-cover rounded">
+                <div>
+                    <h4 class="font-mono text-sm font-bold text-[#e1e3e6]">Infocom Hackstar 2024</h4>
+                    <span class="text-[10px] font-mono text-[#72767d] block mt-1">ABP & ISOEH // CTF LOG</span>
+                </div>
+            </div>
+
+            <div class="bg-[#080808]/85 border border-white/10 rounded-lg p-4 backdrop-blur-md hover:border-accentPrimary transition-colors flex flex-col gap-3">
+                <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg" alt="CTIGA Certification" class="w-full h-40 object-cover rounded">
+                <div>
+                    <h4 class="font-mono text-sm font-bold text-[#e1e3e6]">CTIGA Analyst</h4>
+                    <span class="text-[10px] font-mono text-[#72767d] block mt-1">ISOEH // THREAT INTEL</span>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <section class="hidden-panel py-16 px-6 max-w-4xl mx-auto relative z-10">
-        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">TIMELINE</h2>
+    <!-- Chronological Logs -->
+    <section class="py-16 px-6 max-w-4xl mx-auto relative z-10">
+        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">TIMELINE</h2>
         <div class="flex flex-col gap-6 w-full">
-            <div class="bg-glassBg border border-white/10 p-6 rounded-lg backdrop-blur-md transition-all duration-300 hover:border-accentSecondary hover:bg-accentSecondary/[0.02]">
+            <div class="bg-[#0a0a0a]/72 border border-white/10 p-6 rounded-lg backdrop-blur-md transition-all duration-300 hover:border-accentSecondary hover:bg-accentSecondary/[0.02]">
                 <span class="font-mono text-accentSecondary font-bold text-sm mb-1 block">(March 2026 - June 2026)</span>
                 <h3 class="text-xl font-bold text-white mb-1">VAPT Internship</h3>
                 <p class="text-sm text-[#ccced2]">ISOAH Data Securities Pvt. Ltd.</p>
             </div>
-            <div class="bg-glassBg border border-white/10 p-6 rounded-lg backdrop-blur-md transition-all duration-300 hover:border-accentSecondary hover:bg-accentSecondary/[0.02]">
+            <div class="bg-[#0a0a0a]/72 border border-white/10 p-6 rounded-lg backdrop-blur-md transition-all duration-300 hover:border-accentSecondary hover:bg-accentSecondary/[0.02]">
                 <span class="font-mono text-accentSecondary font-bold text-sm mb-1 block">2023 - 2026 (Pursuing)</span>
                 <h3 class="text-xl font-bold text-white mb-1">B.Sc. Digital Forensics</h3>
-                <p class="text-sm text-[#ccced2]">Indian School of Ethical Hacking (ISOEH), Kolkata under Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India.</p>
-            </div>
-            <div class="bg-glassBg border border-white/10 p-6 rounded-lg backdrop-blur-md transition-all duration-300 hover:border-accentSecondary hover:bg-accentSecondary/[0.02]">
-                <span class="font-mono text-accentSecondary font-bold text-sm mb-1 block">2026</span>
-                <h3 class="text-xl font-bold text-white mb-1">(CEH) v13 AI Certified</h3>
-                <p class="text-sm text-[#ccced2]">EC-Council.</p>
-            </div>
-            <div class="bg-glassBg border border-white/10 p-6 rounded-lg backdrop-blur-md transition-all duration-300 hover:border-accentSecondary hover:bg-accentSecondary/[0.02]">
-                <span class="font-mono text-accentSecondary font-bold text-sm mb-1 block">2015 - 2023</span>
-                <h3 class="text-xl font-bold text-white mb-1">ICSE & ISC (PCMB)</h3>
-                <p class="text-sm text-[#ccced2]">St. Thomas' High School, Howrah, West Bengal, India.</p>
+                <p class="text-sm text-[#ccced2]">ISOEH, Kolkata under MAKAUT, West Bengal, India.</p>
             </div>
         </div>
     </section>
 
-    <section id="thm-badges" class="hidden-panel py-16 px-6 max-w-6xl mx-auto relative z-10">
-        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">TRYHACKME BADGES</h2>
-        <div class="thm-scene w-full h-[450px] md:h-[450px] flex justify-center items-center overflow-hidden relative mt-4 max-w-full scale-75 md:scale-100 mx-auto">
-            <div class="thm-ring relative w-40 h-[100px]">
-                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(0deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/hashcracker.png" alt="Hash Cracker" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
-                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(30deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/linux.png" alt="Linux" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
-                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(60deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/securityawareness.png" alt="Security Awareness" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
-                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(90deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/mrrobot.png" alt="Mr Robot" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
-                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(120deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/league-bronze.png" alt="Bronze League" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
-                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(150deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/streak3.png" alt="Streak" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
-                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(180deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/webbed.png" alt="Webbed" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
-                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(210deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/howthewebworks.png" alt="Web Fundamentals" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
-                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(240deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/introtosecurityengineering.png" alt="Security Engineering" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
-                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(270deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/introtodevsecops.png" alt="DevSecOps" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
-                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(300deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/league-gold.png" alt="Gold League" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
-                <div class="thm-item absolute inset-0 flex justify-center items-center" style="transform: rotateY(330deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/injection.png" alt="Injection" class="w-28 filter drop-shadow-[0_0_8px_#00ffcc] hover:scale-110 hover:drop-shadow-[0_0_16px_#ff00ff] transition-all"></div>
-            </div>
-        </div>
-        
-        <div class="thm-profile-case relative border-2 border-[#333] p-1.5 bg-[#080808]/90 max-w-[440px] w-full mx-auto backdrop-blur-md rounded-md transition-all hover:border-accentPrimary hover:shadow-[0_0_25px_rgba(0,255,204,0.2)] mt-8">
-            <div class="absolute top-0 left-0 bg-accentPrimary text-black text-[10px] font-bold font-mono px-2 py-0.5 uppercase tracking-wider rounded-br">TryHackMe Profile : Top 5%</div>
-            <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/assets/Tryhackme.jpg" alt="TryHackMe Profile" class="w-full h-auto block filter contrast-125">
-        </div>
-    </section>
+    <!-- Uplink Portal -->
+    <section id="contact" class="py-16 px-6 max-w-4xl mx-auto relative z-10">
+        <div class="bg-[#080808]/70 border border-accentPrimary p-10 text-center relative rounded-lg backdrop-blur-md w-full">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#050505] px-4 font-mono text-accentPrimary text-xs tracking-wider whitespace-nowrap">ENCRYPTED CHANNEL</div>
+            <p class="font-mono text-sm mb-6 text-[#ccced2]">Establish connection matrix via core routing for strategic containment or audit simulation analysis.</p>
+            
+            <p class="font-mono text-lg font-bold text-[#00ff66] mb-6 select-all">sayanimaity78@gmail.com</p>
 
-    <section id="contact" class="hidden-panel py-16 px-6 max-w-4xl mx-auto relative z-10">
-        <h2 class="text-4xl font-extrabold font-mono text-white tracking-wide mb-12 relative inline-block hyper-text after:content-[''] after:absolute after:bottom-1 after:right-[-15px] after:w-11 after:h-1 after:bg-accentSecondary">SECURE UPLINK</h2>
-        <div class="contact-box bg-[#080808]/70 border border-accentPrimary p-8 text-center relative rounded-lg backdrop-blur-md w-full max-w-3xl mx-auto">
-            <div class="w-full max-w-xl p-6 bg-[#0f0f0f]/85 rounded-xl border border-white/10 backdrop-blur-md mx-auto">
-                <h3 class="text-xl font-mono font-bold text-white mb-4">Contact Gateway</h3>
-                <div class="block w-full text-left font-mono text-xs text-[#00ffd5] mb-6 border-l-2 border-accentSecondary pl-3 space-y-1">
-                    <p><span class="text-[#ff00ff]">> root@sayani:~#</span> execute contact_protocol</p>
-                    <p>Inquiries: [Forensics | Research | Collaboration]</p>
-                    <p>Status: Open for connection matrix initialization.</p>
-                </div>
-                
-                <p class="text-base md:text-lg font-bold font-mono text-[#00ff66] mb-6 tracking-wide break-all selection:bg-accentSecondary">sayanimaity78@gmail.com</p>
-                
-                <div class="flex flex-wrap justify-center gap-2 mb-8 font-mono text-xs">
-                    <a href="https://linkedin.com/in/sayanimaity" target="_blank" class="px-3 py-1.5 bg-[#0077b5] text-white rounded hover:opacity-90 transition-opacity">LinkedIn</a>
-                    <a href="https://github.com/isayani-78" target="_blank" class="px-3 py-1.5 bg-[#24292f] text-white rounded hover:opacity-90 transition-opacity">GitHub</a>
-                    <a href="https://medium.com/@isayani-78" target="_blank" class="px-3 py-1.5 bg-black text-white border border-white/10 rounded hover:opacity-90 transition-opacity">Medium</a>
-                    <a href="https://x.com/isayani78" target="_blank" class="px-3 py-1.5 bg-[#1DA1F2] text-white rounded hover:opacity-90 transition-opacity">Twitter</a>
-                    <a href="https://discord.com/invite/isayani_78" target="_blank" class="px-3 py-1.5 bg-[#5865F2] text-white rounded hover:opacity-90 transition-opacity">Discord</a>
-                    <a href="https://t.me/isayani_78" target="_blank" class="px-3 py-1.5 bg-[#0088cc] text-white rounded hover:opacity-90 transition-opacity">Telegram</a>
-                </div>
-
-                <form action="https://formspree.io/f/xnjbaapy" method="POST" class="flex flex-col gap-4 font-mono text-xs text-left">
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <input type="text" name="name" placeholder="Your Name *" required class="flex-1 w-full p-3 rounded border border-white/10 text-white bg-[#050505]/50 focus:border-accentPrimary focus:outline-none">
-                        <input type="email" name="email" placeholder="Your Email *" required class="flex-1 w-full p-3 rounded border border-white/10 text-white bg-[#050505]/50 focus:border-accentPrimary focus:outline-none">
-                    </div>
-                    <input type="text" name="subject" placeholder="Your Subject.." class="w-full p-3 rounded border border-white/10 text-white bg-[#050505]/50 focus:border-accentPrimary focus:outline-none">
-                    <textarea name="message" placeholder="Your Message..." rows="4" class="w-full p-3 rounded border border-white/10 text-white bg-[#050505]/50 focus:border-accentPrimary focus:outline-none"></textarea>
-                    <button type="submit" class="w-full py-3 bg-[#ff4d4d] text-white rounded font-bold uppercase tracking-wider hover:bg-red-500 transition-colors">Send Message</button>
-                </form>
+            <div class="flex flex-wrap gap-3 justify-center mb-8 font-mono text-xs">
+                <a href="https://linkedin.com/in/sayanimaity" target="_blank" class="px-3 py-1 bg-blue-600 rounded text-white hover:opacity-90">LinkedIn</a>
+                <a href="https://github.com/isayani-78" target="_blank" class="px-3 py-1 bg-gray-800 rounded text-white hover:opacity-90">GitHub</a>
+                <a href="https://t.me/isayani_78" target="_blank" class="px-3 py-1 bg-blue-400 rounded text-white hover:opacity-90">Telegram</a>
             </div>
+
+            <form action="https://formspree.io/f/xnjbaapy" method="POST" class="flex flex-col gap-4 font-mono text-xs text-left max-w-xl mx-auto">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <input type="text" name="name" placeholder="Your Name *" required class="flex-1 p-3 rounded border border-white/10 text-white bg-black/40 focus:outline-none focus:border-accentPrimary">
+                    <input type="email" name="email" placeholder="Your Email *" required class="flex-1 p-3 rounded border border-white/10 text-white bg-black/40 focus:outline-none focus:border-accentPrimary">
+                </div>
+                <textarea name="message" placeholder="Your Message..." rows="4" class="w-full p-3 rounded border border-white/10 text-white bg-black/40 focus:outline-none focus:border-accentPrimary"></textarea>
+                <button type="submit" class="py-3 bg-red-600 text-white font-bold uppercase rounded hover:bg-red-500 transition-colors">Send Message</button>
+            </form>
         </div>
     </section>
 
     <footer class="text-center p-10 font-mono text-xs text-[#52565d] border-t border-white/5 relative z-10">
-        <p>SYSTEM STATUS: OPTIMAL | © 2026 SAYANI MAITY | System online 💻</p>
+        <div>SYSTEM STATUS: OPTIMAL | © 2026 SAYANI MAITY | System online 💻</div>
     </footer>
 
     <script>
-        // --- SECURITY LOGS: ANTI-DEBUG & INSPECTION INHIBITOR ---
-        document.onkeydown = function(e) {
-            if(e.keyCode == 123) return false; 
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; 
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; 
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; 
-            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; 
-        };
+        // Cursor Engine Track
+        const cursor = document.getElementById('cursor');
+        if (cursor) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button, .project-card').forEach(item => {
+                item.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                item.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+            });
+        }
 
-        // --- INTERFACE CONTROL MENU ---
-        function toggleMenu() {
-            const drawer = document.getElementById('mobile-drawer');
-            const burger = document.querySelector('.hamburger');
+        // Mobile Nav System
+        const drawer = document.getElementById('mobile-drawer');
+        function toggleMobileMenu(btn) {
+            btn.classList.toggle('active');
             drawer.classList.toggle('right-0');
             drawer.classList.toggle('right-[-100%]');
-            burger.classList.toggle('active');
-            
-            const bars = burger.querySelectorAll('.bar');
+            const bars = btn.querySelectorAll('.bar');
             bars[1].classList.toggle('opacity-0');
             bars[0].classList.toggle('translate-y-[9px]');
             bars[0].classList.toggle('rotate-45');
             bars[2].classList.toggle('-translate-y-[9px]');
             bars[2].classList.toggle('-rotate-45');
         }
-
-        // --- CRYPTOGRAPHIC STRING DECRYPTION LOGIC ---
-        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?";
-        document.querySelectorAll('.hyper-text').forEach(el => { el.dataset.value = el.innerText; });
-        
-        const decryptText = (element) => {
-            if(!element) return;
-            const originalText = element.dataset.value || element.innerText; 
-            let iterations = 0;
-            const interval = setInterval(() => {
-                element.innerText = originalText.split("").map((letter, index) => {
-                    if(index < iterations) return originalText[index];
-                    return chars[Math.floor(Math.random() * chars.length)];
-                }).join("");
-                if(iterations >= originalText.length) { clearInterval(interval); element.innerText = originalText; }
-                iterations += 1;
-            }, 30);
+        function closeMobileMenu() {
+            const btn = document.querySelector('.hamburger');
+            if(btn.classList.contains('active')) toggleMobileMenu(btn);
         }
-        const triggerDecryption = (el) => { if (el && !el.classList.contains('decrypting')) { el.classList.add('decrypting'); decryptText(el); setTimeout(() => el.classList.remove('decrypting'), 2000); } }
 
-        // --- INTERACTIVE MOUSE LAYER (RAF SPEED FIX) ---
-        const cursor = document.getElementById('cursor');
-        let transformBuffer = false;
-        
-        document.addEventListener('mousemove', (e) => {
-            if(!transformBuffer) {
-                window.requestAnimationFrame(() => {
-                    cursor.style.left = e.clientX + 'px';
-                    cursor.style.top = e.clientY + 'px';
-                    transformBuffer = false;
-                });
-                transformBuffer = true;
-            }
-        });
-        
-        document.querySelectorAll('a, .project-card, .skill-category, .cta-btn, .cert-card, .cert-reel-card, .thm-profile-case').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-        });
-        
-        // --- INTERSECTION OBSERVER DEPLOYMENT ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show-panel');
-                    if (entry.target.classList.contains('hyper-text')) triggerDecryption(entry.target);
-                    else { const child = entry.target.querySelector('.hyper-text'); if(child) triggerDecryption(child); }
+        // 3D Certificate Click Flip Toggle
+        document.querySelectorAll('.cert-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const inner = card.querySelector('.cert-inner');
+                if(inner.style.transform === "rotateY(180deg)") {
+                    inner.style.transform = "rotateY(0deg)";
+                } else {
+                    inner.style.transform = "rotateY(180deg)";
                 }
-            });
-        }, { threshold: 0.05 });
-        document.querySelectorAll('.hidden-panel').forEach((el) => observer.observe(el));
-
-        // --- MODAL PORT MANAGEMENT MATRIX ---
-        function openCert(title, issuer, desc, imgUrl = null) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-issuer').innerText = issuer;
-            document.getElementById('modal-desc').innerText = desc;
-            const imgContainer = document.getElementById('modal-img-container');
-            imgContainer.innerHTML = ''; 
-            if(imgUrl) {
-                const img = document.createElement('img');
-                img.src = imgUrl;
-                img.className = "block w-full h-auto rounded";
-                imgContainer.appendChild(img);
-            }
-            document.getElementById('cert-modal').style.display = 'flex';
-        }
-        function closeModal() { document.getElementById('cert-modal').style.display = 'none'; }
-        document.getElementById('cert-modal').addEventListener('click', (e) => { if (e.target.id === 'cert-modal') closeModal(); });
-
-        // --- PROJECT TARGET LINKS DECK ---
-        document.querySelectorAll(".project-card").forEach(card => {
-            card.addEventListener("click", () => {
-                const link = card.getAttribute("data-link");
-                if (link) { window.open(link, "_blank"); }
             });
         });
     </script>
