@@ -361,7 +361,7 @@
         .project-card:hover .project-card-inner { transform: rotateY(180deg); }
         .project-card-front, .project-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 8, 8, 0.85); backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 1.8rem; overflow: hidden; }
         .project-card-front { border-top: 4px solid var(--accent-primary); }
-        .project-card-back { transform: rotateY(180deg); background: rgba(15, 15, 15, 0.95); border-color: var(--accent-secondary); }
+        .project-card-back { transform: rotateY(180deg); background: rgba(15, 15, 15, 0.95); border-color: var(--accent-secondary); align-items: flex-start; text-align: left; }
         .project-date { font-family: var(--font-mono); font-size: 0.8rem; color: #72767d; margin-bottom: 0.4rem; }
         .project-title { font-size: 1.35rem; margin-bottom: 0.8rem; color: #fff; font-weight: 700; }
         .project-desc { font-size: 0.9rem; color: #b1b4b9; margin-bottom: 1.2rem; }
@@ -397,13 +397,25 @@
         #modal-img-container { margin: 1.2rem 0; background: #000; border: 1px solid rgba(255,255,255,0.05); padding: 4px; }
         #modal-img-container img { display: block; width: 100%; height: auto; }
 
-        /* --- TIMELINE --- */
-        .timeline { position: relative; border-left: 2px solid rgba(255,255,255,0.05); margin-left: 0.5rem; padding-left: 2rem; }
-        .timeline-item { margin-bottom: 2.5rem; position: relative; }
-        .timeline-item::before { content: ''; position: absolute; left: -2.55rem; top: 6px; width: 0.9rem; height: 0.9rem; background: #050505; border: 2px solid var(--accent-secondary); border-radius: 50%; }
-        .timeline-date { font-family: var(--font-mono); color: var(--accent-secondary); margin-bottom: 0.3rem; display: block; font-size: 0.9rem; }
-        .timeline-title { font-size: 1.2rem; font-weight: bold; color: #fff; }
-        .timeline-sub { color: #a2a5a9; font-size: 0.92rem; }
+        /* --- BOXED TIMELINE STRUCTURE FIX --- */
+        .timeline { position: relative; margin-left: 0.5rem; display: flex; flex-direction: column; gap: 1.8rem; }
+        .timeline-item { 
+            position: relative; 
+            background: rgba(10, 10, 10, 0.7); 
+            border: 1px solid var(--glass-border); 
+            padding: 1.8rem; 
+            border-radius: 8px; 
+            backdrop-filter: blur(12px); 
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover {
+            border-color: var(--accent-secondary);
+            background: rgba(255, 0, 255, 0.02);
+            transform: translateX(4px);
+        }
+        .timeline-date { font-family: var(--font-mono); color: var(--accent-secondary); margin-bottom: 0.4rem; display: block; font-size: 0.9rem; font-weight: bold; }
+        .timeline-title { font-size: 1.25rem; font-weight: bold; color: #fff; margin-bottom: 0.3rem; }
+        .timeline-sub { color: #ccced2; font-size: 0.95rem; line-height: 1.5; }
 
         /* --- CONTACT --- */
         .contact-box { background: rgba(8, 8, 8, 0.7); border: 1px solid var(--accent-primary); padding: 2.5rem; text-align: center; max-width: 800px; margin: 0 auto; position: relative; border-radius: 8px; backdrop-filter: blur(12px); }
@@ -542,7 +554,6 @@
             <div class="about-text">
                 <p> <strong>Identity:</strong> Sayani Maity<br>
                   <strong>Role:</strong> B.Sc. Digital Forensics Student<br>
-                  <strong>Professional Experience:</strong> Successfully Completed VAPT Internship @ ISOAH Data Securities Pvt. Ltd.
                 </p>
 
                   <p>I am <strong>Sayani Maity</strong>, currently pursuing a <strong>B.Sc. in Digital Forensics (2023–2026)</strong> at <strong>Indian School of Ethical Hacking (ISOEH), Kolkata,</strong> under <strong>Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India</strong>.</p>
@@ -572,10 +583,6 @@
                 <div class="stat-card">
                     <span class="stat-number">20+</span>
                     <span class="stat-label">Tools Mastered</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">VAPT Intern (Completed)</span>
-                    <span class="stat-label">ISOAH Data Securities Pvt. Ltd.</span>
                 </div>
             </div>
         </div>
@@ -727,50 +734,40 @@
                  <div class="cert-reel-card" onclick="openCert('(CEH) v13ai', 'EC-Council', 'Certified Ethical Hacker', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai</div><div class="cert-issuer">EC-Council</div></div></div>
                  <div class="cert-reel-card" onclick="openCert('Cryptoquest Participation', 'CTF Event', 'Participation in Cryptoquest.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cryptoquest</div><div class="cert-issuer">CTF Event</div></div></div>
                  <div class="cert-reel-card" onclick="openCert('GroundZero WB Hackathon', 'ISOEH', 'GroundZero West Bengal Hackathon.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">GroundZero</div><div class="cert-issuer">ISOEH</div></div></div>
-
-                 <!-- DUPLICATE SET -->
-                 <div class="cert-reel-card" onclick="openCert('Infocom Hackstar 2023', 'ABP & ISOEH', 'CTF Participation', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Hackstar '23</div><div class="cert-issuer">CTF Event</div></div></div>
-                <div class="cert-reel-card" onclick="openCert('(CEH) v13ai EXAM TRANSCRIPT ', 'EC-Council', '(CEH) v13ai SCORE : 93.6%', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai EXAM TRANSCRIPT</div><div class="cert-issuer">EC-Council</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Infocom Hackstar 2024', 'ABP & ISOEH', 'Certificate of Participation for Infocom Hackstar CTF 2024.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Hackstar '24</div><div class="cert-issuer">CTF Event</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('CTIGA Certification', 'ISOEH', 'Certified Threat Intelligence & Gathering Analyst.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CTIGA</div><div class="cert-issuer">Threat Intel</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('CRTOM Certification', 'Certified Red Team', 'Red Team Operations.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CRTOM</div><div class="cert-issuer">Red Team Ops</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('CCEP Certification', 'Certified Expert', 'Cybersecurity Expert Professional.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CCEP</div><div class="cert-issuer">Expert Professional</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('CPPS Certification', 'Python Specialist', 'Certified Python Programming Specialist.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CPPS</div><div class="cert-issuer">Python Specialist</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Deloitte Cyber Sim', 'Forage', 'Deloitte Australia Cyber Job Simulation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Deloitte Sim</div><div class="cert-issuer">Forage</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Cyber Security CoE', 'Govt. of West Bengal', 'Certificate from Cyber Security Centre of Excellence Govt. of West Bengal', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cyber Security CoE</div><div class="cert-issuer">Govt. WB</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Core Python', 'Course Completion', 'Completion of Core Python Programming Course.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Core Python</div><div class="cert-issuer">Course</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Mastercard Cyber Job Sim', 'Forage', 'Mastercard & New York Jobs CEO Council Cybersecurity Job Simulation.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Mastercard Sim</div><div class="cert-issuer">Forage</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('MAKAUT CTF Participation', 'MAKAUT University', 'CTF Organised by MAKAUT.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">MAKAUT CTF</div><div class="cert-issuer">University Event</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Cyraksha CTF Hackathon 2', 'Cyraksha Cyber Club', 'Participation in CTF of Cyraksha.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cyraksha Hackathon</div><div class="cert-issuer">Cyber Club</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Cyraksha CTF Workshop', 'Cyraksha Cyber Club', 'Participation In CTF workshop.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CTF Workshop</div><div class="cert-issuer">Cyber Club</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('(CEH) v13ai', 'EC-Council', 'Certified Ethical Hacker', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai</div><div class="cert-issuer">EC-Council</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('Cryptoquest Participation', 'CTF Event', 'Participation in Cryptoquest.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">Cryptoquest</div><div class="cert-issuer">CTF Event</div></div></div>
-                 <div class="cert-reel-card" onclick="openCert('GroundZero WB Hackathon', 'ISOEH', 'GroundZero West Bengal Hackathon.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">GroundZero</div><div class="cert-issuer">ISOEH</div></div></div>
                 <div class="cert-reel-card" onclick="openCert('CTIGA Certification', 'ISOEH', 'Certified Threat Intelligence & Gathering Analyst.', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')"><div class="cert-img-wrapper"><div class="cert-img-thumb" style="background-image: url('https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')"></div><div class="cert-overlay"><span>VIEW</span></div></div><div class="cert-content"><div class="cert-name">CEH V13ai EXAM TRANSCRIPT</div><div class="cert-issuer">CEH V13ai SCORE: 93.6%</div></div></div>
             </div>
         </div>
     </section>
 
-    <!-- TIMELINE -->
+    <!-- BOXED TIMELINE SECTION WITH DYNAMIC WRAPPER -->
     <section class="hidden">
         <h2 class="section-title hyper-text">TIMELINE</h2>
         <div class="timeline">
+            <!-- VAPT Internship Event (Shifted directly into a cleanly formatted timeline card box) -->
+            <div class="timeline-item">
+                <span class="timeline-date">2026</span>
+                <h3 class="timeline-title">VAPT Internship (Completed)</h3>
+                <span class="timeline-sub">ISOAH Data Securities Pvt. Ltd.</span>
+            </div>
+
             <div class="timeline-item">
                 <span class="timeline-date">2023 - 2026 (Pursuing)</span>
                 <h3 class="timeline-title">B.Sc. Digital Forensics</h3>
                 <span class="timeline-sub">
-                    Indian School of Ethical Hacking (ISOEH),Kolkata <strong>under</strong> Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India.
+                    Indian School of Ethical Hacking (ISOEH), Kolkata <strong>under</strong> Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India.
                 </span>
             </div>
+            
             <div class="timeline-item">
                 <span class="timeline-date">2026</span>
                 <h3 class="timeline-title">(CEH) v13 AI Certified</h3>
                 <span class="timeline-sub">EC-Council.</span>
             </div>
+            
             <div class="timeline-item">
                 <span class="timeline-date">2015 - 2023</span>
                 <h3 class="timeline-title">ICSE & ISC (with pure science)</h3>
-                <span class="timeline-sub">St. Thomas' High School, Howrah, West Bengal,India.</span>
+                <span class="timeline-sub">St. Thomas' High School, Howrah, West Bengal, India.</span>
             </div>
         </div>
     </section>
@@ -780,7 +777,6 @@
         <h2 class="section-title hyper-text">TRYHACKME BADGES</h2>
         <div class="thm-scene">
             <div class="thm-ring">
-                <!-- THM Items with precise rotation depth -->
                 <div class="thm-item" style="transform: rotateY(0deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/hashcracker.png" alt="Hash Cracker"></div>
                 <div class="thm-item" style="transform: rotateY(27.7deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/linux.png" alt="Linux"></div>
                 <div class="thm-item" style="transform: rotateY(55.4deg) translateZ(280px);"><img src="https://assets.tryhackme.com/img/badges/securityawareness.png" alt="Security Awareness"></div>
@@ -803,7 +799,7 @@
         </div>
     </section>
 
-    <!-- CONTACT UPLINK -->
+    <!-- SECURE GATEWAY UPLINK -->
     <section id="contact" class="hidden">
         <h2 class="section-title hyper-text">SECURE UPLINK</h2>
         <div class="contact-box">
@@ -900,7 +896,7 @@
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
-        const hoverElements = document.querySelectorAll('a, .project-card, .skill-category, .cta-btn, .contact-btn, .cert-card, .cert-reel-card, .thm-profile-case');
+        const hoverElements = document.querySelectorAll('a, .project-card, .skill-category, .cta-btn, .contact-btn, .cert-card, .cert-reel-card, .thm-profile-case, .timeline-item');
         hoverElements.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
