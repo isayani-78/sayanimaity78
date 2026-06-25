@@ -385,17 +385,24 @@
         .tag:hover { border-color: var(--accent-primary); color: #fff; transform: scale(1.03); }
 
         /* --- PROJECTS --- */
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 2rem; }
-        .project-card { background-color: transparent; perspective: 1000px; height: 330px; border: none; }
-        .project-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
-        .project-card:hover .project-card-inner { transform: rotateY(180deg); }
-        .project-card-front, .project-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 8, 8, 0.85); backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 1.8rem; overflow: hidden; }
-        .project-card-front { border-top: 4px solid var(--accent-primary); }
-        .project-card-back { transform: rotateY(180deg); background: rgba(15, 15, 15, 0.95); border-color: var(--accent-secondary); align-items: flex-start; text-align: left; }
-        .project-date { font-family: var(--font-mono); font-size: 0.8rem; color: #72767d; margin-bottom: 0.4rem; }
-        .project-title { font-size: 1.35rem; margin-bottom: 0.8rem; color: #fff; font-weight: 700; }
-        .project-desc { font-size: 0.9rem; color: #b1b4b9; margin-bottom: 1.2rem; }
-        .project-tech { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-secondary); margin-top: auto; }
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 2rem; }
+.project-card { background-color: transparent; perspective: 1000px; height: 380px; border: none; }
+.project-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
+.project-card:hover .project-card-inner { transform: rotateY(180deg); }
+.project-card-front, .project-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 8, 8, 0.85); backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 1.8rem; overflow: hidden; }
+.project-card-front { border-top: 4px solid var(--accent-primary); justify-content: flex-start; }
+.project-card-back { transform: rotateY(180deg); background: rgba(15, 15, 15, 0.95); border-color: var(--accent-secondary); align-items: flex-start; text-align: left; }
+.project-date { font-family: var(--font-mono); font-size: 0.8rem; color: #72767d; margin-bottom: 0.4rem; }
+.project-title { font-size: 1.35rem; margin-bottom: 0.8rem; color: #fff; font-weight: 700; }
+.project-desc { font-size: 0.9rem; color: #b1b4b9; margin-bottom: 1.2rem; }
+.project-tech { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-secondary); margin-top: auto; }
+
+/* GitHub Hint Style */
+.github-hint-tag { 
+    text-align: center; font-size: 10px; color: #fff; font-family: var(--font-mono); 
+    margin-top: auto; padding: 8px; border: 1px solid #fff; border-radius: 4px;
+    width: 100%; background: rgba(255, 255, 255, 0.05);
+}
 
         /* --- CERTIFICATE SLICK REEL --- */
         .cert-container { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; overflow: hidden; padding: 2.5rem 0; mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); }
@@ -689,82 +696,68 @@
     </section>
 
     <section id="projects" class="hidden">
-        <h2 class="section-title hyper-text">PROJECTS</h2>
-        <div class="projects-grid">
-            <div class="project-card" data-link="https://github.com/isayani-78/forensic-analyzer">
-                <div class="project-card-inner">
-                    <div class="project-card-front">
-                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project1.png" 
-                             alt="Forensic Analyzer" 
-                             style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0; margin-bottom: 15px;">
-                        <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">Forensic Analyzer</h3>
-                        <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
-                            Web-based Digital Forensic Learning Tool implementing hashing and encoding techniques.
-                        </p>
-                        <a href="https://github.com/isayani-78/forensic-analyzer" target="_blank" style="font-size:12px;text-decoration:none;border:1px solid currentColor;padding:4px 10px;color:#fff;">
-                            Click & View on GitHub
-                        </a>
-                    </div>
-                    <div class="project-card-back">
-                        <span class="project-date">Nov 2025 - Present</span>
-                        <h3 class="project-title">Forensic Analyzer.</h3>
-                        <p class="project-desc">
-                            A web-based Digital Forensic Learning Tool. Implemented basic hashing and encoding features for educational analysis. (Academic Project)
-                        </p>
-                        <div class="project-tech">PYTHON // WEB // HASHING</div>
-                    </div>
+    <h2 class="section-title hyper-text">PROJECTS</h2>
+    <div class="projects-grid">
+        
+        <div class="project-card" data-link="https://github.com/isayani-78/forensic-analyzer">
+            <div class="project-card-inner">
+                <div class="project-card-front">
+                    <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project1.png" alt="Forensic Analyzer" style="width: 100%; height: 160px; object-fit: cover; border-radius: 6px; margin-bottom: 10px;">
+                    <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">Forensic Analyzer</h3>
+                    <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
+                        Web-based Digital Forensic Learning Tool implementing hashing and encoding techniques.
+                    </p>
+                    <div class="github-hint-tag">CLICK & VIEW ON GITHUB</div>
                 </div>
-            </div>
-
-           <div class="project-card" data-link="https://github.com/isayani-78/forensic-analyzer">
-                <div class="project-card-inner">
-                    <div class="project-card-front">
-                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project2.png" 
-                             alt="Cyber Security Multi-Tool Launcher (CMTL)" 
-                             style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0; margin-bottom: 15px;">
-                        <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">Cyber Security Multi-Tool Launcher (CMTL)</h3>
-                        <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
-                            GUI platform for VAPT, Pen Testing, and Network Scanning.
-                        </p>
-                        <div class="github-hint-tag">CLICK & VIEW ON GITHUB</div>
-                        </a>
-                    </div>
-                    <div class="project-card-back">
-                        <span class="project-date">Aug 2025 - Present</span>
-                        <h3 class="project-title">Cyber Security Multi-Tool Launcher</h3>
-                        <p class="project-desc">
-                            GUI platform for VAPT, Pen Testing, and Network Scanning. A one-click interface to streamline tasks for efficiency. (Academic Project)
-                        </p>
-                        <div class="project-tech">GUI // VAPT // AUTOMATION</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card" data-link="https://github.com/isayani-78/forensic-analyzer">
-                <div class="project-card-inner">
-                    <div class="project-card-front">
-                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project3.png" 
-                             alt="AI-Powered Phishing Email Detector." 
-                             style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0; margin-bottom: 15px;">
-                        <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">AI-Powered Phishing Email Detector.</h3>
-                        <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
-                            Detects phishing emails using AI analysis of headers and content.
-                        </p>
-                        <a href="https://github.com/isayani-78/AI-Powered-Phishing-Email-Detector" target="_blank" style="font-size:12px;text-decoration:none;border:1px solid currentColor;padding:4px 10px;color:#fff;">
-                            Click & View on GitHub
-                        </a>
-                    </div>
-                    <div class="project-card-back">
-                        <span class="project-date">June 2025 - Present</span>
-                        <h3 class="project-title">AI-Powered Phishing Email Detector</h3>
-                        <p class="project-desc"> 
-                            Detects phishing emails using AI-based analysis of headers and content to identify malicious patterns.
-                        </p>
-                        <div class="project-tech">AI // EMAIL SEC // THREAT INTEL</div>
-                    </div>
+                <div class="project-card-back">
+                    <span class="project-date">Nov 2025 - Present</span>
+                    <h3 class="project-title">Forensic Analyzer.</h3>
+                    <p class="project-desc">A web-based Digital Forensic Learning Tool. Implemented basic hashing and encoding features for educational analysis.</p>
+                    <div class="project-tech">PYTHON // WEB // HASHING</div>
                 </div>
             </div>
         </div>
+
+        <div class="project-card" data-link="https://github.com/isayani-78/CMTL">
+            <div class="project-card-inner">
+                <div class="project-card-front">
+                    <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project2.png" alt="CMTL" style="width: 100%; height: 160px; object-fit: cover; border-radius: 6px; margin-bottom: 10px;">
+                    <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">Cyber Security Multi-Tool Launcher</h3>
+                    <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
+                        GUI platform for VAPT, Pen Testing, and Network Scanning.
+                    </p>
+                    <div class="github-hint-tag">CLICK & VIEW ON GITHUB</div>
+                </div>
+                <div class="project-card-back">
+                    <span class="project-date">Aug 2025 - Present</span>
+                    <h3 class="project-title">CMTL</h3>
+                    <p class="project-desc">GUI platform for VAPT, Pen Testing, and Network Scanning. A one-click interface to streamline tasks for efficiency.</p>
+                    <div class="project-tech">GUI // VAPT // AUTOMATION</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card" data-link="https://github.com/isayani-78/AI-Powered-Phishing-Email-Detector">
+            <div class="project-card-inner">
+                <div class="project-card-front">
+                    <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/project3.png" alt="Phishing Detector" style="width: 100%; height: 160px; object-fit: cover; border-radius: 6px; margin-bottom: 10px;">
+                    <h3 style="color:#fff;font-weight:bold;font-size:16px;margin-bottom:6px;">AI-Powered Phishing Detector</h3>
+                    <p style="font-size:13px;line-height:1.4;opacity:0.85;margin-bottom:10px;">
+                        Detects phishing emails using AI analysis of headers and content.
+                    </p>
+                    <div class="github-hint-tag">CLICK & VIEW ON GITHUB</div>
+                </div>
+                <div class="project-card-back">
+                    <span class="project-date">June 2025 - Present</span>
+                    <h3 class="project-title">AI-Powered Phishing Detector</h3>
+                    <p class="project-desc">Detects phishing emails using AI-based analysis of headers and content to identify malicious patterns.</p>
+                    <div class="project-tech">AI // EMAIL SEC // THREAT INTEL</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
     </section>
 
     <section id="credentials" class="hidden">
