@@ -1,4 +1,4 @@
-F<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">  
@@ -51,7 +51,7 @@ F<!DOCTYPE html>
             background: rgba(0, 255, 204, 0.02);
             position: fixed;
             bottom: 100%;
-            animation: scanline 8s linear infinite; /* Performance save: slowed down interpolation loops */
+            animation: scanline 8s linear infinite; 
             pointer-events: none;
             box-shadow: 0 0 10px rgba(0, 255, 204, 0.08);
             will-change: bottom; /* Forces GPU hardware acceleration layers */
@@ -159,7 +159,7 @@ F<!DOCTYPE html>
             width: 160px; 
             height: 100px; 
             transform-style: preserve-3d; 
-            animation: thm-spin 35s linear infinite; /* Stabilized 3D rotation steps */
+            animation: thm-spin 35s linear infinite; 
         }
         
         .thm-ring:hover { animation-play-state: paused; }
@@ -224,7 +224,6 @@ F<!DOCTYPE html>
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none; 
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -239,7 +238,6 @@ F<!DOCTYPE html>
         }
 
         body {
-            /* Optimized transition state handlers across cross-platform systems */
             animation: color-cycle 30s infinite alternate ease-in-out;
         }
 
@@ -251,7 +249,7 @@ F<!DOCTYPE html>
             100% { background-color: rgba(5, 5, 5, 0.3); }    
         }
 
-        a { text-decoration: none; color: inherit; cursor: none; }
+        a { text-decoration: none; color: inherit; }
 
         .profession-box {
             background: #0a0a0a;
@@ -270,31 +268,8 @@ F<!DOCTYPE html>
             line-height: 1.6;
             margin: 0;
         }
-        
-        /* --- CUSTOM CURSOR --- */
-        #cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--accent-primary);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            mix-blend-mode: difference;
-            will-change: left, top;
-        }
-        #cursor.hovered {
-            width: 45px;
-            height: 45px;
-            background: rgba(0, 255, 204, 0.15);
-            border-color: var(--accent-secondary);
-        }
 
         @media (hover: none) and (pointer: coarse) {
-            #cursor { display: none !important; }
-            * { cursor: auto !important; }
-            /* Massive optimization: disable 3D renderer on sluggish mobile CPUs */
             .spline-background-container { display: none !important; }
             body { background-color: #050505 !important; }
         }
@@ -315,14 +290,14 @@ F<!DOCTYPE html>
         .nav-links a:hover { color: var(--accent-primary); }
         .nav-links a:hover::after { width: 100%; }
 
-        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+        .hamburger { display: flex; cursor: pointer; flex-direction: column; gap: 5px; }
         .bar { width: 25px; height: 3px; background-color: var(--accent-primary); transition: 0.3s; }
         
         /* --- HERO --- */
         .hero { 
             min-height: 100dvh; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            text-align: center; padding: 5rem 1.5rem 3rem; /* Adjusted top padding values */
+            text-align: center; padding: 5rem 1.5rem 3rem; 
             position: relative; 
             animation: hero-fade-in 1.5s ease forwards; 
         }
@@ -339,7 +314,6 @@ F<!DOCTYPE html>
         .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; text-transform: uppercase; line-height: 1.1; color: #fff; margin-bottom: 1rem; letter-spacing: -1px; }
         .glitch { position: relative; }
         
-        /* Optimizing micro-jitters during scrolling */
         .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; }
         .glitch::before { left: 2px; text-shadow: -1px 0 var(--accent-secondary); clip: rect(44px, 450px, 56px, 0); animation: glitch-anim 6s infinite linear alternate-reverse; }
         .glitch::after { left: -2px; text-shadow: -1px 0 var(--accent-primary); clip: rect(44px, 450px, 56px, 0); animation: glitch-anim2 6s infinite linear alternate-reverse; }
@@ -408,7 +382,7 @@ F<!DOCTYPE html>
 
         /* --- PROJECTS --- */
         .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 2rem; }
-        .project-card { background-color: transparent; perspective: 1000px; height: 380px; border: none; }
+        .project-card { background-color: transparent; perspective: 1000px; height: 380px; border: none; cursor: pointer; }
         .project-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); transform-style: preserve-3d; }
         .project-card:hover .project-card-inner { transform: rotateY(180deg); }
         .project-card-front, .project-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(8, 8, 8, 0.85); backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 1.8rem; overflow: hidden; }
@@ -550,16 +524,13 @@ F<!DOCTYPE html>
         .show { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body>
 
     <div class="spline-background-container">
-        <!-- Added loading="lazy" metadata wrapper to stop memory-leaks inside weak GPU drivers -->
         <spline-viewer url="https://prod.spline.design/Slk6b8kz3LRlKiyk/scene.splinecode" loading="lazy"></spline-viewer>
     </div>
 
     <div class="forensic-scanline"></div>
-
-    <div id="cursor"></div>
 
     <div class="modal-overlay" id="cert-modal">
         <div class="modal-content">
@@ -951,40 +922,18 @@ F<!DOCTYPE html>
             const originalText = element.dataset.value || element.innerText; 
             element.dataset.value = originalText; 
             let iterations = 0;
-            // Optimized interval timing parameters
             const interval = setInterval(() => {
                 element.innerText = originalText.split("").map((letter, index) => {
                     if(index < iterations) return originalText[index];
                     return chars[Math.floor(Math.random() * chars.length)];
                 }).join("");
                 if(iterations >= originalText.length) { clearInterval(interval); element.innerText = originalText; }
-                iterations += 1; /* Accelerated compilation steps to clear threads fast */
+                iterations += 1;
             }, 40);
         }
         const triggerDecryption = (el) => { if (el && !el.classList.contains('decrypting')) { el.classList.add('decrypting'); decryptText(el); setTimeout(() => el.classList.remove('decrypting'), 2000); } }
 
-        // --- INTERACTIVE CURSOR CONTROLLERS ---
-        const cursor = document.getElementById('cursor');
-        let transformBuffer = false;
-        
-        // Massive performance optimize: requestAnimationFrame stops mouse lagging layout shifts
-        document.addEventListener('mousemove', (e) => {
-            if(!transformBuffer) {
-                window.requestAnimationFrame(() => {
-                    cursor.style.left = e.clientX + 'px';
-                    cursor.style.top = e.clientY + 'px';
-                    transformBuffer = false;
-                });
-                transformBuffer = true;
-            }
-        });
-        
-        const hoverElements = document.querySelectorAll('a, .project-card, .skill-category, .cta-btn, .contact-btn, .cert-card, .cert-reel-card, .thm-profile-case, .timeline-item');
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-        });
-        
+        // --- INTERSECTION OBSERVER FOR DECRYPTION ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -993,7 +942,7 @@ F<!DOCTYPE html>
                     else { const child = entry.target.querySelector('.hyper-text'); if(child) triggerDecryption(child); }
                 }
             });
-        }, { threshold: 0.05 }); /* Lowered bounds to reduce background scroll recalculations */
+        }, { threshold: 0.05 });
         document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
 
         // --- MODAL ENGINE MANAGEMENT ---
