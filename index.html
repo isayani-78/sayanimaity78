@@ -385,7 +385,7 @@
         .project-card { background-color: transparent; perspective: 1000px; height: 380px; border: none; cursor: pointer; }
         .project-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); transform-style: preserve-3d; }
         
-        /* Mobile configuration triggers via JS injection below */
+        /* Configuration triggers via CSS hover & dynamic scroll-center triggers */
         .project-card:hover .project-card-inner,
         .project-card.mobile-flip .project-card-inner { transform: rotateY(180deg); }
         
@@ -949,24 +949,21 @@
         }, { threshold: 0.05 });
         document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
 
-        // --- MOBILE SCROLL-CENTER FLIP MECH FOR PROJECTS ---
-        const mobileFlipObserver = new IntersectionObserver((entries) => {
-            // Only trigger on actual touchscreen devices
-            if (window.matchMedia("(max-width: 768px)").matches) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('mobile-flip');
-                    } else {
-                        entry.target.classList.remove('mobile-flip');
-                    }
-                });
-            }
+        // --- MULTI-VIEWPORT SCROLL-CENTER FLIP MECH FOR PROJECTS (ALL DEVICES) ---
+        const scrollFlipObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('mobile-flip');
+                } else {
+                    entry.target.classList.remove('mobile-flip');
+                }
+            });
         }, {
-            // Targets center boundary viewports on target devices
+            // Targets center boundary viewports globally across Desktop, Tab, and Mobile views
             rootMargin: "-30% 0px -30% 0px",
             threshold: 0.4
         });
-        document.querySelectorAll('.project-card').forEach((card) => mobileFlipObserver.observe(card));
+        document.querySelectorAll('.project-card').forEach((card) => scrollFlipObserver.observe(card));
 
         // --- MODAL ENGINE MANAGEMENT ---
         function openCert(title, issuer, desc, imgUrl = null) {
