@@ -270,7 +270,8 @@
         }
 
         @media (hover: none) and (pointer: coarse) {
-            .spline-background-container { display: none !important; }
+            /* Background stays visible on touch devices; JS below downscales
+               internal render resolution instead of hiding the canvas. */
             body { background-color: #050505 !important; }
         }
         
@@ -530,6 +531,20 @@
 
         .hidden { opacity: 0; transform: translateY(20px); transition: 0.4s all ease-out; }
         .show { opacity: 1; transform: translateY(0); }
+
+        /* --- PERFORMANCE: pause continuous CSS animations while the tab is
+             hidden/backgrounded. Zero visual effect while the page is visible;
+             purely stops wasted GPU/CPU work when the user isn't looking. --- */
+        body.perf-paused,
+        body.perf-paused .forensic-scanline,
+        body.perf-paused .carousel-track,
+        body.perf-paused .cert-track,
+        body.perf-paused .thm-ring,
+        body.perf-paused .hero-avatar-ring,
+        body.perf-paused .glitch::before,
+        body.perf-paused .glitch::after {
+            animation-play-state: paused !important;
+        }
     </style>
 </head>
 <body>
@@ -1070,6 +1085,141 @@ if (contactForm) {
         }
     });
 }
+
+        // ================= PERFORMANCE: ADAPTIVE 3D BACKGROUND RENDERING =================
+        // Everything below only affects HOW the existing Spline scene is rendered
+        // (internal resolution / pause-when-hidden). It never changes the scene,
+        // camera, lighting, model, animation, colors, or CSS filter already applied.
+        (function () {
+            const splineContainer = document.querySelector('.spline-background-container');
+            const splineViewer = document.querySelector('spline-viewer');
+            if (!splineContainer || !splineViewer) return;
+
+            // ---- 1. Hardware capability detection ----
+            function detectDeviceTier() {
+                const isMobile = (matchMedia('(hover: none) and (pointer: coarse)').matches) ||
+                    /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+                const cores = navigator.hardwareConcurrency || 4;
+                const mem = navigator.deviceMemory || 4; // GB, not supported in all browsers
+                const netType = (navigator.connection && navigator.connection.effectiveType) || '4g';
+
+                // Heuristic tier from CPU/RAM/network signals
+                let heuristicTier = 'high';
+                if (isMobile) {
+                    if (cores <= 4 || mem <= 3 || netType === 'slow-2g' || netType === '2g') heuristicTier = 'low';
+                    else if (cores <= 6 || mem <= 4) heuristicTier = 'medium';
+                    else heuristicTier = 'medium'; // cap mobile at medium regardless of specs
+                } else {
+                    if (cores <= 2 || mem <= 2) heuristicTier = 'low';
+                    else if (cores <= 4 || mem <= 4) heuristicTier = 'medium';
+                    else heuristicTier = 'high';
+                }
+
+                // GPU renderer sniff via a throwaway WebGL context (best-effort; not
+                // available/accurate in every browser, so it only ever downgrades,
+                // never upgrades, the heuristic result above)
+                let gpuTier = 'high';
+                try {
+                    const testCanvas = document.createElement('canvas');
+                    const gl = testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl');
+                    if (!gl) {
+                        gpuTier = 'low';
+                    } else {
+                        const dbgInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                        const renderer = (dbgInfo ? gl.getParameter(dbgInfo.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER)) || '';
+                        const r = renderer.toLowerCase();
+                        if (/(intel).*(hd|uhd graphics [23456])/.test(r) || /mali-4|mali-t6|mali-t7|adreno (2|3)0/.test(r) || /powervr sgx/.test(r)) {
+                            gpuTier = 'low';
+                        } else if (/intel/.test(r) || /mali|adreno [45]/.test(r) || /powervr/.test(r)) {
+                            gpuTier = 'medium';
+                        } else {
+                            gpuTier = 'high';
+                        }
+                    }
+                } catch (e) {
+                    gpuTier = 'medium';
+                }
+
+                const order = { low: 0, medium: 1, high: 2 };
+                const finalTier = order[gpuTier] < order[heuristicTier] ? gpuTier : heuristicTier;
+
+                return { tier: finalTier, isMobile };
+            }
+
+            // ---- 2. Apply adaptive render-resolution scaling ----
+            // Renders the Spline canvas internally smaller, then CSS-scales it back
+            // up to fill the same visual space. This cuts the number of pixels the
+            // GPU has to shade every frame (the main lag source) without changing
+            // anything the user sees - filter, position, and size stay identical.
+            function applyRenderScale(scale) {
+                if (scale >= 1) {
+                    splineViewer.style.width = '100%';
+                    splineViewer.style.height = '100%';
+                    splineViewer.style.transform = '';
+                    splineViewer.style.transformOrigin = '';
+                    return;
+                }
+                const inv = (1 / scale).toFixed(4);
+                splineViewer.style.width = (scale * 100).toFixed(2) + '%';
+                splineViewer.style.height = (scale * 100).toFixed(2) + '%';
+                splineViewer.style.transformOrigin = 'top left';
+                splineViewer.style.transform = 'scale(' + inv + ')';
+            }
+
+            function initAdaptiveQuality() {
+                const { tier, isMobile } = detectDeviceTier();
+
+                let scale = 1;
+                if (isMobile) {
+                    scale = (tier === 'low') ? 0.55 : 0.72; // Optimized / Medium quality on mobile
+                } else {
+                    if (tier === 'low') scale = 0.6;        // Optimized Quality
+                    else if (tier === 'medium') scale = 0.8; // Medium Quality
+                    else scale = 1;                          // Full Quality
+                }
+
+                applyRenderScale(scale);
+
+                // Also cap devicePixelRatio-driven oversampling on lower tiers by
+                // clamping how much extra density the scale trick above preserves.
+                if (tier === 'low' && window.devicePixelRatio > 1.5) {
+                    applyRenderScale(Math.min(scale, 0.5));
+                }
+            }
+
+            // Run after the custom element has upgraded so sizing isn't fought.
+            if (window.customElements && customElements.whenDefined) {
+                customElements.whenDefined('spline-viewer').then(initAdaptiveQuality).catch(initAdaptiveQuality);
+            } else {
+                window.addEventListener('load', initAdaptiveQuality);
+            }
+            // Safety net in case whenDefined never resolves on some browsers
+            setTimeout(initAdaptiveQuality, 1500);
+
+            // ---- 3. Pause rendering work when tab hidden / window minimized ----
+            // Browsers already throttle rAF in hidden tabs, but we also explicitly
+            // pause the decorative CSS animations and drop the Spline canvas'
+            // pointer/compositing priority so nothing spins its wheels off-screen.
+            function handleVisibilityChange() {
+                if (document.hidden) {
+                    document.body.classList.add('perf-paused');
+                    splineContainer.style.visibility = 'hidden';
+                } else {
+                    document.body.classList.remove('perf-paused');
+                    splineContainer.style.visibility = 'visible';
+                }
+            }
+            document.addEventListener('visibilitychange', handleVisibilityChange, { passive: true });
+
+            // ---- 4. Re-evaluate quality tier on resize (debounced) in case of
+            //         device rotation or window resize crossing a breakpoint ----
+            let resizeTimeout = null;
+            window.addEventListener('resize', function () {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(initAdaptiveQuality, 400);
+            }, { passive: true });
+        })();
     </script>
 </body>
 </html>
