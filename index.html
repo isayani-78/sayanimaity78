@@ -885,7 +885,7 @@
                         <a href="https://discordapp.com/users/1178036036119560213" target="_blank" style="padding:6px 10px; background:#5865F2; border-radius:6px; text-decoration:none; color:#fff;">Discord</a>
                         <a href="https://t.me/isayani_78" target="_blank" style="padding:6px 10px; background:#0088cc; border-radius:6px; text-decoration:none; color:#fff;">Telegram</a>
                     </div>
-                    <form action="https://formspree.io/f/xnjbaapy" method="POST" style="display:flex; flex-direction:column; gap:15px; font-family: var(--font-mono);">
+                    <form id="contactForm" action="https://formspree.io/f/xnjbaapy" method="POST" style="display:flex; flex-direction:column; gap:15px; font-family: var(--font-mono);">
                         <div style="display:flex; gap:10px;">
                             <input type="text" name="name" placeholder="Your Name *" required style="flex:1; width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); color:#fff; background: rgba(5,5,5,0.5);">
                             <input type="email" name="email" placeholder="Your Email *" required style="flex:1; width:100%; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); color:#fff; background: rgba(5,5,5,0.5);">
@@ -992,6 +992,84 @@
                 if (link) { window.open(link, "_blank"); }
             });
         });
+        // ================= CONTACT FORM (FORMSPREE + DISCORD) =================
+
+const contactForm = document.getElementById("contactForm");
+
+if (contactForm) {
+    contactForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(contactForm);
+
+        try {
+
+            // Send to Formspree (Email Notification)
+            const formspreeRequest = fetch(contactForm.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
+
+            // Send to Discord
+            const discordRequest = fetch("https://discord.com/api/webhooks/1523305498173116526/Lz8f-iQiQNwfVDElq-YzbcHUvvJFftOOr6Z5tDzFAxcEHBJwcnZ1Fe25s5HFr8wnZId7", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    embeds: [
+                        {
+                            title: "Portfolio Contact Form",
+                            color: 65535,
+                            fields: [
+                                {
+                                    name: "👤 Name",
+                                    value: formData.get("name") || "N/A",
+                                    inline: true
+                                },
+                                {
+                                    name: "📧 Email",
+                                    value: formData.get("email") || "N/A",
+                                    inline: true
+                                },
+                                {
+                                    name: "📝 Subject",
+                                    value: formData.get("subject") || "N/A",
+                                    inline: false
+                                },
+                                {
+                                    name: "💬 Message",
+                                    value: formData.get("message") || "N/A",
+                                    inline: false
+                                }
+                            ],
+                            footer: {
+                                text: "Sayani's Portfolio"
+                            },
+                            timestamp: new Date().toISOString()
+                        }
+                    ]
+                })
+            });
+
+            await Promise.all([
+                formspreeRequest,
+                discordRequest
+            ]);
+
+            alert("✅ Message sent successfully!");
+
+            contactForm.reset();
+
+        } catch (error) {
+            console.error(error);
+            alert("❌ Failed to send message.");
+        }
+    });
+}
     </script>
 </body>
 </html>
