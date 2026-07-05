@@ -907,10 +907,9 @@
     </footer>
 
     <script>
-        // --- LIGHTWEIGHT 3D PARTICLE BACKGROUND (replaces the heavy Spline scene) ---
-        // Genuine 3D via three.js, but with a tiny point-cloud, no textures, capped
-        // pixel ratio, adaptive particle count, and full pause when off-screen/hidden
-        // so it stays smooth on low-end phones and laptops alike.
+        // --- DEEP TECHY 3D BACKGROUND: cursor-reactive data shards, network links, and a watery ripple grid ---
+        // Still lightweight: low shard count, low-segment ripple plane, capped pixel ratio,
+        // adaptive detail for mobile/touch, and a full render pause when off-screen or the tab is hidden.
         function initBG3D() {
             const canvas = document.getElementById('bg3d-canvas');
             if (!canvas || typeof THREE === 'undefined') { return; }
@@ -918,43 +917,103 @@
             const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const isSmall = window.innerWidth < 768;
             const isCoarse = window.matchMedia('(pointer: coarse)').matches;
-            const particleCount = reduceMotion ? 0 : (isSmall || isCoarse ? 260 : 850);
 
             const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 260;
+            scene.fog = new THREE.FogExp2(0x050505, 0.0022);
+
+            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1500);
+            camera.position.set(0, 40, 280);
 
             const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false, powerPreference: 'low-power' });
             renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isSmall ? 1.25 : 1.75));
             renderer.setSize(window.innerWidth, window.innerHeight, false);
 
-            let points = null;
-            if (particleCount > 0) {
-                const geometry = new THREE.BufferGeometry();
-                const positions = new Float32Array(particleCount * 3);
-                for (let i = 0; i < particleCount; i++) {
-                    positions[i * 3] = (Math.random() - 0.5) * 900;
-                    positions[i * 3 + 1] = (Math.random() - 0.5) * 900;
-                    positions[i * 3 + 2] = (Math.random() - 0.5) * 900;
+            // Accent palette pulled straight from the site's own theme colors
+            const palette = [0x00ffcc, 0xff00ff, 0xffb000, 0xff0000, 0x00aaff];
+
+            // --- Floating low-poly "data shard" cluster ---
+            const shardGroup = new THREE.Group();
+            const shardCount = reduceMotion ? 0 : (isSmall || isCoarse ? 5 : 8);
+            const shardData = [];
+
+            function makeShard(size, colorHex) {
+                const geo = new THREE.IcosahedronGeometry(size, 0).toNonIndexed();
+                const posAttr = geo.getAttribute('position');
+                const colors = [];
+                const c = new THREE.Color(colorHex);
+                for (let i = 0; i < posAttr.count; i += 3) {
+                    const shade = 0.65 + Math.random() * 0.55;
+                    for (let v = 0; v < 3; v++) colors.push(c.r * shade, c.g * shade, c.b * shade);
                 }
-                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
 
-                const material = new THREE.PointsMaterial({
-                    color: 0x00ffcc,
-                    size: isSmall ? 1.6 : 2,
-                    transparent: true,
-                    opacity: 0.5,
-                    sizeAttenuation: true
-                });
+                const mat = new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.45 });
+                const mesh = new THREE.Mesh(geo, mat);
 
-                points = new THREE.Points(geometry, material);
-                scene.add(points);
+                const edges = new THREE.EdgesGeometry(geo);
+                const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: colorHex, transparent: true, opacity: 0.4 }));
+                mesh.add(line);
+                return mesh;
+            }
+
+            for (let i = 0; i < shardCount; i++) {
+                const size = 12 + Math.random() * 24;
+                const color = palette[i % palette.length];
+                const shard = makeShard(size, color);
+                shard.position.set(
+                    (Math.random() - 0.5) * 440,
+                    (Math.random() - 0.5) * 260 + 30,
+                    (Math.random() - 0.5) * 300
+                );
+                shard.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+                shard.userData.spin = { x: (Math.random() - 0.5) * 0.004, y: (Math.random() - 0.5) * 0.006 };
+                shardGroup.add(shard);
+                shardData.push(shard);
+            }
+
+            // Thin "network" links between nearby shards for a data-connection feel (drawn once, cheap)
+            if (shardData.length > 1) {
+                const linkPositions = [];
+                for (let i = 0; i < shardData.length; i++) {
+                    for (let j = i + 1; j < shardData.length; j++) {
+                        const d = shardData[i].position.distanceTo(shardData[j].position);
+                        if (d < 230) {
+                            linkPositions.push(shardData[i].position.x, shardData[i].position.y, shardData[i].position.z);
+                            linkPositions.push(shardData[j].position.x, shardData[j].position.y, shardData[j].position.z);
+                        }
+                    }
+                }
+                if (linkPositions.length) {
+                    const linkGeo = new THREE.BufferGeometry();
+                    linkGeo.setAttribute('position', new THREE.Float32BufferAttribute(linkPositions, 3));
+                    const linkMat = new THREE.LineBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.12 });
+                    shardGroup.add(new THREE.LineSegments(linkGeo, linkMat));
+                }
+            }
+
+            scene.add(shardGroup);
+
+            // --- Lightweight cursor-reactive "watery" ripple grid floor ---
+            let waterPlane = null, waterPosAttr = null, waterBase = null;
+            if (!reduceMotion) {
+                const planeSeg = isSmall || isCoarse ? 20 : 30;
+                const planeGeo = new THREE.PlaneGeometry(900, 700, planeSeg, planeSeg);
+                planeGeo.rotateX(-Math.PI / 2);
+                waterPosAttr = planeGeo.getAttribute('position');
+                waterBase = Float32Array.from(waterPosAttr.array);
+                const planeMat = new THREE.MeshBasicMaterial({ color: 0x00ffcc, wireframe: true, transparent: true, opacity: 0.1 });
+                waterPlane = new THREE.Mesh(planeGeo, planeMat);
+                waterPlane.position.y = -150;
+                scene.add(waterPlane);
             }
 
             let mouseX = 0, mouseY = 0;
+            let targetRotX = 0, targetRotY = 0;
             window.addEventListener('pointermove', (e) => {
                 mouseX = (e.clientX / window.innerWidth - 0.5);
                 mouseY = (e.clientY / window.innerHeight - 0.5);
+                targetRotY = mouseX * 0.6;
+                targetRotX = mouseY * 0.35;
             }, { passive: true });
 
             let visible = true;
@@ -975,14 +1034,40 @@
                 }, 200);
             }, { passive: true });
 
+            let t = 0;
             function animate() {
                 requestAnimationFrame(animate);
-                if (!visible || !points) { return; }
-                points.rotation.y += 0.0006;
-                points.rotation.x += 0.0002;
-                camera.position.x += (mouseX * 40 - camera.position.x) * 0.03;
-                camera.position.y += (-mouseY * 40 - camera.position.y) * 0.03;
-                camera.lookAt(scene.position);
+                if (!visible) { return; }
+                t += 0.016;
+
+                // whole shard cluster tilts toward the cursor -> real 3D parallax
+                shardGroup.rotation.y += (targetRotY - shardGroup.rotation.y) * 0.04;
+                shardGroup.rotation.x += (targetRotX - shardGroup.rotation.x) * 0.04;
+                shardData.forEach((shard) => {
+                    shard.rotation.x += shard.userData.spin.x;
+                    shard.rotation.y += shard.userData.spin.y;
+                });
+
+                // ripple emanates from the cursor's projected position on the grid
+                if (waterPlane && waterPosAttr) {
+                    const mWorldX = mouseX * 450;
+                    const mWorldZ = mouseY * 350;
+                    const arr = waterPosAttr.array;
+                    for (let i = 0; i < arr.length; i += 3) {
+                        const x = waterBase[i];
+                        const z = waterBase[i + 2];
+                        const dx = x - mWorldX;
+                        const dz = z - mWorldZ;
+                        const dist = Math.sqrt(dx * dx + dz * dz);
+                        arr[i + 1] = Math.sin(dist * 0.045 - t * 2.4) * 14 * Math.exp(-dist * 0.008);
+                    }
+                    waterPosAttr.needsUpdate = true;
+                }
+
+                camera.position.x += (mouseX * 35 - camera.position.x) * 0.03;
+                camera.position.y += (40 - mouseY * 35 - camera.position.y) * 0.03;
+                camera.lookAt(0, 0, 0);
+
                 renderer.render(scene, camera);
             }
             animate();
