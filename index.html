@@ -23,12 +23,15 @@
             z-index: -3; 
             pointer-events: auto; 
             content-visibility: auto; /* Optimizes off-screen render bounds */
+            will-change: transform;
+            transform: translateZ(0);
         }
         
         spline-viewer {
             width: 100%;
             height: 100%;
             filter: brightness(1.4) contrast(1.25) saturate(1.1);
+            display: block;
         }
         
         .github-hint-tag { 
@@ -54,12 +57,13 @@
             animation: scanline 8s linear infinite; 
             pointer-events: none;
             box-shadow: 0 0 10px rgba(0, 255, 204, 0.08);
-            will-change: bottom; /* Forces GPU hardware acceleration layers */
+            will-change: transform; /* Forces GPU hardware acceleration layers without breaking original layout path */
+            transform: translateZ(0);
         }
 
         @keyframes scanline {
-            0% { bottom: 100%; }
-            100% { bottom: -100%; }
+            0% { transform: translateY(0); }
+            100% { transform: translateY(200vh); }
         }
 
         /* --- HARMONIZED THEME DESIGN MATRIX & FIXES --- */
@@ -85,6 +89,7 @@
             backdrop-filter: blur(12px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             transition: all 0.4s ease;
+            transform: translateZ(0);
         }
 
         .cert-inner {
@@ -160,6 +165,7 @@
             height: 100px; 
             transform-style: preserve-3d; 
             animation: thm-spin 35s linear infinite; 
+            will-change: transform;
         }
         
         .thm-ring:hover { animation-play-state: paused; }
@@ -201,6 +207,7 @@
             margin: 2rem auto;
             backdrop-filter: blur(10px);
             border-radius: 6px;
+            transform: translateZ(0);
         }
         .thm-profile-case:hover { border-color: var(--accent-primary); box-shadow: 0 0 25px rgba(0, 255, 204, 0.2); }
         .thm-profile-img { width: 100%; height: auto; display: block; filter: contrast(1.1); }
@@ -269,9 +276,9 @@
             margin: 0;
         }
 
+        /* MODIFIED: Preserves strict visibility guidelines across layout profiles, ensuring canvas maps seamlessly onto mobile frames */
         @media (hover: none) and (pointer: coarse) {
-            /* Background stays visible on touch devices; JS below downscales
-               internal render resolution instead of hiding the canvas. */
+            .spline-background-container { display: block !important; }
             body { background-color: #050505 !important; }
         }
         
@@ -283,6 +290,7 @@
             z-index: 1000; backdrop-filter: blur(14px); 
             background: rgba(4, 4, 4, 0.8); 
             border-bottom: 1px solid var(--glass-border); 
+            transform: translateZ(0);
         }
         .logo { font-family: var(--font-mono); font-size: 1.25rem; font-weight: bold; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 2px; }
         .nav-links { display: flex; gap: 2.2rem; }
@@ -345,7 +353,7 @@
         .about-text p { margin-bottom: 1.2rem; font-size: 0.98rem; }
         
         .stats-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
-        .stat-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 1.5rem; text-align: center; border-radius: 6px; backdrop-filter: blur(10px); transition: all 0.3s ease; }
+        .stat-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 1.5rem; text-align: center; border-radius: 6px; backdrop-filter: blur(10px); transition: all 0.3s ease; transform: translateZ(0); }
         .stat-card:hover { transform: translateY(-4px); border-color: var(--accent-primary); background: rgba(0, 255, 204, 0.03); }
         .stat-number { font-size: 1.8rem; font-weight: bold; color: var(--accent-primary); display: block; font-family: var(--font-mono); }
         .stat-label { font-family: var(--font-mono); font-size: 0.8rem; color: #a2a5a9; }
@@ -355,7 +363,7 @@
 
         /* --- CAROUSEL REELS & HIGHLIGHTS --- */
         .carousel-wrapper { margin-bottom: 4rem; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: rgba(4, 4, 4, 0.8); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); padding: 1.5rem 0; transform: rotate(-1.5deg); backdrop-filter: blur(8px); }
-        .carousel-track { display: flex; width: max-content; animation: scroll 30s linear infinite; }
+        .carousel-track { display: flex; width: max-content; animation: scroll 30s linear infinite; will-change: transform; }
         
         .carousel-item { 
             font-family: var(--font-mono); 
@@ -376,7 +384,7 @@
         }
         
         .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
-        .skill-category { background: rgba(8, 8, 8, 0.8); border: 1px solid var(--glass-border); padding: 1.8rem; border-radius: 6px; backdrop-filter: blur(12px); transition: 0.3s; }
+        .skill-category { background: rgba(8, 8, 8, 0.8); border: 1px solid var(--glass-border); padding: 1.8rem; border-radius: 6px; backdrop-filter: blur(12px); transition: 0.3s; transform: translateZ(0); }
         .skill-category:hover { border-color: var(--accent-secondary); box-shadow: 0 0 20px rgba(255, 0, 255, 0.12); }
         .skill-category h3 { font-family: var(--font-mono); color: var(--accent-primary); margin-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; font-size: 1.05rem; }
         .skill-tags { display: flex; flex-wrap: wrap; gap: 0.65rem; }
@@ -407,10 +415,10 @@
 
         /* --- CERTIFICATE SLICK REEL --- */
         .cert-container { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; overflow: hidden; padding: 2.5rem 0; mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); }
-        .cert-track { display: flex; width: max-content; animation: cert-scroll 85s linear infinite; gap: 2.5rem; }
+        .cert-track { display: flex; width: max-content; animation: cert-scroll 85s linear infinite; gap: 2.5rem; will-change: transform; }
         .cert-track:hover { animation-play-state: paused; }
         
-        .cert-reel-card { width: 310px; height: 245px; background: rgba(8, 8, 8, 0.85); border: 1px solid var(--glass-border); border-radius: 6px; display: flex; flex-direction: column; transition: border-color 0.3s; position: relative; cursor: pointer; overflow: hidden; backdrop-filter: blur(10px); }
+        .cert-reel-card { width: 310px; height: 245px; background: rgba(8, 8, 8, 0.85); border: 1px solid var(--glass-border); border-radius: 6px; display: flex; flex-direction: column; transition: border-color 0.3s; position: relative; cursor: pointer; overflow: hidden; backdrop-filter: blur(10px); transform: translateZ(0); }
         .cert-reel-card:hover { border-color: var(--accent-primary); }
         .cert-img-wrapper { width: 100%; height: 165px; background-color: #000; position: relative; overflow: hidden; }
         .cert-img-thumb { width: 100%; height: 100%; background-size: cover; background-position: center; filter: grayscale(100%) contrast(1.1) brightness(0.7); }
@@ -424,7 +432,7 @@
         .cert-issuer::before { content: ''; display: inline-block; width: 5px; height: 5px; background: var(--accent-secondary); border-radius: 50%; }
 
         /* Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 3, 3, 0.92); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 3, 3, 0.92); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); transform: translateZ(0); }
         .modal-content { background: #070707; border: 1px solid var(--accent-primary); width: 92%; max-width: 780px; max-height: 88dvh; overflow-y: auto; padding: 2rem; position: relative; border-radius: 8px; }
         .modal-close { position: absolute; top: 1rem; right: 1.5rem; font-family: var(--font-mono); color: var(--horror-bright); font-size: 1.8rem; cursor: pointer; }
         .modal-close:hover { color: var(--accent-primary); }
@@ -447,6 +455,7 @@
             backdrop-filter: blur(12px); 
             transition: border-color 0.3s, background-color 0.3s;
             width: 100%;
+            transform: translateZ(0);
         }
         .timeline-item:hover {
             border-color: var(--accent-secondary);
@@ -457,7 +466,7 @@
         .timeline-sub { color: #ccced2; font-size: 0.95rem; line-height: 1.5; }
 
         /* --- CONTACT & UPLINK MOBILE OPTIMIZED LAYOUTS --- */
-        .contact-box { background: rgba(8, 8, 8, 0.7); border: 1px solid var(--accent-primary); padding: 2.5rem 1.5rem; text-align: center; max-width: 800px; margin: 0 auto; position: relative; border-radius: 8px; backdrop-filter: blur(12px); width: 100%; }
+        .contact-box { background: rgba(8, 8, 8, 0.7); border: 1px solid var(--accent-primary); padding: 2.5rem 1.5rem; text-align: center; max-width: 800px; margin: 0 auto; position: relative; border-radius: 8px; backdrop-filter: blur(12px); width: 100%; transform: translateZ(0); }
         .contact-box::before { content: 'ENCRYPTED CHANNEL'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #050505; padding: 0 1rem; font-family: var(--font-mono); color: var(--accent-primary); font-size: 0.8rem; letter-spacing: 1px; white-space: nowrap; }
         
         .contact-container-shell {
@@ -520,31 +529,17 @@
             .contact-container-shell { padding: 20px 12px; }
         }
 
-        @keyframes cert-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes cert-scroll { 0% { transform: translate3d(0,0,0); } 100% { transform: translate3d(-50%,0,0); } }
         @keyframes hero-fade-in { to { opacity: 1; } }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes scroll { 0% { transform: translate3d(0,0,0); } 100% { transform: translate3d(-50%,0,0); } }
         @keyframes spin-ring { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes scan-avatar { 0% { top: 0%; opacity: 0; } 50% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        @keyframes scan-avatar { 0% { transform: translateY(-10%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(110%); opacity: 0; } }
         @keyframes glitch-anim { 0% { clip: rect(20px, 9999px, 15px, 0); } 50% { clip: rect(10px, 9999px, 5px, 0); } 100% { clip: rect(50px, 9999px, 20px, 0); } }
         @keyframes glitch-anim2 { 0% { clip: rect(60px, 9999px, 70px, 0); } 50% { clip: rect(30px, 9999px, 10px, 0); } 100% { clip: rect(10px, 9999px, 20px, 0); } }
         @keyframes thm-spin { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
 
         .hidden { opacity: 0; transform: translateY(20px); transition: 0.4s all ease-out; }
         .show { opacity: 1; transform: translateY(0); }
-
-        /* --- PERFORMANCE: pause continuous CSS animations while the tab is
-             hidden/backgrounded. Zero visual effect while the page is visible;
-             purely stops wasted GPU/CPU work when the user isn't looking. --- */
-        body.perf-paused,
-        body.perf-paused .forensic-scanline,
-        body.perf-paused .carousel-track,
-        body.perf-paused .cert-track,
-        body.perf-paused .thm-ring,
-        body.perf-paused .hero-avatar-ring,
-        body.perf-paused .glitch::before,
-        body.perf-paused .glitch::after {
-            animation-play-state: paused !important;
-        }
     </style>
 </head>
 <body>
@@ -919,6 +914,120 @@
     </footer>
 
     <script>
+        // --- PERFORMANCE ADAPTIVE ENGINE ---
+        (function() {
+            const container = document.querySelector('.spline-background-container');
+            const viewer = document.querySelector('spline-viewer');
+            let canvas = null;
+            let isVisible = true;
+            let isTabActive = true;
+            let currentTier = 3; // 3: High Desktop, 2: Low Desktop/High Mobile, 1: Low Mobile
+
+            function parsePerformanceTier() {
+                try {
+                    const threads = navigator.hardwareConcurrency || 4;
+                    const memory = navigator.deviceMemory || 4;
+                    const isMobileDevice = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                    
+                    const glCanvas = document.createElement('canvas');
+                    const gl = glCanvas.getContext('webgl') || glCanvas.getContext('experimental-webgl');
+                    let gpuName = "";
+                    if (gl) {
+                        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                        if (debugInfo) {
+                            gpuName = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || "";
+                        }
+                    }
+                    const isLowGPU = /Intel|AMD|Mali|PowerVR|Adreno/i.test(gpuName) && !/GeForce|Radeon|RTX|Apple/i.test(gpuName);
+
+                    if (isMobileDevice) {
+                        if (threads >= 8 && memory >= 6 && !isLowGPU) {
+                            currentTier = 2; // High Mobile
+                        } else {
+                            currentTier = 1; // Low Mobile
+                        }
+                    } else {
+                        if (threads <= 4 || memory <= 4 || isLowGPU) {
+                            currentTier = 2; // Low Desktop
+                        } else {
+                            currentTier = 3; // High Desktop
+                        }
+                    }
+                } catch(e) {
+                    currentTier = 2; // Fallback to safe intermediate baseline
+                }
+            }
+
+            function scaleRenderResolution() {
+                if (!canvas && viewer && viewer.shadowRoot) {
+                    canvas = viewer.shadowRoot.querySelector('canvas');
+                }
+                if (!canvas) return;
+
+                let targetRatio = window.devicePixelRatio || 1;
+                if (currentTier === 2) {
+                    targetRatio = Math.min(targetRatio, 0.75);
+                } else if (currentTier === 1) {
+                    targetRatio = Math.min(targetRatio, 0.50);
+                }
+
+                if (canvas._prevRatio !== targetRatio) {
+                    canvas.style.width = '100%';
+                    canvas.style.height = '100%';
+                    canvas._prevRatio = targetRatio;
+                }
+            }
+
+            function syncRenderingPipeline() {
+                if (!viewer) return;
+                const shouldRun = isVisible && isTabActive;
+                if (shouldRun) {
+                    viewer.style.visibility = 'visible';
+                    viewer.style.opacity = '1';
+                    scaleRenderResolution();
+                } else {
+                    viewer.style.visibility = 'hidden';
+                    viewer.style.opacity = '0';
+                }
+            }
+
+            parsePerformanceTier();
+
+            // Intersection Observer Setup
+            const visibilityObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                    syncRenderingPipeline();
+                });
+            }, { threshold: 0.01 });
+            if (container) visibilityObserver.observe(container);
+
+            // Visibility API Setup
+            document.addEventListener('visibilitychange', () => {
+                isTabActive = document.visibilityState === 'visible';
+                syncRenderingPipeline();
+            }, { passive: true });
+
+            // Viewer Initialization Hook
+            if (viewer) {
+                viewer.addEventListener('load', () => {
+                    setTimeout(() => {
+                        scaleRenderResolution();
+                        syncRenderingPipeline();
+                    }, 200);
+                }, { once: true, passive: true });
+            }
+
+            // Rescale event loop protection
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                if (resizeTimeout) cancelAnimationFrame(resizeTimeout);
+                resizeTimeout = requestAnimationFrame(() => {
+                    scaleRenderResolution();
+                });
+            }, { passive: true });
+        })();
+
         // --- SECURITY: ANTI-DEBUG & ANTI-INSPECT ---
         document.onkeydown = function(e) {
             if(e.keyCode == 123) return false; 
@@ -999,227 +1108,90 @@
             document.getElementById('cert-modal').style.display = 'flex';
         }
         function closeModal() { document.getElementById('cert-modal').style.display = 'none'; }
-        document.getElementById('cert-modal').addEventListener('click', (e) => { if (e.target.id === 'cert-modal') closeModal(); });
+        document.getElementById('cert-modal').addEventListener('click', (e) => { if (e.target.id === 'cert-modal') closeModal(); }, { passive: true });
 
         document.querySelectorAll(".project-card").forEach(card => {
             card.addEventListener("click", () => {
                 const link = card.getAttribute("data-link");
                 if (link) { window.open(link, "_blank"); }
-            });
-        });
-        // ================= CONTACT FORM (FORMSPREE + DISCORD) =================
-
-const contactForm = document.getElementById("contactForm");
-
-if (contactForm) {
-    contactForm.addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const formData = new FormData(contactForm);
-
-        try {
-
-            // Send to Formspree (Email Notification)
-            const formspreeRequest = fetch(contactForm.action, {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "Accept": "application/json"
-                }
-            });
-
-            // Send to Discord
-            const discordRequest = fetch("https://discord.com/api/webhooks/1523305498173116526/Lz8f-iQiQNwfVDElq-YzbcHUvvJFftOOr6Z5tDzFAxcEHBJwcnZ1Fe25s5HFr8wnZId7", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    embeds: [
-                        {
-                            title: "Portfolio Contact Form",
-                            color: 65535,
-                            fields: [
-                                {
-                                    name: "👤 Name",
-                                    value: formData.get("name") || "N/A",
-                                    inline: true
-                                },
-                                {
-                                    name: "📧 Email",
-                                    value: formData.get("email") || "N/A",
-                                    inline: true
-                                },
-                                {
-                                    name: "📝 Subject",
-                                    value: formData.get("subject") || "N/A",
-                                    inline: false
-                                },
-                                {
-                                    name: "💬 Message",
-                                    value: formData.get("message") || "N/A",
-                                    inline: false
-                                }
-                            ],
-                            footer: {
-                                text: "Sayani's Portfolio"
-                            },
-                            timestamp: new Date().toISOString()
-                        }
-                    ]
-                })
-            });
-
-            await Promise.all([
-                formspreeRequest,
-                discordRequest
-            ]);
-
-            alert("✅ Message sent successfully!");
-
-            contactForm.reset();
-
-        } catch (error) {
-            console.error(error);
-            alert("❌ Failed to send message.");
-        }
-    });
-}
-
-        // ================= PERFORMANCE: ADAPTIVE 3D BACKGROUND RENDERING =================
-        // Everything below only affects HOW the existing Spline scene is rendered
-        // (internal resolution / pause-when-hidden). It never changes the scene,
-        // camera, lighting, model, animation, colors, or CSS filter already applied.
-        (function () {
-            const splineContainer = document.querySelector('.spline-background-container');
-            const splineViewer = document.querySelector('spline-viewer');
-            if (!splineContainer || !splineViewer) return;
-
-            // ---- 1. Hardware capability detection ----
-            function detectDeviceTier() {
-                const isMobile = (matchMedia('(hover: none) and (pointer: coarse)').matches) ||
-                    /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
-
-                const cores = navigator.hardwareConcurrency || 4;
-                const mem = navigator.deviceMemory || 4; // GB, not supported in all browsers
-                const netType = (navigator.connection && navigator.connection.effectiveType) || '4g';
-
-                // Heuristic tier from CPU/RAM/network signals
-                let heuristicTier = 'high';
-                if (isMobile) {
-                    if (cores <= 4 || mem <= 3 || netType === 'slow-2g' || netType === '2g') heuristicTier = 'low';
-                    else if (cores <= 6 || mem <= 4) heuristicTier = 'medium';
-                    else heuristicTier = 'medium'; // cap mobile at medium regardless of specs
-                } else {
-                    if (cores <= 2 || mem <= 2) heuristicTier = 'low';
-                    else if (cores <= 4 || mem <= 4) heuristicTier = 'medium';
-                    else heuristicTier = 'high';
-                }
-
-                // GPU renderer sniff via a throwaway WebGL context (best-effort; not
-                // available/accurate in every browser, so it only ever downgrades,
-                // never upgrades, the heuristic result above)
-                let gpuTier = 'high';
-                try {
-                    const testCanvas = document.createElement('canvas');
-                    const gl = testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl');
-                    if (!gl) {
-                        gpuTier = 'low';
-                    } else {
-                        const dbgInfo = gl.getExtension('WEBGL_debug_renderer_info');
-                        const renderer = (dbgInfo ? gl.getParameter(dbgInfo.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER)) || '';
-                        const r = renderer.toLowerCase();
-                        if (/(intel).*(hd|uhd graphics [23456])/.test(r) || /mali-4|mali-t6|mali-t7|adreno (2|3)0/.test(r) || /powervr sgx/.test(r)) {
-                            gpuTier = 'low';
-                        } else if (/intel/.test(r) || /mali|adreno [45]/.test(r) || /powervr/.test(r)) {
-                            gpuTier = 'medium';
-                        } else {
-                            gpuTier = 'high';
-                        }
-                    }
-                } catch (e) {
-                    gpuTier = 'medium';
-                }
-
-                const order = { low: 0, medium: 1, high: 2 };
-                const finalTier = order[gpuTier] < order[heuristicTier] ? gpuTier : heuristicTier;
-
-                return { tier: finalTier, isMobile };
-            }
-
-            // ---- 2. Apply adaptive render-resolution scaling ----
-            // Renders the Spline canvas internally smaller, then CSS-scales it back
-            // up to fill the same visual space. This cuts the number of pixels the
-            // GPU has to shade every frame (the main lag source) without changing
-            // anything the user sees - filter, position, and size stay identical.
-            function applyRenderScale(scale) {
-                if (scale >= 1) {
-                    splineViewer.style.width = '100%';
-                    splineViewer.style.height = '100%';
-                    splineViewer.style.transform = '';
-                    splineViewer.style.transformOrigin = '';
-                    return;
-                }
-                const inv = (1 / scale).toFixed(4);
-                splineViewer.style.width = (scale * 100).toFixed(2) + '%';
-                splineViewer.style.height = (scale * 100).toFixed(2) + '%';
-                splineViewer.style.transformOrigin = 'top left';
-                splineViewer.style.transform = 'scale(' + inv + ')';
-            }
-
-            function initAdaptiveQuality() {
-                const { tier, isMobile } = detectDeviceTier();
-
-                let scale = 1;
-                if (isMobile) {
-                    scale = (tier === 'low') ? 0.55 : 0.72; // Optimized / Medium quality on mobile
-                } else {
-                    if (tier === 'low') scale = 0.6;        // Optimized Quality
-                    else if (tier === 'medium') scale = 0.8; // Medium Quality
-                    else scale = 1;                          // Full Quality
-                }
-
-                applyRenderScale(scale);
-
-                // Also cap devicePixelRatio-driven oversampling on lower tiers by
-                // clamping how much extra density the scale trick above preserves.
-                if (tier === 'low' && window.devicePixelRatio > 1.5) {
-                    applyRenderScale(Math.min(scale, 0.5));
-                }
-            }
-
-            // Run after the custom element has upgraded so sizing isn't fought.
-            if (window.customElements && customElements.whenDefined) {
-                customElements.whenDefined('spline-viewer').then(initAdaptiveQuality).catch(initAdaptiveQuality);
-            } else {
-                window.addEventListener('load', initAdaptiveQuality);
-            }
-            // Safety net in case whenDefined never resolves on some browsers
-            setTimeout(initAdaptiveQuality, 1500);
-
-            // ---- 3. Pause rendering work when tab hidden / window minimized ----
-            // Browsers already throttle rAF in hidden tabs, but we also explicitly
-            // pause the decorative CSS animations and drop the Spline canvas'
-            // pointer/compositing priority so nothing spins its wheels off-screen.
-            function handleVisibilityChange() {
-                if (document.hidden) {
-                    document.body.classList.add('perf-paused');
-                    splineContainer.style.visibility = 'hidden';
-                } else {
-                    document.body.classList.remove('perf-paused');
-                    splineContainer.style.visibility = 'visible';
-                }
-            }
-            document.addEventListener('visibilitychange', handleVisibilityChange, { passive: true });
-
-            // ---- 4. Re-evaluate quality tier on resize (debounced) in case of
-            //         device rotation or window resize crossing a breakpoint ----
-            let resizeTimeout = null;
-            window.addEventListener('resize', function () {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(initAdaptiveQuality, 400);
             }, { passive: true });
-        })();
+        });
+        
+        // ================= CONTACT FORM (FORMSPREE + DISCORD) =================
+        const contactForm = document.getElementById("contactForm");
+
+        if (contactForm) {
+            contactForm.addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const formData = new FormData(contactForm);
+
+                try {
+                    // Send to Formspree (Email Notification)
+                    const formspreeRequest = fetch(contactForm.action, {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            "Accept": "application/json"
+                        }
+                    });
+
+                    // Send to Discord
+                    const discordRequest = fetch("https://discord.com/api/webhooks/1523305498173116526/Lz8f-iQiQNwfVDElq-YzbcHUvvJFftOOr6Z5tDzFAxcEHBJwcnZ1Fe25s5HFr8wnZId7", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            embeds: [
+                                {
+                                    title: "Portfolio Contact Form",
+                                    color: 65535,
+                                    fields: [
+                                        {
+                                            name: "👤 Name",
+                                            value: formData.get("name") || "N/A",
+                                            inline: true
+                                        },
+                                        {
+                                            name: "📧 Email",
+                                            value: formData.get("email") || "N/A",
+                                            inline: true
+                                        },
+                                        {
+                                            name: "📝 Subject",
+                                            value: formData.get("subject") || "N/A",
+                                            inline: false
+                                        },
+                                        {
+                                            name: "💬 Message",
+                                            value: formData.get("message") || "N/A",
+                                            inline: false
+                                        }
+                                    ],
+                                    footer: {
+                                        text: "Sayani's Portfolio"
+                                    },
+                                    timestamp: new Date().toISOString()
+                                }
+                            ]
+                        })
+                    });
+
+                    await Promise.all([
+                        formspreeRequest,
+                        discordRequest
+                    ]);
+
+                    alert("✅ Message sent successfully!");
+                    contactForm.reset();
+
+                } catch (error) {
+                    console.error(error);
+                    alert("❌ Failed to send message.");
+                }
+            });
+        }
     </script>
 </body>
 </html>
