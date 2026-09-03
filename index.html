@@ -376,22 +376,26 @@
         .carousel-track { display: flex; width: max-content; animation: scroll 30s linear infinite; }
         
         .carousel-item { 
-            font-family: var(--font-mono); 
-            font-size: 1.8rem; 
-            font-weight: bold; 
-            color: var(--text-color); 
-            margin: 0 2.2rem; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            opacity: 0.6; 
-            padding: 2px 12px;
-            border-radius: 4px;
-            transition: color 0.2s, opacity 0.2s;
-        }
-        .carousel-item:hover {
-            color: var(--accent-primary);
-            opacity: 1;
-        }
+    font-family: var(--font-mono); 
+    font-size: 1.8rem; 
+    font-weight: bold; 
+    color: var(--accent-primary); 
+    margin: 0 2.2rem; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    opacity: 1; 
+    padding: 4px 14px;
+    border: 1px solid var(--accent-secondary);
+    border-radius: 4px;
+    background: rgba(255, 0, 255, 0.06);
+    box-shadow: 0 0 12px rgba(255, 0, 255, 0.15);
+    transition: color 0.2s, opacity 0.2s, box-shadow 0.2s;
+}
+       .carousel-item:hover {
+    color: var(--accent-secondary);
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+}
         
         .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
         .skill-category { background: rgba(8, 8, 8, 0.8); border: 1px solid var(--glass-border); padding: 1.8rem; border-radius: 6px; backdrop-filter: blur(12px); transition: 0.3s; }
@@ -456,16 +460,18 @@
 
         /* --- BOXED TIMELINE STRUCTURE PANELS --- */
         .timeline { position: relative; margin-left: 0; display: flex; flex-direction: column; gap: 1.6rem; width: 100%; }
-        .timeline-item { 
-            position: relative; 
-            background: rgba(10, 10, 10, 0.72); 
-            border: 1px solid var(--glass-border); 
-            padding: 1.6rem; 
-            border-radius: 8px; 
-            backdrop-filter: blur(12px); 
-            transition: border-color 0.3s, background-color 0.3s;
-            width: 100%;
-        }
+       .timeline-item {
+    position: relative;
+    padding: 1.8rem 2rem;
+    margin-bottom: 2rem;
+    background: rgba(8, 8, 8, 0.8);
+    border: 1px solid var(--accent-secondary);
+    border-left: 3px solid var(--accent-secondary);
+    border-radius: 8px;
+    box-shadow: 0 0 18px rgba(255, 0, 255, 0.12);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
         .timeline-item:hover {
             border-color: var(--accent-secondary);
             background: rgba(255, 0, 255, 0.02);
