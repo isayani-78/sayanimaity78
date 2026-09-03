@@ -64,16 +64,18 @@
         }
 
         /* --- HARMONIZED THEME DESIGN MATRIX & FIXES --- */
-        .cert-display-case {
-            display: flex;
-            justify-content: center;
-            padding: 20px 0;
-            perspective: 1000px;
-            width: 100%;
-            max-width: 440px; 
-            margin: 0 auto 3rem auto;
-        }
-
+    .cert-display-case {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    perspective: 1000px;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 3rem auto;
+}
         .cert-card {
             width: 100%; 
             height: 300px; 
@@ -482,10 +484,11 @@
             .about-text { padding: 1.5rem; }
             .stats-container { grid-template-columns: 1fr; gap: 1rem; width: 100%; }
             
-            .cert-display-case { 
-                width: 90%; 
-                max-width: 340px; 
-                margin: 0 auto 2.5rem auto; 
+            .cert-display-case {
+                width: 90%;
+                max-width: 700px;
+                margin: 0 auto 2.5rem auto;
+                grid-template-columns: 1fr;
             }
             .cert-card { 
                 height: 240px; 
@@ -609,17 +612,43 @@
         </p>
 
         <div class="cert-display-case">
-            <div class="cert-card">
-                <div class="cert-inner">
-                    <div class="cert-front">
-                        <div class="cert-label">(CEH) v13ai</div>
-                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg" alt="CEH Certificate">
-                    </div>
-                    <div class="cert-back">
-                        <div class="cert-label">EXAM TRANSCRIPT</div>
-                        <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg" alt="Exam Transcript">
-                    </div>
-                </div>
+
+    <!-- CEH CARD - LEFT -->
+    <div class="cert-card">
+        <div class="cert-inner">
+
+            <div class="cert-front">
+                <div class="cert-label">(CEH) v13ai</div>
+                <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg" alt="CEH Certificate">
+            </div>
+
+            <div class="cert-back">
+                <div class="cert-label">EXAM TRANSCRIPT</div>
+                <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg" alt="CEH Exam Transcript">
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- CHFI CARD - RIGHT -->
+    <div class="cert-card">
+        <div class="cert-inner">
+
+            <div class="cert-front">
+                <div class="cert-label">CHFI v11</div>
+                <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CHFI%20Certificate.jpg" alt="CHFI Certificate">
+            </div>
+
+            <div class="cert-back">
+                <div class="cert-label">EXAM TRANSCRIPT</div>
+                <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CHFI%20ExamTranscript.jpg" alt="CHFI Exam Transcript">
+            </div>
+
+        </div>
+    </div>
+
+</div>
             </div>
         </div>
         
