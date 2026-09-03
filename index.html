@@ -351,7 +351,16 @@
         .about-text p { margin-bottom: 1.2rem; font-size: 0.98rem; }
         
         .stats-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; align-items: start; }
-        .stat-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 1.5rem; text-align: center; border-radius: 6px; backdrop-filter: blur(10px); transition: all 0.3s ease; }
+       .stat-card {
+    background: var(--glass);
+    border: 1px solid var(--accent-primary);
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: 6px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(0, 255, 213, 0.12);
+    transition: all 0.3s ease;
+}
         .stat-card:hover { transform: translateY(-4px); border-color: var(--accent-primary); background: rgba(0, 255, 204, 0.03); }
         .stat-number { font-size: 1.8rem; font-weight: bold; color: var(--accent-primary); display: block; font-family: var(--font-mono); }
         .stat-label { font-family: var(--font-mono); font-size: 0.8rem; color: #a2a5a9; }
