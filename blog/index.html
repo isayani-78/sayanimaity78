@@ -1,1 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Sayani Maity // BLOG</title>
+
+    <style>
+        :root {
+            --bg: #050505;
+            --text: #b0b3b8;
+            --primary: #00ffcc;
+            --secondary: #ff00ff;
+            --glass: rgba(10, 10, 10, 0.82);
+            --border: rgba(255, 255, 255, 0.08);
+            --mono: 'Courier New', Courier, monospace;
+            --sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(rgba(0,255,204,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,204,0.025) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            padding: 1.2rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 5, 0.92);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            color: var(--primary);
+            font-family: var(--mono);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .back-btn {
+            font-family: var(--mono);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+            padding: 7px 14px;
+            border-radius: 4px;
+            transition: 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0,255,204,0.2);
+        }
+
+        /* HEADER */
+
+        .blog-header {
+            text-align: center;
+            padding: 6rem 1.5rem 4rem;
+        }
+
+        .terminal-line {
+            font-family: var(--mono);
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-header h1 {
+            font-family: var(--mono);
+            color: var(--primary);
+            font-size: clamp(2.2rem, 6vw, 4.5rem);
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .blog-header p {
+            max-width: 700px;
+            margin: auto;
+            color: #8d9298;
+            font-family: var(--mono);
+        }
+
+        /* BLOG GRID */
+
+        .blog-container {
+            width: min(1150px, 90%);
+            margin: 0 auto 6rem;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 8px;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            transition: 0.35s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--secondary);
+            box-shadow: 0 0 25px rgba(255,0,255,0.12);
+        }
+
+        /* BLOG IMAGE */
+
+        .blog-image-wrapper {
+            width: 100%;
+            height: 230px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-image {
+            transform: scale(1.05);
+        }
+
+        /* BLOG CONTENT */
+
+        .blog-content {
+            padding: 1.6rem;
+        }
+
+        .blog-date {
+            font-family: var(--mono);
+            color: #72767d;
+            font-size: 0.75rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .blog-title {
+            color: #fff;
+            font-size: 1.35rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .blog-description {
+            color: #a7abb0;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .blog-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.3rem;
+        }
+
+        .blog-tag {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--primary);
+            border: 1px solid rgba(0,255,204,0.35);
+            padding: 4px 8px;
+            border-radius: 3px;
+            background: rgba(0,255,204,0.04);
+        }
+
+        .read-btn {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            padding: 9px;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: #fff;
+            border: 1px solid var(--secondary);
+            border-radius: 4px;
+            transition: 0.3s ease;
+        }
+
+        .read-btn:hover {
+            color: var(--secondary);
+            background: rgba(255,0,255,0.06);
+            box-shadow: 0 0 15px rgba(255,0,255,0.15);
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 1rem 1.2rem;
+            }
+
+            .blog-header {
+                padding: 4rem 1.2rem 3rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-image-wrapper {
+                height: 210px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">&lt;whoami /&gt; sayani // BLOG</div>
+
+        <a href="../" class="back-btn">← BACK TO PROFILE</a>
+    </nav>
+
+
+    <header class="blog-header">
+
+        <div class="terminal-line">
+            &gt;_ ACCESSING SAYANI'S KNOWLEDGE BASE...
+        </div>
+
+        <h1>BLOG // ARCHIVES</h1>
+
+        <p>
+            Technical write-ups, cybersecurity research, digital forensics,
+            penetration testing, investigations, labs and security experiments.
+        </p>
+
+    </header>
+
+
+    <main class="blog-container">
+
+        <div class="blog-grid">
+
+
+            <!-- BLOG POST 01 -->
+
+            <article class="blog-card">
+
+                <div class="blog-image-wrapper">
+
+                    <!-- PUT BLOG COVER IMAGE HERE -->
+
+                    <img
+                        src="assets/images/blog-placeholder.jpg"
+                        alt="Blog Cover"
+                        class="blog-image"
+                    >
+
+                </div>
+
+                <div class="blog-content">
+
+                    <div class="blog-date">
+                        [ DATE: COMING SOON ]
+                    </div>
+
+                    <h2 class="blog-title">
+                        Snort 3 IDS & IPS Lab
+                    </h2>
+
+                    <p class="blog-description">
+                        Building a practical network security lab using
+                        Snort 3, CentOS Firewall, Kali Linux and Metasploitable 2.
+                    </p>
+
+                    <div class="blog-tags">
+                        <span class="blog-tag">SNORT 3</span>
+                        <span class="blog-tag">IDS</span>
+                        <span class="blog-tag">IPS</span>
+                        <span class="blog-tag">NETWORK SECURITY</span>
+                    </div>
+
+                    <!-- LATER THIS WILL OPEN THE ARTICLE -->
+
+                    <a href="snort-3-ids-ips.html" class="read-btn">
+                        READ ARTICLE →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- BLOG POST 02 -->
+
+            <article class="blog-card">
+
+                <div class="blog-image-wrapper">
+
+                    <img
+                        src="assets/images/blog-placeholder.jpg"
+                        alt="Digital Forensics"
+                        class="blog-image"
+                    >
+
+                </div>
+
+                <div class="blog-content">
+
+                    <div class="blog-date">
+                        [ DATE: COMING SOON ]
+                    </div>
+
+                    <h2 class="blog-title">
+                        Digital Forensics Investigation
+                    </h2>
+
+                    <p class="blog-description">
+                        Practical concepts, evidence acquisition,
+                        forensic analysis and investigation workflows.
+                    </p>
+
+                    <div class="blog-tags">
+                        <span class="blog-tag">DIGITAL FORENSICS</span>
+                        <span class="blog-tag">EVIDENCE</span>
+                        <span class="blog-tag">INVESTIGATION</span>
+                    </div>
+
+                    <a href="#" class="read-btn">
+                        READ ARTICLE →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </main>
+
+
+    <footer>
+        &gt;_ Investigating. Exploiting. Securing. // SAYANI MAITY
+    </footer>
+
+</body>
+</html>
