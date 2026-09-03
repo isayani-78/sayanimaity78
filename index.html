@@ -338,7 +338,16 @@
         .section-title::after { content: ''; position: absolute; bottom: 4px; right: -15px; width: 45px; height: 4px; background: var(--accent-secondary); }
         
         .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center; }
-        .about-text { background: rgba(10, 10, 10, 0.7); padding: 2rem; border-radius: 8px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); color: #e1e3e6; }
+       .about-text {
+    background: rgba(10, 10, 10, 0.7);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 0 15px rgba(0, 255, 213, 0.15);
+    backdrop-filter: blur(10px);
+    color: #e1e3e6;
+    position: relative;
+}
         .about-text p { margin-bottom: 1.2rem; font-size: 0.98rem; }
         
         .stats-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; align-items: start; }
@@ -653,22 +662,30 @@
         </div>
         
         <div class="about-grid">
-            <div class="about-text">
-                <p> <strong>Identity:</strong> Sayani Maity<br>
-                  <strong>Role:</strong> B.Sc. Digital Forensics Student<br>
-                </p>
+          <div class="about-text">
+    <p><strong>Identity:</strong> Sayani Maity<br>
+       <strong>Role:</strong> B.Sc. Digital Forensics Student</p>
 
-                <p>I am <strong>Sayani Maity</strong>, currently pursuing a <strong>B.Sc. in Digital Forensics (2023–2026)</strong> at <strong>Indian School of Ethical Hacking (ISOEH), Kolkata,</strong> under <strong>Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India</strong>.</p>
-                <p>As a <strong>(CEH) v13 AI Certified professional</strong>, I specialize in bridging the gap between theoretical security and real-world defense.</p>
-                <p>I specialize in <strong>Digital Forensics, Penetration Testing, OSINT, and cybersecurity tooling</strong>.</p>
-                <p>Exploring <strong>AI-Driven Security</strong> to strengthen threat detection, analysis, and cyber resilience.</p>
-                <p>My expertise lies in <strong>Penetration Testing (WAPT/VAPT), OSINT research</strong>, and the development of <strong>AI-assisted detection tools</strong>.</p>
-                <p>I am proficient in <strong>automating security workflows using Python and Bash</strong>, ensuring efficiency and precision in technical operations.</p>
-                <p>I thrive on solving <strong>complex CTF challenges and conducting deep-dive threat analysis</strong>, with a constant focus on <strong>automation and proactive defense</strong>.</p>
-                <p>My technical arsenal includes hands-on experience with industry-standard tools like <strong>Nmap, Burp Suite, Autopsy, and advanced OSINT research</strong> frameworks.</p>
-                <p>I am passionate about <strong>leveraging my technical skill set to help organizations build resilient, proactive security postures</strong> and contributing to a safer digital ecosystem.</p>
-                <p style="color: var(--accent-primary); font-family: var(--font-mono);">>_ Investigating. Exploiting. Securing.</p>
-            </div>
+    <p>I am <strong>Sayani Maity</strong>, currently pursuing a <strong>B.Sc. in Digital Forensics (2023–2026)</strong> at <strong>Indian School of Ethical Hacking (ISOEH), Kolkata</strong>, under <strong>Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India</strong>.</p>
+
+    <p>As a <strong>(CEH) v13 AI Certified</strong> and <strong>CHFI v11 Certified</strong> professional, I specialize in bridging the gap between <strong>offensive security, digital forensics, and real-world cyber defense</strong>.</p>
+
+    <p>I specialize in <strong>Digital Forensics, Cybercrime Investigation, Penetration Testing, OSINT, and cybersecurity tooling</strong>, with a strong focus on <strong>forensic analysis, evidence handling, vulnerability assessment, and security investigations</strong>.</p>
+
+    <p>Exploring <strong>AI-Driven Security</strong> to strengthen threat detection, analysis, and cyber resilience.</p>
+
+    <p>My expertise lies in <strong>Penetration Testing (WAPT/VAPT), OSINT research</strong>, and the development of <strong>AI-assisted detection tools</strong>.</p>
+
+    <p>I am proficient in <strong>automating security workflows using Python and Bash</strong>, ensuring efficiency and precision in technical operations.</p>
+
+    <p>I thrive on solving <strong>complex CTF challenges and conducting deep-dive threat analysis</strong>, with a constant focus on <strong>automation and proactive defense</strong>.</p>
+
+    <p>My technical arsenal includes hands-on experience with industry-standard tools like <strong>Nmap, Burp Suite, Autopsy, and advanced OSINT research</strong> frameworks.</p>
+
+    <p>I am passionate about <strong>leveraging my technical skill set to help organizations build resilient, proactive security postures</strong> and contributing to a safer digital ecosystem.</p>
+
+    <p style="color: var(--accent-primary); font-family: var(--font-mono);">>_ Investigating. Exploiting. Securing.</p>
+</div>
             <div class="stats-container">
                 <div class="stat-card">
                     <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH%20badge.jpg" alt="CEH Badge" class="ceh-badge-img">
