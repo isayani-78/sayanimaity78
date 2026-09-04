@@ -6,13 +6,19 @@
 
     <title>Sayani Maity // BLOG</title>
 
+    <meta name="description"
+          content="Sayani Maity's cybersecurity blog covering digital forensics, penetration testing, network security, investigations and security research.">
+
     <style>
         :root {
             --bg: #050505;
+            --bg-soft: #080808;
             --text: #b0b3b8;
+            --muted: #777c82;
             --primary: #00ffcc;
             --secondary: #ff00ff;
-            --glass: rgba(10, 10, 10, 0.82);
+            --white: #f5f5f5;
+            --glass: rgba(10, 10, 10, 0.88);
             --border: rgba(255, 255, 255, 0.08);
             --mono: 'Courier New', Courier, monospace;
             --sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -45,6 +51,17 @@
                 linear-gradient(rgba(0,255,204,0.025) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0,255,204,0.025) 1px, transparent 1px);
             background-size: 40px 40px;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(0,255,204,0.035), transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(255,0,255,0.035), transparent 30%);
             z-index: -1;
         }
 
@@ -53,35 +70,44 @@
             color: inherit;
         }
 
-        /* NAVIGATION */
+        /* =========================
+           NAVIGATION
+        ========================== */
 
         nav {
             position: sticky;
             top: 0;
             z-index: 1000;
+
             width: 100%;
-            padding: 1.2rem 2.5rem;
+            padding: 1.1rem 2.5rem;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(5, 5, 5, 0.92);
+
+            background: rgba(5,5,5,0.94);
             border-bottom: 1px solid var(--border);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
         }
 
         .logo {
             color: var(--primary);
             font-family: var(--mono);
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
         }
 
         .back-btn {
             font-family: var(--mono);
+            font-size: 0.8rem;
             color: var(--secondary);
+
             border: 1px solid var(--secondary);
             padding: 7px 14px;
             border-radius: 4px;
+
             transition: 0.3s ease;
         }
 
@@ -91,7 +117,9 @@
             box-shadow: 0 0 15px rgba(0,255,204,0.2);
         }
 
-        /* HEADER */
+        /* =========================
+           HEADER
+        ========================== */
 
         .blog-header {
             text-align: center;
@@ -101,7 +129,7 @@
         .terminal-line {
             font-family: var(--mono);
             color: var(--secondary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin-bottom: 1rem;
         }
 
@@ -110,17 +138,25 @@
             color: var(--primary);
             font-size: clamp(2.2rem, 6vw, 4.5rem);
             letter-spacing: 3px;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
+
+            text-shadow:
+                0 0 10px rgba(0,255,204,0.25),
+                0 0 25px rgba(0,255,204,0.08);
         }
 
         .blog-header p {
-            max-width: 700px;
+            max-width: 750px;
             margin: auto;
+
             color: #8d9298;
             font-family: var(--mono);
+            font-size: 0.88rem;
         }
 
-        /* BLOG GRID */
+        /* =========================
+           BLOG CONTAINER
+        ========================== */
 
         .blog-container {
             width: min(1150px, 90%);
@@ -133,36 +169,73 @@
             gap: 2rem;
         }
 
+        /* =========================
+           BLOG CARD
+        ========================== */
+
         .blog-card {
             background: var(--glass);
+
             border: 1px solid var(--border);
             border-top: 3px solid var(--primary);
             border-radius: 8px;
+
             overflow: hidden;
+
             backdrop-filter: blur(12px);
-            transition: 0.35s ease;
+
+            transition:
+                transform 0.35s ease,
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
         }
 
         .blog-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-7px);
+
             border-color: var(--secondary);
-            box-shadow: 0 0 25px rgba(255,0,255,0.12);
+
+            box-shadow:
+                0 0 25px rgba(255,0,255,0.12),
+                0 0 50px rgba(0,255,204,0.03);
         }
 
-        /* BLOG IMAGE */
+        /* =========================
+           COVER IMAGE
+        ========================== */
 
         .blog-image-wrapper {
             width: 100%;
             height: 230px;
+
             overflow: hidden;
             background: #000;
+
+            position: relative;
+        }
+
+        .blog-image-wrapper::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    transparent 55%,
+                    rgba(0,0,0,0.35)
+                );
+
+            pointer-events: none;
         }
 
         .blog-image {
             width: 100%;
             height: 100%;
+
             object-fit: cover;
             display: block;
+
             transition: transform 0.5s ease;
         }
 
@@ -170,7 +243,9 @@
             transform: scale(1.05);
         }
 
-        /* BLOG CONTENT */
+        /* =========================
+           BLOG CONTENT
+        ========================== */
 
         .blog-content {
             padding: 1.6rem;
@@ -179,120 +254,252 @@
         .blog-date {
             font-family: var(--mono);
             color: #72767d;
-            font-size: 0.75rem;
-            margin-bottom: 0.6rem;
+            font-size: 0.72rem;
+            margin-bottom: 0.65rem;
+            letter-spacing: 0.5px;
         }
 
         .blog-title {
-            color: #fff;
-            font-size: 1.35rem;
+            color: var(--white);
+            font-family: var(--mono);
+            font-size: 1.3rem;
+            line-height: 1.4;
             margin-bottom: 0.8rem;
         }
 
         .blog-description {
             color: #a7abb0;
             font-size: 0.9rem;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
         }
+
+        /* =========================
+           META
+        ========================== */
+
+        .post-meta {
+            display: flex;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+
+            margin: 0.8rem 0 1.15rem;
+
+            font-family: var(--mono);
+            font-size: 0.7rem;
+        }
+
+        .post-meta span {
+            padding: 4px 8px;
+
+            border: 1px solid rgba(0,255,204,0.22);
+            border-radius: 4px;
+
+            background: rgba(0,255,204,0.025);
+
+            color: #8f9499;
+        }
+
+        .post-meta .views {
+            color: var(--primary);
+        }
+
+        /* =========================
+           TAGS
+        ========================== */
 
         .blog-tags {
             display: flex;
             flex-wrap: wrap;
+
             gap: 0.5rem;
             margin-bottom: 1.3rem;
         }
 
         .blog-tag {
             font-family: var(--mono);
-            font-size: 0.7rem;
+            font-size: 0.68rem;
+
             color: var(--primary);
+
             border: 1px solid rgba(0,255,204,0.35);
+
             padding: 4px 8px;
             border-radius: 3px;
+
             background: rgba(0,255,204,0.04);
         }
+
+        /* =========================
+           READ BUTTON
+        ========================== */
 
         .read-btn {
             display: inline-block;
             width: 100%;
+
             text-align: center;
-            padding: 9px;
+
+            padding: 10px;
+
             font-family: var(--mono);
-            font-size: 0.8rem;
+            font-size: 0.78rem;
+
             color: #fff;
+
             border: 1px solid var(--secondary);
             border-radius: 4px;
+
             transition: 0.3s ease;
         }
 
         .read-btn:hover {
             color: var(--secondary);
+
             background: rgba(255,0,255,0.06);
-            box-shadow: 0 0 15px rgba(255,0,255,0.15);
+
+            box-shadow:
+                0 0 15px rgba(255,0,255,0.15);
         }
 
-        /* FOOTER */
+        /* =========================
+           COMING SOON
+        ========================== */
+
+        .coming-soon {
+            opacity: 0.65;
+        }
+
+        .coming-soon .read-btn {
+            border-color: #555;
+            color: #777;
+            cursor: default;
+        }
+
+        .coming-soon .read-btn:hover {
+            color: #777;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
 
         footer {
             text-align: center;
+
             padding: 2rem;
+
             border-top: 1px solid var(--border);
+
             font-family: var(--mono);
-            font-size: 0.75rem;
+            font-size: 0.72rem;
+
             color: #666;
         }
 
-        /* MOBILE */
+        /* =========================
+           MOBILE
+        ========================== */
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
 
             nav {
                 padding: 1rem 1.2rem;
             }
 
+            .logo {
+                font-size: 0.78rem;
+            }
+
+            .back-btn {
+                font-size: 0.68rem;
+                padding: 6px 9px;
+            }
+
             .blog-header {
-                padding: 4rem 1.2rem 3rem;
+                padding: 4.5rem 1.2rem 3rem;
+            }
+
+            .blog-header h1 {
+                font-size: clamp(2rem, 11vw, 3rem);
+                letter-spacing: 2px;
+            }
+
+            .blog-header p {
+                font-size: 0.78rem;
             }
 
             .blog-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .blog-image-wrapper {
                 height: 210px;
             }
+
+            .blog-content {
+                padding: 1.25rem;
+            }
         }
-        .post-meta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 0.8rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: #8f9499;
-}
 
-.post-meta span {
-    padding: 4px 8px;
-    border: 1px solid rgba(0, 255, 204, 0.25);
-    border-radius: 4px;
-    background: rgba(0, 255, 204, 0.03);
-}
+        @media (max-width: 480px) {
 
-.post-meta .views {
-    color: var(--accent-primary);
-}
+            nav {
+                gap: 10px;
+            }
+
+            .logo {
+                font-size: 0.7rem;
+            }
+
+            .back-btn {
+                font-size: 0.62rem;
+                padding: 6px 8px;
+            }
+
+            .blog-image-wrapper {
+                height: 190px;
+            }
+
+            .blog-title {
+                font-size: 1.1rem;
+            }
+
+            .blog-description {
+                font-size: 0.84rem;
+            }
+
+            .post-meta {
+                font-size: 0.64rem;
+            }
+
+            .blog-tag {
+                font-size: 0.62rem;
+            }
+        }
     </style>
 </head>
 
 <body>
 
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
     <nav>
         <div class="logo">&lt;whoami /&gt; sayani // BLOG</div>
 
-        <a href="../" class="back-btn">← BACK TO PROFILE</a>
+        <a href="../" class="back-btn">
+            ← BACK TO PROFILE
+        </a>
     </nav>
 
+
+    <!-- =========================
+         HEADER
+    ========================== -->
 
     <header class="blog-header">
 
@@ -310,52 +517,108 @@
     </header>
 
 
+    <!-- =========================
+         BLOG POSTS
+    ========================== -->
+
     <main class="blog-container">
 
         <div class="blog-grid">
 
 
-            <!-- BLOG POST 01 -->
+            <!-- =========================================
+                 BLOG POST 01
+            ========================================== -->
 
             <article class="blog-card">
 
                 <div class="blog-image-wrapper">
 
-                    <!-- PUT BLOG COVER IMAGE HERE -->
+                    <!--
+                        REPLACE THIS IMAGE LATER WITH YOUR
+                        ACTUAL COVER IMAGE.
+
+                        Example:
+                        assets/images/snort-cover.jpg
+                    -->
 
                     <img
                         src="assets/images/blog-placeholder.jpg"
-                        alt="Blog Cover"
+                        alt="Snort 3 IDS and IPS Lab"
                         class="blog-image"
+                        loading="lazy"
                     >
 
                 </div>
 
+
                 <div class="blog-content">
 
                     <div class="blog-date">
-                        [ DATE: COMING SOON ]
+                        [ DATE: 2026 ]
                     </div>
 
+
                     <h2 class="blog-title">
-                        Snort 3 IDS & IPS Lab
+                        Snort 3 IDS &amp; IPS Lab
                     </h2>
+
 
                     <p class="blog-description">
                         Building a practical network security lab using
-                        Snort 3, CentOS Firewall, Kali Linux and Metasploitable 2.
+                        Snort 3, CentOS Firewall, Kali Linux and
+                        Metasploitable 2.
                     </p>
 
-                    <div class="blog-tags">
-                        <span class="blog-tag">SNORT 3</span>
-                        <span class="blog-tag">IDS</span>
-                        <span class="blog-tag">IPS</span>
-                        <span class="blog-tag">NETWORK SECURITY</span>
+
+                    <!-- AUTOMATIC META -->
+
+                    <div class="post-meta">
+
+                        <span class="reading-time"
+                              data-article="snort-3-ids-ips.html">
+                            ⏱ Calculating read time...
+                        </span>
+
+                        <span class="views"
+                              data-page="snort-3-ids-ips">
+                            ◉ Loading views...
+                        </span>
+
                     </div>
 
-                    <!-- LATER THIS WILL OPEN THE ARTICLE -->
 
-                    <a href="snort-3-ids-ips.html" class="read-btn">
+                    <!-- TAGS -->
+
+                    <div class="blog-tags">
+
+                        <span class="blog-tag">
+                            SNORT 3
+                        </span>
+
+                        <span class="blog-tag">
+                            IDS
+                        </span>
+
+                        <span class="blog-tag">
+                            IPS
+                        </span>
+
+                        <span class="blog-tag">
+                            NETWORK SECURITY
+                        </span>
+
+                        <span class="blog-tag">
+                            CENTOS
+                        </span>
+
+                    </div>
+
+
+                    <a
+                        href="snort-3-ids-ips.html"
+                        class="read-btn"
+                    >
                         READ ARTICLE →
                     </a>
 
@@ -364,44 +627,78 @@
             </article>
 
 
-            <!-- BLOG POST 02 -->
 
-            <article class="blog-card">
+            <!-- =========================================
+                 BLOG POST 02
+            ========================================== -->
+
+            <article class="blog-card coming-soon">
 
                 <div class="blog-image-wrapper">
 
+                    <!-- FUTURE COVER IMAGE -->
+
                     <img
                         src="assets/images/blog-placeholder.jpg"
-                        alt="Digital Forensics"
+                        alt="Digital Forensics Investigation"
                         class="blog-image"
+                        loading="lazy"
                     >
 
                 </div>
 
+
                 <div class="blog-content">
 
                     <div class="blog-date">
-                        [ DATE: COMING SOON ]
+                        [ STATUS: COMING SOON ]
                     </div>
+
 
                     <h2 class="blog-title">
                         Digital Forensics Investigation
                     </h2>
+
 
                     <p class="blog-description">
                         Practical concepts, evidence acquisition,
                         forensic analysis and investigation workflows.
                     </p>
 
-                    <div class="blog-tags">
-                        <span class="blog-tag">DIGITAL FORENSICS</span>
-                        <span class="blog-tag">EVIDENCE</span>
-                        <span class="blog-tag">INVESTIGATION</span>
+
+                    <div class="post-meta">
+
+                        <span>
+                            ⏱ COMING SOON
+                        </span>
+
+                        <span>
+                            ◉ —
+                        </span>
+
                     </div>
 
-                    <a href="#" class="read-btn">
-                        READ ARTICLE →
-                    </a>
+
+                    <div class="blog-tags">
+
+                        <span class="blog-tag">
+                            DIGITAL FORENSICS
+                        </span>
+
+                        <span class="blog-tag">
+                            EVIDENCE
+                        </span>
+
+                        <span class="blog-tag">
+                            INVESTIGATION
+                        </span>
+
+                    </div>
+
+
+                    <span class="read-btn">
+                        ARTICLE UNDER DEVELOPMENT
+                    </span>
 
                 </div>
 
@@ -413,9 +710,113 @@
     </main>
 
 
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
     <footer>
-        &gt;_ Investigating. Exploiting. Securing. // SAYANI MAITY
+        &gt;_ Investigating. Exploiting. Securing.
+        // SAYANI MAITY
     </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /* =========================================
+           AUTOMATIC READING TIME
+           Average reading speed = 200 WPM
+        ========================================== */
+
+        document.querySelectorAll(".reading-time").forEach(async (element) => {
+
+            const articlePath = element.dataset.article;
+
+            if (!articlePath) {
+                return;
+            }
+
+            try {
+
+                const response = await fetch(articlePath);
+
+                if (!response.ok) {
+                    throw new Error("Article unavailable");
+                }
+
+                const html = await response.text();
+
+                const parser = new DOMParser();
+
+                const documentHTML =
+                    parser.parseFromString(html, "text/html");
+
+
+                const articleContent =
+                    documentHTML.querySelector(".article-content") ||
+                    documentHTML.querySelector("main") ||
+                    documentHTML.body;
+
+
+                articleContent
+                    .querySelectorAll("script, style, nav, footer")
+                    .forEach(el => el.remove());
+
+
+                const text =
+                    articleContent.innerText ||
+                    articleContent.textContent ||
+                    "";
+
+
+                const words =
+                    text.trim()
+                        .split(/\s+/)
+                        .filter(Boolean)
+                        .length;
+
+
+                const minutes =
+                    Math.max(1, Math.ceil(words / 200));
+
+
+                element.textContent =
+                    `⏱ ${minutes} min read`;
+
+            } catch (error) {
+
+                element.textContent =
+                    "⏱ Read time unavailable";
+
+            }
+
+        });
+
+
+
+        /* =========================================
+           VIEW COUNTER
+
+           IMPORTANT:
+           GitHub Pages alone cannot maintain a
+           real global counter.
+
+           This placeholder intentionally does NOT
+           fake a number.
+
+           Connect a backend/counter service later.
+        ========================================== */
+
+        document.querySelectorAll(".views").forEach((element) => {
+
+            element.textContent = "◉ Views: —";
+
+        });
+
+    </script>
 
 </body>
 </html>
