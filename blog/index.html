@@ -132,7 +132,7 @@
         }
 
         /* =========================
-           HEADER (Blog & Articles style with top/bottom text)
+           HEADER
         ========================= */
         .blog-header {
             text-align: center;
@@ -382,10 +382,10 @@
         <a href="../" class="back-btn">← Back to Profile</a>
     </nav>
 
-    <!-- HEADER (Blog & Articles combined with Accessing Knowledge Base terminal intro) -->
+    <!-- HEADER -->
     <header class="blog-header">
         <div class="terminal-top">&gt;_ ACCESSING SAYANI'S KNOWLEDGE BASE...</div>
-        <h1>Blog &amp; Articles</h1>
+        <h1>Blog &amp; Writeups</h1>
         <p>Technical write-ups, cybersecurity research, digital forensics, penetration testing, investigations, labs and security experiments.</p>
     </header>
 
@@ -417,6 +417,8 @@
                         <span class="blog-date">Aug 27, 2026</span>
                         <span>•</span>
                         <span class="reading-time" data-article="snort-3-ids-ips.html">⏱ Calculating...</span>
+                        <span>•</span>
+                        <span class="views" data-page="snort_3_ids_ips">◉ Loading views...</span>
                     </div>
                     <h2 class="blog-title">Snort 3 IDS &amp; IPS Lab Architecture</h2>
                     <p class="blog-description">
@@ -426,7 +428,7 @@
                 </div>
             </article>
 
-            <!-- POST 02 (Coming Soon) -->
+            <!-- POST 02 (Coming Soon / Not Posted Yet) -->
             <article class="blog-card coming-soon" data-tags="forensics security">
                 <div class="blog-image-wrapper">
                     <img src="../assets/images/blog-placeholder.jpg" alt="Digital Forensics Investigation" class="blog-image" loading="lazy">
@@ -435,7 +437,9 @@
                     <div class="blog-meta-top">
                         <span class="blog-date">Coming Soon</span>
                         <span>•</span>
-                        <span>⏱ —</span>
+                        <span class="reading-time" data-article="">⏱ — min read</span>
+                        <span>•</span>
+                        <span class="views" data-page="">◉ Views: —</span>
                     </div>
                     <h2 class="blog-title">Digital Forensics Investigation &amp; Evidence Triage</h2>
                     <p class="blog-description">
@@ -459,10 +463,13 @@
             lucide.createIcons();
         }
 
-        // Reading Time Calculator
+        // Fully Automated Reading Time Calculator: fetches the blog post file and counts words at 200 WPM
         document.querySelectorAll(".reading-time").forEach(async (element) => {
             const articlePath = element.dataset.article;
-            if (!articlePath) return;
+            if (!articlePath) {
+                element.textContent = "⏱ — min read";
+                return;
+            }
             try {
                 const response = await fetch(articlePath);
                 if (!response.ok) throw new Error();
@@ -473,10 +480,33 @@
                 content.querySelectorAll("script, style, nav, footer").forEach(el => el.remove());
                 const text = content.innerText || content.textContent || "";
                 const words = text.trim().split(/\s+/).filter(Boolean).length;
+                if (words === 0) throw new Error();
                 const minutes = Math.max(1, Math.ceil(words / 200));
-                element.textContent = `${minutes} min read`;
+                element.textContent = `⏱ ${minutes} min read`;
             } catch (error) {
-                element.textContent = "3 min read";
+                element.textContent = "⏱ — min read";
+            }
+        });
+
+        // Fully Automated Real-time View Counter
+        document.querySelectorAll(".views").forEach(async (element) => {
+            const pageId = element.dataset.page;
+            if (!pageId) {
+                element.textContent = "◉ Views: —";
+                return;
+            }
+            try {
+                let response = await fetch(`https://api.countapi.xyz/hit/sayanimaity78.site/${pageId}`);
+                if (!response.ok) {
+                    response = await fetch(`https://api.counterapi.dev/v1/sayanimaity78/blog_${pageId}/up`);
+                    const data = await response.json();
+                    element.textContent = `◉ ${data.count || 0} views`;
+                    return;
+                }
+                const data = await response.json();
+                element.textContent = `◉ ${data.value} views`;
+            } catch (error) {
+                element.textContent = `◉ 0 views`;
             }
         });
 
