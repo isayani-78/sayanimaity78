@@ -330,9 +330,9 @@
   </p>
 
   <p class="text-slate-300 text-[15px] md:text-base font-light leading-7 tracking-wide">
-    Outside cybersecurity, she holds the <span class="text-sky-400 font-medium">Ankan Bivakar 2021</span> certification from Bangiya Sangeet Parishad for distinction in Art.
-    <a href="https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/More%20About%20Me%20%26%20Bio%20Data/assets/sayaniart.jpg"_blank" class="ml-2 text-sky-400 font-semibold hover:text-white transition-colors underline underline-offset-4">VIEW</a>
-  </p>
+  Outside cybersecurity, she holds the <span class="text-sky-400 font-medium">Ankan Bivakar 2021</span> certification from Bangiya Sangeet Parishad for distinction in Art.
+  <button onclick="openArtModal('https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/More%20About%20Me%20%26%20Bio%20Data/assets/sayaniart.jpg')" class="ml-2 text-sky-400 font-semibold hover:text-white transition-colors underline underline-offset-4 cursor-pointer">VIEW</button>
+</p>
 
   <div class="pt-2 border-t border-slate-800/70">
     <p class="text-slate-100 text-[15px] md:text-base font-semibold italic leading-7 tracking-wide">
@@ -780,6 +780,58 @@
     document.getElementById('cert-modal').addEventListener('click', (e) => {
       if (e.target.id === 'cert-modal') closeModal();
     });
+    function openArtModal(imgSrc) {
+  const modal = document.getElementById('art-modal');
+  const img = document.getElementById('art-modal-img');
+  img.src = imgSrc;
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeArtModal() {
+  const modal = document.getElementById('art-modal');
+  modal.classList.remove('flex');
+  modal.classList.add('hidden');
+}
+
+function openArtModal(imgSrc) {
+      const modal = document.getElementById('art-modal');
+      const img = document.getElementById('art-modal-img');
+      if (modal && img) {
+        img.src = imgSrc;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeArtModal() {
+      const modal = document.getElementById('art-modal');
+      if (modal) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const artModalEl = document.getElementById('art-modal');
+      if (artModalEl) {
+        artModalEl.addEventListener('click', (e) => {
+          if (e.target.id === 'art-modal') closeArtModal();
+        });
+      }
+    });
   </script>
+  
+<!-- ART MODAL POPUP -->
+<div id="art-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[110] hidden items-center justify-center p-4">
+  <div class="relative max-w-2xl w-full bg-[#0d0f17] border border-[#1a1e2c] p-4 rounded-2xl shadow-2xl">
+    <button onclick="closeArtModal()" class="absolute -top-3 -right-3 w-8 h-8 bg-sky-600 text-white rounded-full flex items-center justify-center font-bold text-lg hover:bg-sky-500 transition-all shadow-lg cursor-pointer">&times;</button>
+    <div class="rounded-xl overflow-hidden max-h-[80vh] flex items-center justify-center bg-black/50">
+      <img id="art-modal-img" src="" alt="Ankan Bivakar Certificate" class="max-w-full max-h-[75vh] object-contain rounded-lg" />
+    </div>
+  </div>
+</div>
+  </div>
+</div>
 </body>
 </html>
