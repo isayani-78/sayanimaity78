@@ -1,1 +1,798 @@
+<!-- ========================================================================== -->
+<!-- COMPLETE FINAL CLEANED INDEX.HTML — SAYANI MAITY PORTFOLIO                 -->
+<!-- ========================================================================== -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#050505" />
 
+  <title>Sayani Maity — Digital Forensics Analyst || VAPT &amp; Application Security Specialist</title>
+  <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/sitelogo.jpg" />
+
+  <!-- Typography & Assets -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/three@0.128.0/build/three.min.js" defer></script>
+
+  <style>
+    :root {
+      --bg: #050505;
+      --card-bg: #0d0f17;
+      --card-border: #1a1e2c;
+      --accent-blue: #0284c7;
+      --accent-cyan: #00ffcc;
+      --font-mono: 'Fira Code', monospace;
+      --font-cinzel: 'Cinzel', serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      background-color: var(--bg);
+      color: #94a3b8;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    .spline-background-container {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -2;
+      pointer-events: none;
+    }
+    #bg3d-canvas {
+      width: 100%; height: 100%; display: block;
+      filter: brightness(1.3) contrast(1.2) saturate(1.1);
+    }
+
+    .forensic-scanline {
+      width: 100%; height: 6px; z-index: -1;
+      background: rgba(0, 255, 204, 0.02);
+      position: fixed; bottom: 100%;
+      animation: scanline 9s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes scanline {
+      0% { bottom: 100%; }
+      100% { bottom: -100%; }
+    }
+
+    .hero-name-gradient {
+      font-family: 'Cinzel', serif;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      background: linear-gradient(180deg, #ffffff 15%, #bae6fd 55%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 14px rgba(56, 189, 248, 0.25));
+    }
+
+    .about-surface {
+      background: #10121a;
+      border: 1px solid #1a1e2b;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+    }
+
+    .about-editorial-text {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 0.02em;
+      word-spacing: 0.05em;
+      line-height: 1.95;
+    }
+
+    .pro-box {
+      background: #0d0f17;
+      border: 1px solid #1a1e2c;
+      border-radius: 12px;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .pro-box:hover {
+      border-color: rgba(56, 189, 248, 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px -10px rgba(2, 132, 199, 0.2);
+    }
+    .pro-box-featured {
+      border-left: 3px solid #0284c7;
+    }
+
+    .cert-aditya-card {
+      background: #0d0f17;
+      border: 1px solid #1a1e2c;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      min-width: 280px;
+      flex: 0 0 280px;
+    }
+    .cert-aditya-card:hover {
+      border-color: #38bdf8;
+      background: #111420;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px -10px rgba(2, 132, 199, 0.3);
+    }
+
+    .online-pill {
+      background: #0d0f17;
+      border: 1px solid #1a1e2c;
+      border-radius: 16px;
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 12px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .online-pill:hover {
+      border-color: #38bdf8;
+      background: #121520;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px -6px rgba(2, 132, 199, 0.35);
+    }
+
+    .skill-card-3d {
+      perspective: 1000px; height: 250px; cursor: pointer;
+    }
+    .skill-card-inner {
+      position: relative; width: 100%; height: 100%;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .skill-card-3d:hover .skill-card-inner {
+      transform: rotateY(180deg);
+    }
+    .skill-card-front, .skill-card-back {
+      position: absolute; inset: 0;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      border-radius: 12px; border: 1px solid #1a1e2c; overflow: hidden;
+      display: flex; flex-direction: column; background: #0d0f17;
+    }
+    .skill-card-front { align-items: center; text-align: center; }
+    .skill-cover-img {
+      width: 100%; height: 145px; object-fit: cover; border-bottom: 1px solid #1a1e2c;
+    }
+    .skill-card-back {
+      transform: rotateY(180deg); background: #080a10;
+      border-color: #0284c7; text-align: left; padding: 1.5rem; justify-content: center;
+    }
+
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(4, 5, 8, 0.94);
+      backdrop-filter: blur(12px); z-index: 100; display: none;
+      justify-content: center; align-items: center; padding: 16px;
+    }
+    .modal-overlay.active { display: flex; }
+  </style>
+</head>
+<body class="selection:bg-sky-500 selection:text-white">
+
+  <!-- 3D Three.js Backdrop -->
+  <div class="spline-background-container">
+    <canvas id="bg3d-canvas"></canvas>
+  </div>
+  <div class="forensic-scanline"></div>
+
+  <!-- NAVIGATION -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-[#050505]/90 backdrop-blur-md border-b border-[#1a1e2c]">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="text-sm font-semibold tracking-wider font-['Space_Grotesk'] text-white flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+        &lt;whoami /&gt; SAYANI
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-slate-400">
+        <a href="#about" class="text-sky-400 relative py-1">About<span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-sky-400 rounded-full"></span></a>
+        <a href="#credentials" class="hover:text-white transition-colors">Credentials</a>
+        <a href="#skills" class="hover:text-white transition-colors">Skills</a>
+      </nav>
+
+      <button class="md:hidden text-slate-300 hover:text-white" onclick="toggleMenu()" aria-label="Toggle Menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#090b10] border-b border-[#1a1e2c] px-6 py-4 space-y-3 font-mono text-xs">
+      <a href="#about" onclick="toggleMenu()" class="block text-sky-400">01. ABOUT</a>
+      <a href="#credentials" onclick="toggleMenu()" class="block text-slate-300">02. CREDENTIALS</a>
+      <a href="#skills" onclick="toggleMenu()" class="block text-slate-300">03. SKILLS</a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION COMPLETELY REMOVED AS REQUESTED -->
+
+  <!-- SECTION: ABOUT ME (Containing Bio, Stats, Downloads & Connect Sayani in Online) -->
+  <section id="about" class="py-28 px-6 max-w-6xl mx-auto">
+    <div class="about-surface p-8 sm:p-12 md:p-16 rounded-3xl">
+      
+      <!-- Top Layout: Two-Column Bio and Image Card -->
+      <div class="grid lg:grid-cols-12 gap-12 items-center mb-16">
+        
+        <!-- Left Column: Heading styled as KNOW MORE ABOUT SAYANI MAITY -->
+        <div class="lg:col-span-7 space-y-6 text-slate-300 about-editorial-text text-base sm:text-lg">
+          <span class="font-mono text-xs text-sky-400 tracking-[0.2em] uppercase font-semibold">DIGITAL FORENSICS ENTHUSIAST || VAPT &amp; APPLICATION SECURITY ANALYST, KOLKATA, INDIA</span>
+          
+          <h2 class="text-3xl sm:text-5xl font-bold text-white font-['Cinzel'] tracking-tight mb-6 hero-name-gradient">
+            KNOW MORE ABOUT SAYANI MAITY.
+          </h2>
+
+          <p class="text-slate-100 font-medium">
+            Sayani Maity is a Digital Forensics Enthusiast, Penetration Tester, Security Researcher, VAPT &amp; Application Security Analyst from Kolkata, and a graduate in Digital Forensics from the Indian School of Ethical Hacking (ISOEH), Kolkata, under Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal, India.
+          </p>
+
+          <p class="text-slate-300">
+            As a CEH v13 AI Certified and CHFI v11 Certified cybersecurity professional, I specialize in Penetration Testing (WAPT/VAPT), Application Security, Digital Forensics, Cybercrime Investigation, OSINT, Vulnerability Assessment, and Security Research. I have hands-on experience with industry-standard tools including Nmap, Burp Suite, Autopsy, and advanced OSINT frameworks, along with strong proficiency in Python and Bash for security automation.
+          </p>
+
+          <p class="text-slate-300">
+            My work focuses on identifying vulnerabilities, analyzing attack surfaces, investigating digital evidence, and strengthening cyber defense through practical security research and automation. With a growing interest in AI-driven security, I explore intelligent detection and analysis solutions while continuously developing my skills through CTFs, deep-dive threat analysis, and real-world cybersecurity projects.
+          </p>
+        </div>
+
+        <!-- Right Column: Mid-size Image Card -->
+        <div class="lg:col-span-5 flex flex-col items-center">
+          <div class="pro-box p-4 rounded-2xl border border-[#1a1e2c] max-w-sm w-full shadow-2xl bg-[#0d0f17]">
+            <div class="w-full h-80 rounded-xl overflow-hidden border border-[#23283a]">
+              <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/More%20About%20Me%20%26%20Bio%20Data/assets/sayani2nd.jpg" alt="Sayani Maity - Portfolio Portrait" class="w-full h-full object-cover" onerror="this.src='https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/sayani2nd.jpg'" />
+            </div>
+            <div class="mt-4 flex items-center justify-between px-2">
+              <span class="text-xs font-mono text-sky-400 font-semibold">root@sayanimaity:~#</span>
+              <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Verified Identity</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 5 Strategic Numbers Display -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3.5 w-full text-center mb-16">
+        <div class="pro-box p-4">
+          <div class="text-2xl font-bold font-['Space_Grotesk'] text-sky-400 mb-1">93.6%</div>
+          <div class="text-[10px] uppercase tracking-wider font-semibold text-slate-400">CEH v13 AI Score</div>
+        </div>
+        <div class="pro-box p-4">
+          <div class="text-2xl font-bold font-['Space_Grotesk'] text-sky-400 mb-1">84.7%</div>
+          <div class="text-[10px] uppercase tracking-wider font-semibold text-slate-400">CHFI v11 Score</div>
+        </div>
+        <div class="pro-box p-4">
+          <div class="text-2xl font-bold font-['Space_Grotesk'] text-sky-400 mb-1">Top 5%</div>
+          <div class="text-[10px] uppercase tracking-wider font-semibold text-slate-400">TryHackMe Global</div>
+        </div>
+        <div class="pro-box p-4">
+          <div class="text-2xl font-bold font-['Space_Grotesk'] text-sky-400 mb-1">3+</div>
+          <div class="text-[10px] uppercase tracking-wider font-semibold text-slate-400">Major Projects</div>
+        </div>
+        <div class="pro-box p-4 col-span-2 sm:col-span-1">
+          <div class="text-2xl font-bold font-['Space_Grotesk'] text-sky-400 mb-1">20+</div>
+          <div class="text-[10px] uppercase tracking-wider font-semibold text-slate-400">Tools Mastered</div>
+        </div>
+      </div>
+
+      <!-- Resume & Cover Letter Download Hub -->
+      <div class="document-download-box pro-box p-8 mb-16 text-center border border-[#1a1e2c] rounded-2xl bg-[#0d0f17]">
+        <h3 class="font-['Space_Grotesk'] text-xl font-bold text-white mb-3">Professional Dossier &amp; Credentials</h3>
+        <p class="text-xs text-slate-400 mb-6 font-mono">Access official Curriculum Vitae and customized formal Cover Letter documents directly below.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="https://github.com/isayani-78/sayanimaity78/raw/main/Sayani%20Maity%20Resume.pdf" target="_blank" class="px-7 py-3 rounded-full bg-sky-600 text-white font-bold text-xs tracking-wider uppercase hover:bg-sky-500 transition-all shadow-lg shadow-sky-600/25">
+            📥 Download Resume (PDF)
+          </a>
+          <a href="https://github.com/isayani-78/sayanimaity78/raw/main/Sayani_Maity_Cover_Letter.pdf" target="_blank" class="px-7 py-3 rounded-full bg-[#141824] text-sky-400 border border-[#23283a] font-bold text-xs tracking-wider uppercase hover:bg-[#1c2230] transition-all">
+            📄 Download Cover Letter (PDF)
+          </a>
+        </div>
+      </div>
+
+      <!-- Connect Sayani in Online -->
+      <div class="social-links-section text-center pt-8 border-t border-[#1a1e2c]">
+        <h3 class="text-2xl font-bold text-white font-['Cinzel'] tracking-wide mb-6" style="background: linear-gradient(180deg, #ffffff 15%, #bae6fd 55%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Connect with Sayani</h3>
+        
+        <div class="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+          <a href="https://linkedin.com/in/sayanimaity" target="_blank" class="online-pill">
+            <svg class="w-5 h-5 flex-shrink-0 fill-[#0A66C2]" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            <div>
+              <span class="text-xs font-bold text-white block text-left">LinkedIn</span>
+              <span class="text-[11px] text-sky-400 font-mono block">Professional Profile</span>
+            </div>
+          </a>
+
+          <a href="https://github.com/isayani-78" target="_blank" class="online-pill">
+            <svg class="w-5 h-5 flex-shrink-0 fill-white" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            <div>
+              <span class="text-xs font-bold text-white block text-left">GitHub</span>
+              <span class="text-[11px] text-sky-400 font-mono block">Security Tools &amp; Repos</span>
+            </div>
+          </a>
+
+          <a href="https://discordapp.com/users/1178036036119560213" target="_blank" class="online-pill">
+            <svg class="w-5 h-5 flex-shrink-0 fill-[#5865F2]" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.894.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            <div>
+              <span class="text-xs font-bold text-white block text-left">Discord</span>
+              <span class="text-[11px] text-sky-400 font-mono block">@isayani_78</span>
+            </div>
+          </a>
+
+          <a href="https://tryhackme.com/p/isayani78" target="_blank" class="online-pill">
+            <svg viewBox="0 0 240 130" class="w-5 h-5 flex-shrink-0">
+              <path d="M70,30 C60,10 30,15 25,35 C10,35 5,50 15,65 C5,80 20,95 40,90 L85,90 C105,90 115,75 105,55 C115,35 90,15 70,30 Z" fill="none" stroke="#dc2626" stroke-width="12"/>
+            </svg>
+            <div>
+              <span class="text-xs font-bold text-white block text-left">TryHackMe</span>
+              <span class="text-[11px] text-sky-400 font-mono block">Top 5% Global CTF</span>
+            </div>
+          </a>
+
+          <a href="https://medium.com/@isayani-78" target="_blank" class="online-pill">
+            <svg class="w-5 h-5 flex-shrink-0 fill-white" viewBox="0 0 24 24"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
+            <div>
+              <span class="text-xs font-bold text-white block text-left">Medium</span>
+              <span class="text-[11px] text-sky-400 font-mono block">Research Articles</span>
+            </div>
+          </a>
+
+          <a href="blog/" class="online-pill">
+            <i data-lucide="pen-tool" class="w-5 h-5 flex-shrink-0 text-sky-400"></i>
+            <div>
+              <span class="text-xs font-bold text-sky-400 block text-left">Blog</span>
+              <span class="text-[11px] text-slate-300 font-mono block">Security Writeups</span>
+            </div>
+          </a>
+
+          <a href="https://x.com/isayani78" target="_blank" class="online-pill">
+            <svg class="w-5 h-5 flex-shrink-0 fill-white" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <div>
+              <span class="text-xs font-bold text-white block text-left">Twitter / X</span>
+              <span class="text-[11px] text-sky-400 font-mono block">Threat Intel Feeds</span>
+            </div>
+          </a>
+
+          <a href="https://www.facebook.com/isayani78" target="_blank" class="online-pill">
+            <svg class="w-5 h-5 flex-shrink-0 fill-[#1877F2]" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            <div>
+              <span class="text-xs font-bold text-white block text-left">Facebook</span>
+              <span class="text-[11px] text-sky-400 font-mono block">Community</span>
+            </div>
+          </a>
+
+          <a href="https://t.me/isayani_78" target="_blank" class="online-pill">
+            <svg class="w-5 h-5 flex-shrink-0 fill-[#26A5E4]" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            <div>
+              <span class="text-xs font-bold text-white block text-left">Telegram</span>
+              <span class="text-[11px] text-sky-400 font-mono block">Direct Messaging</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION: CREDENTIALS & ACHIEVEMENTS -->
+  <section id="credentials" class="py-20 px-6 max-w-6xl mx-auto border-t border-[#1a1e2c]">
+    <div class="flex justify-between items-center mb-12">
+      <div>
+        <span class="text-xs font-bold tracking-[0.25em] text-slate-500 uppercase font-mono">VERIFIED EXPERTISE</span>
+        <h2 class="text-3xl font-bold text-white font-['Space_Grotesk'] mt-1">PROFESSIONAL CREDENTIALS</h2>
+      </div>
+      <div class="flex gap-3">
+        <button onclick="scrollCertContainer(-1)" class="w-11 h-11 rounded-full bg-[#0d0f17] border border-[#1a1e2c] text-sky-400 flex items-center justify-center font-bold hover:bg-sky-600 hover:text-white transition-all">&#10094;</button>
+        <button onclick="scrollCertContainer(1)" class="w-11 h-11 rounded-full bg-[#0d0f17] border border-[#1a1e2c] text-sky-400 flex items-center justify-center font-bold hover:bg-sky-600 hover:text-white transition-all">&#10095;</button>
+      </div>
+    </div>
+
+    <!-- Horizontal Side-Scroll Track Container -->
+    <div id="certTrack" class="flex gap-6 overflow-x-auto scroll-smooth pb-6 [scrollbar-width:none] [-ms-overflow-style:none]">
+      
+      <!-- 1. CEH v13 AI -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg" alt="CEH v13 AI" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">CEH v13 AI Certified</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">Certified Ethical Hacker · Score: 93.6%</p>
+        <button onclick="openCertModal('CEH v13 AI Certified', 'EC-Council', 'Official Score: 93.6%', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CEH-Certificate.jpg', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20ExamTranscript.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 2. CHFI v11 -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CHFI%20Certificate.jpg" alt="CHFI v11" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">CHFI v11 Certified</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">Computer Hacking Forensic Investigator · Score: 84.7%</p>
+        <button onclick="openCertModal('CHFI v11 Certified', 'EC-Council', 'Official Score: 84.7%', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CHFI%20Certificate.jpg', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CHFI%20ExamTranscript.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 3. CTIGA -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg" alt="CTIGA" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">CTIGA Certification</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">Threat Intelligence &amp; Gathering Analyst</p>
+        <button onclick="openCertModal('CTIGA Certification', 'Red Team Leaders', 'Certified Threat Intelligence & Gathering Analyst', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTIGA.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 4. CRTOM -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg" alt="CRTOM" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">CRTOM Certificate</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">Red Team Operations Management</p>
+        <button onclick="openCertModal('CRTOM Certification', 'Red Team Leaders', 'Red Team Operations Accreditation', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CRTOM%20certificate.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 5. CCEP -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg" alt="CCEP" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">CCEP Certificate</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">Cybersecurity Expert Professional</p>
+        <button onclick="openCertModal('CCEP Certification', 'Red Team Leaders', 'Cybersecurity Expert Professional', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CCEP%20certificate.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 6. CPPS -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg" alt="CPPS" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">CPPS Certificate</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">Certified Phishing Prevention Specialist</p>
+        <button onclick="openCertModal('CPPS Certification', 'Hack & FIX Academy', 'Certified Phishing Prevention Specialist', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CPPS%20Certificate.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 7. Cyber Security CoE -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg" alt="CoE" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">Cyber Security CoE</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">Govt. of West Bengal Certificate</p>
+        <button onclick="openCertModal('Cyber Security Centre of Excellence', 'Govt. of West Bengal', 'Dept of IT & Electronics', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 8. Core Python -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg" alt="Python" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">Core Python Course</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">ISOEH Programming Completion</p>
+        <button onclick="openCertModal('Core Python Programming', 'ISOEH (Programming)', 'Completion of Core Python Programming Course', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 9. Deloitte Cyber Sim -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg" alt="Deloitte" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">Deloitte Cyber Sim</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">Forage Australia Job Simulation</p>
+        <button onclick="openCertModal('Deloitte Cyber Simulation', 'Forage', 'Deloitte Australia Cyber Job Simulation', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Deloitte%20job%20simulation.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 10. Mastercard Sim -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg" alt="Mastercard" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">Mastercard Sim</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">Cybersecurity Job Simulation</p>
+        <button onclick="openCertModal('Mastercard Cyber Simulation', 'Mastercard & New York Jobs CEO Council', 'Cybersecurity Job Simulation', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Mastercard%20%26%20New%20York%20Jobs%20CEO%20Council%20%E2%80%93%20Cybersecurity%20Job%20Simulation%20(Forage).jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 11. Advent of Cyber 2025 -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://assets.tryhackme.com/img/badges/advent-of-cyber-2025.png" alt="AoC 2025" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">Advent of Cyber 2025</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">TryHackMe Defense Challenge</p>
+        <button onclick="openCertModal('Advent of Cyber 2025 Certification', 'TryHackMe', 'Completed 24-Day Advanced Cyber Defense and Incident Response Challenges', 'https://assets.tryhackme.com/img/badges/advent-of-cyber-2025.png')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 12. Infocom Hackstar '24 -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg" alt="Hackstar 24" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">Infocom Hackstar '24</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">ABP &amp; ISOEH CTF Competition</p>
+        <button onclick="openCertModal('Infocom Hackstar 2024', 'Infocom ABP & ISOEH', 'CTF Competition Certificate 2024', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 13. Infocom Hackstar '23 -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg" alt="Hackstar 23" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">Infocom Hackstar '23</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">ABP &amp; ISOEH CTF Participation</p>
+        <button onclick="openCertModal('Infocom Hackstar 2023', 'Infocom ABP & ISOEH', 'CTF Participation in Hackstar 2023', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 14. MAKAUT CTF -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg" alt="MAKAUT CTF" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">MAKAUT University CTF</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">University Cybersecurity CTF</p>
+        <button onclick="openCertModal('MAKAUT CTF Participation', 'MAKAUT University', 'CTF Organised by MAKAUT', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 15. Cyraksha Hackathon 2 -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg" alt="Cyraksha" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">Cyraksha Hackathon 2</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">The Cyber Club of Kolkata CTF</p>
+        <button onclick="openCertModal('Cyraksha CTF Hackathon 2', 'Cyraksha (The Cyber Club of Kolkata)', 'Participation in CTF of Cyraksha', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 16. CTF Workshop -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg" alt="Workshop" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">CTF Workshop</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">Cyber Security Training by Cyraksha</p>
+        <button onclick="openCertModal('Cyraksha CTF Workshop', 'Cyraksha (The Cyber Club of Kolkata)', 'Participation In CTF workshop', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20In%20CTF%20workshop%20By%20Cyraksha%20(The%20Cyber%20Club%20Of%20Kolkata).jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 17. Cryptoquest -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg" alt="Cryptoquest" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">Cryptoquest</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">EDGE'24 Cryptography Competition</p>
+        <button onclick="openCertModal('Cryptoquest Participation', 'EDGE\'24 (Geekonix)', 'Participation in Cryptoquest Cryptography Competition at EDGE\'24', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 18. GroundZero WB Hackathon -->
+      <div class="cert-aditya-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg" alt="GroundZero" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">GroundZero Hackathon</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">ISOEH West Bengal Certificate</p>
+        <button onclick="openCertModal('GroundZero WB Hackathon', 'ISOEH & Cyraksha', 'GroundZero West Bengal Hackathon Certificate', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION: SKILLS -->
+  <section id="skills" class="py-20 px-6 max-w-6xl mx-auto border-t border-[#1a1e2c]">
+    <div class="text-center mb-12">
+      <span class="text-xs font-bold tracking-[0.25em] text-slate-500 uppercase font-mono">CORE SPECIALIZATIONS</span>
+      <h2 class="text-3xl font-bold text-white font-['Space_Grotesk'] mt-1">Skills</h2>
+      <p class="text-xs text-slate-400 font-mono mt-2">&gt; COMPREHENSIVE TECHNICAL TOOLKIT &amp; CORE CAPABILITIES &lt;</p>
+    </div>
+
+    <!-- Master Unified Skills & Tools Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="pro-box p-6 pro-box-featured">
+        <span class="text-xs font-bold text-sky-400 uppercase font-mono block mb-3">// 01. VAPT &amp; PENTESTING</span>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">VAPT</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">WAPT</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Burp Suite Pro</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Nmap</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">OWASP ZAP</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Metasploit</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">OpenVAS</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Nikto</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Netcat</span>
+        </div>
+      </div>
+
+      <div class="pro-box p-6 pro-box-featured">
+        <span class="text-xs font-bold text-sky-400 uppercase font-mono block mb-3">// 02. DIGITAL FORENSICS &amp; TRIAGE</span>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Autopsy</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Magnet AXIOM</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">FTK Imager</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Oxygen Forensic</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Cellebrite UFED</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">EaseUS Data Recovery</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Memory Triage</span>
+        </div>
+      </div>
+
+      <div class="pro-box p-6 pro-box-featured">
+        <span class="text-xs font-bold text-sky-400 uppercase font-mono block mb-3">// 03. SECURITY AUTOMATION</span>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Python</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Bash</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Shell Scripting</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">CMTL Framework</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">NumPy &amp; Matplotlib</span>
+        </div>
+      </div>
+
+      <div class="pro-box p-6 pro-box-featured">
+        <span class="text-xs font-bold text-sky-400 uppercase font-mono block mb-3">// 04. OSINT &amp; INTEL GATHERING</span>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">OSINT Research</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Threat Modeling</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Domain Recon</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">WHOIS / DNS Correlation</span>
+        </div>
+      </div>
+
+      <div class="pro-box p-6 pro-box-featured">
+        <span class="text-xs font-bold text-sky-400 uppercase font-mono block mb-3">// 05. AI-ASSISTED SECURITY</span>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">AI Phishing Detector</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">NLP Heuristic Parsing</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Machine Learning Models</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Threat Automation</span>
+        </div>
+      </div>
+
+      <div class="pro-box p-6 pro-box-featured">
+        <span class="text-xs font-bold text-sky-400 uppercase font-mono block mb-3">// 06. DATA PROTECTION &amp; OS</span>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Cryptography &amp; Steganalysis</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Kali Linux &amp; BlackArch</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Parrot OS &amp; Ubuntu</span>
+          <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Wireshark &amp; TCP/IP</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL ENGINE -->
+  <div id="cert-modal" class="modal-overlay">
+    <div class="pro-box p-6 max-w-xl w-full relative border border-[#23283a]">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-mono text-xl">&times;</button>
+      <div class="mb-3">
+        <h3 id="modal-title" class="text-base font-bold text-white font-mono"></h3>
+        <span id="modal-issuer" class="text-xs font-mono text-sky-400"></span>
+      </div>
+      <div id="modal-img-container" class="rounded-lg overflow-hidden border border-[#1a1e2c] mb-3 bg-black flex flex-col gap-3 p-2 max-h-[60vh] overflow-y-auto"></div>
+      <p id="modal-desc" class="text-xs text-slate-400 font-mono mb-2"></p>
+    </div>
+  </div>
+
+  <!-- Professional Footer -->
+  <footer class="py-10 text-center text-xs text-slate-500 border-t border-[#1a1e2c] font-sans">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p>&copy; 2026 Sayani Maity. All rights reserved.</p>
+      <p class="font-mono text-[11px] text-slate-400">Application Security &amp; Digital Forensics Portfolio</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    lucide.createIcons();
+
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    function scrollCertContainer(direction) {
+      const track = document.getElementById('certTrack');
+      const scrollAmount = 340 * direction;
+      track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+
+    function initBG3D() {
+      const canvas = document.getElementById('bg3d-canvas');
+      if (!canvas || typeof THREE === 'undefined') return;
+
+      const isSmall = window.innerWidth < 768;
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x050505, 0.002);
+
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1500);
+      camera.position.set(0, 30, 260);
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false, powerPreference: 'low-power' });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isSmall ? 1.25 : 1.75));
+      renderer.setSize(window.innerWidth, window.innerHeight, false);
+
+      const torusGroup = new THREE.Group();
+      const geometry = new THREE.TorusGeometry(35, 10, 16, 50);
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ffcc, wireframe: true, transparent: true, opacity: 0.25 });
+      
+      const torus1 = new THREE.Mesh(geometry, material);
+      torus1.position.set(-80, 20, -50);
+      torusGroup.add(torus1);
+
+      const torus2 = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x0284c7, wireframe: true, transparent: true, opacity: 0.3 }));
+      torus2.position.set(90, -30, -80);
+      torusGroup.add(torus2);
+
+      const torus3 = new THREE.Mesh(new THREE.TorusKnotGeometry(25, 8, 64, 16), new THREE.MeshBasicMaterial({ color: 0x38bdf8, wireframe: true, transparent: true, opacity: 0.2 }));
+      torus3.position.set(0, 50, -120);
+      torusGroup.add(torus3);
+
+      scene.add(torusGroup);
+
+      const planeGeo = new THREE.PlaneGeometry(800, 600, 25, 25);
+      planeGeo.rotateX(-Math.PI / 2);
+      const planeMat = new THREE.MeshBasicMaterial({ color: 0x0284c7, wireframe: true, transparent: true, opacity: 0.06 });
+      const gridPlane = new THREE.Mesh(planeGeo, planeMat);
+      gridPlane.position.y = -140;
+      scene.add(gridPlane);
+
+      let mouseX = 0, mouseY = 0;
+      window.addEventListener('pointermove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5);
+        mouseY = (e.clientY / window.innerHeight - 0.5);
+      }, { passive: true });
+
+      let visible = true;
+      document.addEventListener('visibilitychange', () => { visible = !document.hidden; });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        if (!visible) return;
+
+        torusGroup.rotation.x += 0.003;
+        torusGroup.rotation.y += 0.005;
+
+        torus1.rotation.z += 0.01;
+        torus2.rotation.x += 0.008;
+
+        camera.position.x += (mouseX * 30 - camera.position.x) * 0.04;
+        camera.position.y += (30 - mouseY * 30 - camera.position.y) * 0.04;
+        camera.lookAt(0, 0, 0);
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight, false);
+      }, { passive: true });
+    }
+    if (document.readyState === 'complete') { initBG3D(); } else { window.addEventListener('load', initBG3D); }
+
+    function openCertModal(title, issuer, desc, img1, img2 = null) {
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-issuer').innerText = issuer;
+      document.getElementById('modal-desc').innerText = desc;
+      const box = document.getElementById('modal-img-container');
+      box.innerHTML = '';
+      
+      if (img1) {
+        const i1 = document.createElement('img');
+        i1.src = img1;
+        i1.className = 'w-full h-auto object-contain rounded border border-[#1a1e2c]';
+        box.appendChild(i1);
+      }
+      if (img2) {
+        const i2 = document.createElement('img');
+        i2.src = img2;
+        i2.className = 'w-full h-auto object-containross border border-[#1a1e2c]';
+        box.appendChild(i2);
+      }
+      document.getElementById('cert-modal').classList.add('active');
+    }
+    function closeModal() {
+      document.getElementById('cert-modal').classList.remove('active');
+    }
+    document.getElementById('cert-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'cert-modal') closeModal();
+    });
+  </script>
+</body>
+</html>
