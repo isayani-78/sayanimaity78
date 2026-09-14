@@ -141,32 +141,6 @@
       box-shadow: 0 8px 24px -6px rgba(2, 132, 199, 0.35);
     }
 
-    .skill-card-3d {
-      perspective: 1000px; height: 250px; cursor: pointer;
-    }
-    .skill-card-inner {
-      position: relative; width: 100%; height: 100%;
-      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-      transform-style: preserve-3d;
-    }
-    .skill-card-3d:hover .skill-card-inner {
-      transform: rotateY(180deg);
-    }
-    .skill-card-front, .skill-card-back {
-      position: absolute; inset: 0;
-      backface-visibility: hidden; -webkit-backface-visibility: hidden;
-      border-radius: 12px; border: 1px solid #1a1e2c; overflow: hidden;
-      display: flex; flex-direction: column; background: #0d0f17;
-    }
-    .skill-card-front { align-items: center; text-align: center; }
-    .skill-cover-img {
-      width: 100%; height: 145px; object-fit: cover; border-bottom: 1px solid #1a1e2c;
-    }
-    .skill-card-back {
-      transform: rotateY(180deg); background: #080a10;
-      border-color: #0284c7; text-align: left; padding: 1.5rem; justify-content: center;
-    }
-
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(4, 5, 8, 0.94);
       backdrop-filter: blur(12px); z-index: 100; display: none;
@@ -176,19 +150,6 @@
   </style>
 </head>
 <body class="selection:bg-sky-500 selection:text-white">
-
-
-  <!-- SECTION: ABOUT ME (Dedicated Bio Page) -->
-<section class="py-28 px-6 max-w-6xl mx-auto pt-28">
-  <div class="about-surface p-8 sm:p-12 md:p-16 rounded-3xl">
-    
-    <!-- BACK TO PROFILE BUTTON -->
-    <div class="mb-8">
-      <a href="../index.html#about" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#141824] border border-[#23283a] text-sky-400 hover:bg-sky-600 hover:text-white font-mono text-xs font-semibold transition-all shadow-lg">
-        <i data-lucide="arrow-left" class="w-4 h-4"></i>
-        <span>Back to Profile</span>
-      </a>
-    </div>
 
   <!-- 3D Three.js Backdrop -->
   <div class="spline-background-container">
@@ -223,10 +184,20 @@
     </div>
   </header>
 
-  <!-- 1. INTRO SECTION & STATS (Independent Solid Box) -->
-    <div class="about-surface p-8 sm:p-12 md:p-16">
+  <!-- SECTION: ABOUT ME (Dedicated Bio Page) -->
+  <section id="about" class="py-28 px-6 max-w-6xl mx-auto pt-28">
+    <div class="about-surface p-8 sm:p-12 md:p-16 rounded-3xl">
+      
+      <!-- BACK TO PROFILE BUTTON -->
+      <div class="mb-8">
+        <a href="../index.html#about" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#141824] border border-[#23283a] text-sky-400 hover:bg-sky-600 hover:text-white font-mono text-xs font-semibold transition-all shadow-lg">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          <span>Back to Profile</span>
+        </a>
+      </div>
+
+      <!-- 1. INTRO SECTION & STATS -->
       <div class="grid lg:grid-cols-12 gap-12 items-start mb-10">
-        
         <!-- Left Intro Text -->
         <div class="lg:col-span-7 space-y-6 text-slate-300 about-editorial-text text-base sm:text-lg">
           <span class="font-mono text-xs text-sky-400 tracking-[0.2em] uppercase font-semibold">DIGITAL FORENSICS ENTHUSIAST || VAPT &amp; APPLICATION SECURITY ANALYST &nbsp;•&nbsp; KOLKATA, INDIA</span>
@@ -244,7 +215,7 @@
         <div class="lg:col-span-5 flex flex-col items-center">
           <div class="pro-box p-4 rounded-2xl border border-[#1a1e2c] max-w-sm w-full shadow-2xl bg-[#0d0f17]">
             <div class="w-full h-80 rounded-xl overflow-hidden border border-[#23283a]">
-              <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/More%20About%20Me%20%26%20Bio%20Data/assets/sayani2nd.jpg" alt="Sayani Maity - Portfolio Portrait" class="w-full h-full object-cover" onerror="this.src='https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/sayani2nd.jpg'" />
+              <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/More%20About%20Me%20%26%20Bio%20Data/assets/sayani2nd.jpg" alt="Sayani Maity - Portfolio Portrait" class="w-full h-full object-cover" />
             </div>
             <div class="mt-4 flex items-center justify-between px-2">
               <span class="text-xs font-mono text-sky-400 font-semibold">root@sayanimaity:~#</span>
@@ -252,10 +223,10 @@
             </div>
           </div>
         </div>
-
       </div>
+
       <!-- GitHub & Portfolio Buttons -->
-      <div class="flex flex-wrap gap-4 pt-6 border-t border-[#1a1e2c]">
+      <div class="flex flex-wrap gap-4 pt-6 border-t border-[#1a1e2c] mb-10">
         <a href="https://github.com/isayani-78" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-sky-600 text-white font-bold text-xs uppercase tracking-wider hover:bg-sky-500 transition-all shadow-lg shadow-sky-600/25">
           <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
           <span>GitHub</span>
@@ -266,8 +237,6 @@
         </a>
       </div>
 
-
-      </div>
       <!-- Strategic Numbers Display -->
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3.5 w-full text-center mb-10">
         <div class="pro-box p-4">
@@ -292,9 +261,8 @@
         </div>
       </div>
 
-    </div>
       <!-- Resume & Cover Letter Download Hub -->
-      <div class="document-download-box pro-box p-8 mb-16 text-center border border-[#1a1e2c] rounded-2xl bg-[#0d0f17]">
+      <div class="document-download-box pro-box p-8 mb-12 text-center border border-[#1a1e2c] rounded-2xl bg-[#0d0f17]">
         <h3 class="font-['Space_Grotesk'] text-xl font-bold text-white mb-3">Professional Dossier &amp; Credentials</h3>
         <p class="text-xs text-slate-400 mb-6 font-mono">Credentials verified. Career documentation secured below.</p>
         <div class="flex flex-wrap justify-center gap-4">
@@ -307,48 +275,45 @@
         </div>
       </div>
 
-      <!-- 3. DETAILED BIOGRAPHY SECTION (Requirement 2) -->
-    <div class="about-surface p-8 sm:p-12 md:p-16">
-      <span class="font-mono text-xs text-sky-400 tracking-[0.25em] uppercase font-bold block mb-3">BIOGRAPHY</span>
-      
-      <h3 class="text-2xl sm:text-4xl font-bold text-white font-['Cinzel'] tracking-tight mb-6 pb-4 border-b border-[#1a1e2c]">
-         THE JOURNEY • FROM SKILLS TO EXPERTISE
-      </h3>
+      <!-- 3. DETAILED BIOGRAPHY SECTION -->
+      <div class="mb-12">
+        <span class="font-mono text-xs text-sky-400 tracking-[0.25em] uppercase font-bold block mb-3">BIOGRAPHY</span>
+        
+        <h3 class="text-2xl sm:text-4xl font-bold text-white font-['Cinzel'] tracking-tight mb-6 pb-4 border-b border-[#1a1e2c]">
+            THE JOURNEY • FROM SKILLS TO EXPERTISE
+        </h3>
 
-<div class="space-y-7">
+        <div class="space-y-7">
+          <p class="text-slate-300 text-[15px] md:text-base font-light leading-7 tracking-wide">
+            Sayani Maity is a Digital Forensics enthusiast, VAPT &amp; Application Security Analyst, Penetration Tester, and Ethical Hacker from Kolkata, West Bengal, India. She completed her <span class="text-sky-400 font-medium">B.Sc. in Digital Forensics from Indian School of Ethical Hacking (ISOEH), Kolkata, under Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal</span>, as part of the <span class="text-sky-400 font-medium">2023–2026</span> batch, following an ICSE and ISC Science background from <span class="text-sky-400 font-medium">St. Thomas’ High School, Howrah</span>, with PCMB as her core subjects. She holds globally recognized <span class="text-sky-400 font-medium">CEH v13 AI</span> and <span class="text-sky-400 font-medium">CHFI v11</span> certifications from EC-Council, achieving <span class="text-sky-400 font-medium">93.6%</span> and <span class="text-sky-400 font-medium">84.7%</span> respectively, along with CRPO (Certified Ransomeware Protection Officer), CSCSO (Certified SME Cyber Security Officer) from EU Cyber Academy under European union agency for cybersecurity (ENISA) and as a additional Cybersecurity Certifications are CRTOM, CPPS, CTIGA, CCEP, and Core Python Programming credentials.
+          </p>
 
-  <p class="text-slate-300 text-[15px] md:text-base font-light leading-7 tracking-wide">
-    Sayani Maity is a Digital Forensics enthusiast, VAPT &amp; Application Security Analyst, Penetration Tester, and Ethical Hacker from Kolkata, West Bengal, India. She completed her <span class="text-sky-400 font-medium">B.Sc. in Digital Forensics from Indian School of Ethical Hacking (ISOEH), Kolkata, under Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal</span>, as part of the <span class="text-sky-400 font-medium">2023–2026</span> batch, following an ICSE and ISC Science background from <span class="text-sky-400 font-medium">St. Thomas’ High School, Howrah</span>, with PCMB as her core subjects. She holds globally recognized <span class="text-sky-400 font-medium">CEH v13 AI</span> and <span class="text-sky-400 font-medium">CHFI v11</span> certifications from EC-Council, achieving <span class="text-sky-400 font-medium">93.6%</span> and <span class="text-sky-400 font-medium">84.7%</span> respectively, along with CRPO (Certified Ransomeware Protection Officer), CSCSO (Certified SME Cyber Security Officer) from EU Cyber Academy under European union agency for cybersecurity (ENISA) and as a additional Cybersecurity Certifications are CRTOM, CPPS, CTIGA, CCEP, and Core Python Programming credentials.
-  </p>
+          <p class="text-slate-300 text-[15px] md:text-base font-light leading-7 tracking-wide">
+            Her professional experience includes a <span class="text-sky-400 font-medium">VAPT Internship at ISOAH Data Securities Pvt. Ltd.</span> from March–June 2026, covering web applications, REST APIs, network endpoints, OWASP Top 10, vulnerability assessment, PoC development, CVSS-based risk analysis, Microsoft 365 and administrative infrastructure reviews, and remediation validation. Her expertise spans Digital Forensics, VAPT, WAPT, Application &amp; API Security, OSINT, Information Security, Cybercrime Investigation, Evidence Handling, Disk &amp; Memory Analysis, Network Security, Traffic Analysis, Log Investigation, Cryptography, Firewalls, IDS/IPS, Incident Analysis, Security Research, and Security Automation. Her projects include CMTL, AI-Powered Phishing Email Detector, and Digital Forensic Learning Tool / Forensic Analyzer.
+          </p>
 
-  <p class="text-slate-300 text-[15px] md:text-base font-light leading-7 tracking-wide">
-    Her professional experience includes a <span class="text-sky-400 font-medium">VAPT Internship at ISOAH Data Securities Pvt. Ltd.</span> from March–June 2026, covering web applications, REST APIs, network endpoints, OWASP Top 10, vulnerability assessment, PoC development, CVSS-based risk analysis, Microsoft 365 and administrative infrastructure reviews, and remediation validation. Her expertise spans Digital Forensics, VAPT, WAPT, Application &amp; API Security, OSINT, Information Security, Cybercrime Investigation, Evidence Handling, Disk &amp; Memory Analysis, Network Security, Traffic Analysis, Log Investigation, Cryptography, Firewalls, IDS/IPS, Incident Analysis, Security Research, and Security Automation. Her projects include CMTL, AI-Powered Phishing Email Detector, and Digital Forensic Learning Tool / Forensic Analyzer.
-  </p>
+          <p class="text-slate-300 text-[15px] md:text-base font-light leading-7 tracking-wide">
+            Her development is reinforced by global cybersecurity achievements on <span class="text-sky-400 font-medium">TryHackMe</span>, where she ranks among the <span class="text-sky-400 font-medium">Top 5% globally</span>, including <span class="text-sky-400 font-medium">Gold League 1st Place — Epic 0.8% (Nov 2025)</span>, <span class="text-sky-400 font-medium">Silver League 1st Place — Rare 1.2% (Dec 2025)</span>, and <span class="text-sky-400 font-medium">Bronze League 1st Place — Rare 2.8% (Oct 2025)</span>. She also completed <span class="text-sky-400 font-medium">Advent of Cyber 2025</span>, achieving <span class="text-sky-400 font-medium">1.8% global rarity</span>. An <span class="text-sky-400 font-medium">ex-member of Cyraksha — The Cyber Club of Kolkata</span>, she served as Technical Team Core Member (2024) and Managing Team Core Member (2025), contributing to West Bengal Ground Zero CTF events. She actively participates in the <span class="text-sky-400 font-medium">GDG Cloud Kolkata community</span>, <span class="text-sky-400 font-medium">Microsoft Security events</span>, meetups and workshops, DevOps events, CTFs, and cybersecurity programs.
+          </p>
 
-  <p class="text-slate-300 text-[15px] md:text-base font-light leading-7 tracking-wide">
-    Her development is reinforced by global cybersecurity achievements on <span class="text-sky-400 font-medium">TryHackMe</span>, where she ranks among the <span class="text-sky-400 font-medium">Top 5% globally</span>, including <span class="text-sky-400 font-medium">Gold League 1st Place — Epic 0.8% (Nov 2025)</span>, <span class="text-sky-400 font-medium">Silver League 1st Place — Rare 1.2% (Dec 2025)</span>, and <span class="text-sky-400 font-medium">Bronze League 1st Place — Rare 2.8% (Oct 2025)</span>. She also completed <span class="text-sky-400 font-medium">Advent of Cyber 2025</span>, achieving <span class="text-sky-400 font-medium">1.8% global rarity</span>. An <span class="text-sky-400 font-medium">ex-member of Cyraksha — The Cyber Club of Kolkata</span>, she served as Technical Team Core Member (2024) and Managing Team Core Member (2025), contributing to West Bengal Ground Zero CTF events. She actively participates in the <span class="text-sky-400 font-medium">GDG Cloud Kolkata community</span>, <span class="text-sky-400 font-medium">Microsoft Security events</span>, meetups and workshops, DevOps events, CTFs, and cybersecurity programs.
-  </p>
+          <p class="text-slate-300 text-[15px] md:text-base font-light leading-7 tracking-wide">
+            Outside cybersecurity, she holds the <span class="text-sky-400 font-medium">Ankan Bivakar 2021</span> certification from Bangiya Sangeet Parishad for distinction in Art.
+            <button onclick="openArtModal('https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/More%20About%20Me%20%26%20Bio%20Data/assets/sayaniart.jpg')" class="ml-2 text-sky-400 font-semibold hover:text-white transition-colors underline underline-offset-4 cursor-pointer">VIEW</button>
+          </p>
 
-  <p class="text-slate-300 text-[15px] md:text-base font-light leading-7 tracking-wide">
-  Outside cybersecurity, she holds the <span class="text-sky-400 font-medium">Ankan Bivakar 2021</span> certification from Bangiya Sangeet Parishad for distinction in Art.
-  <button onclick="openArtModal('https://raw.githubusercontent.com/isayani-78/sayanimaity78/main/More%20About%20Me%20%26%20Bio%20Data/assets/sayaniart.jpg')" class="ml-2 text-sky-400 font-semibold hover:text-white transition-colors underline underline-offset-4 cursor-pointer">VIEW</button>
-</p>
+          <div class="pt-2 border-t border-slate-800/70">
+            <p class="text-slate-100 text-[15px] md:text-base font-semibold italic leading-7 tracking-wide">
+              From starting with the fundamentals to building practical capability through continuous learning, certifications, global challenges, hands-on investigation, professional experience, and cybersecurity research, Sayani has transformed curiosity into expertise. What began with understanding how systems work, how vulnerabilities emerge, how attacks unfold, and what digital evidence remains has evolved into a disciplined approach to investigating, testing, analyzing, and securing modern digital environments. Today, she is a <span class="text-sky-400">Digital Forensics, VAPT &amp; Application Security, and Information Security professional</span>, actively engaged in investigation and security research, with a growing focus on <span class="text-sky-400">AI-driven Cybersecurity</span> and emerging threats. From 0 to 100, every stage of the journey has been shaped by practice, persistence, investigation, and the drive to continuously evolve.
+            </p>
+          </div>
 
-  <div class="pt-2 border-t border-slate-800/70">
-    <p class="text-slate-100 text-[15px] md:text-base font-semibold italic leading-7 tracking-wide">
-      From starting with the fundamentals to building practical capability through continuous learning, certifications, global challenges, hands-on investigation, professional experience, and cybersecurity research, Sayani has transformed curiosity into expertise. What began with understanding how systems work, how vulnerabilities emerge, how attacks unfold, and what digital evidence remains has evolved into a disciplined approach to investigating, testing, analyzing, and securing modern digital environments. Today, she is a <span class="text-sky-400">Digital Forensics, VAPT &amp; Application Security, and Information Security professional</span>, actively engaged in investigation and security research, with a growing focus on <span class="text-sky-400">AI-driven Cybersecurity</span> and emerging threats. From 0 to 100, every stage of the journey has been shaped by practice, persistence, investigation, and the drive to continuously evolve.
-    </p>
-  </div>
-
-  <blockquote class="pt-1 text-center">
-    <p class="text-slate-400 text-sm font-light italic tracking-wide">
-      “Curiosity started the journey; investigation shaped the expertise.”
-    </p>
-  </blockquote>
-
-</div>
-    </div>
-
+          <blockquote class="pt-1 text-center">
+            <p class="text-slate-400 text-sm font-light italic tracking-wide">
+              “Curiosity started the journey; investigation shaped the expertise.”
+            </p>
+          </blockquote>
+        </div>
+      </div>
 
       <!-- Connect Sayani in Online -->
       <div class="social-links-section text-center pt-8 border-t border-[#1a1e2c]">
@@ -362,8 +327,6 @@
               <span class="text-[11px] text-sky-400 font-mono block">Professional Profile</span>
             </div>
           </a>
-
-          
 
           <a href="https://discordapp.com/users/1178036036119560213" target="_blank" class="online-pill">
             <svg class="w-5 h-5 flex-shrink-0 fill-[#5865F2]" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.894.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
@@ -464,9 +427,27 @@
         <button onclick="openCertModal('CHFI v11 Certified', 'EC-Council', 'Official Score: 84.7%', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CHFI%20Certificate.jpg', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20CHFI%20ExamTranscript.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
       </div>
 
+      <!-- 3. CSCSO -->
+      <div class="cert-pro-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20CSCSO%20Certificate.jpg" alt="CSCSO" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">CSCSO</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">Certified SME Cyber Security Officer</p>
+        <button onclick="openCertModal('Certified SME Cyber Security Officer', 'EU Cyber Academy', 'CSCSO Accreditation', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20CSCSO%20Certificate.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
 
-    
-      <!-- 7. Cyber Security CoE -->
+      <!-- 4. CRPO -->
+      <div class="cert-pro-card">
+        <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
+          <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20CRPO%20Certificate.jpg" alt="CRPO" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <h3 class="font-bold text-white text-base mb-1">CRPO</h3>
+        <p class="text-[11px] text-slate-400 mb-3 font-mono">Certified Ransomeware Protection Officer</p>
+        <button onclick="openCertModal('Certified Ransomeware Protection Officer', 'EU Cyber Academy', 'CRPO Accreditation', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20CRPO%20Certificate.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
+      </div>
+
+      <!-- 5. Cyber Security CoE -->
       <div class="cert-pro-card">
         <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
           <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg" alt="CoE" class="w-full h-full object-cover rounded-lg" />
@@ -476,7 +457,7 @@
         <button onclick="openCertModal('Cyber Security Centre of Excellence', 'Govt. of West Bengal', 'Dept of IT & Electronics', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Certificate%20from%20Cyber%20Security%20Centre%20of%20Exellence%20Deprtment%20of%20Information%20Technology%20%26%20Electronics%20Government%20of%20West%20Bengal.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
       </div>
 
-      <!-- 8. Core Python -->
+      <!-- 6. Core Python -->
       <div class="cert-pro-card">
         <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
           <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg" alt="Python" class="w-full h-full object-cover rounded-lg" />
@@ -486,8 +467,7 @@
         <button onclick="openCertModal('Core Python Programming', 'ISOEH (Programming)', 'Completion of Core Python Programming Course', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Completion%20of%20Core%20Python%20Course.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
       </div>
 
-      
-      <!-- 11. Advent of Cyber 2025 -->
+      <!-- 7. Advent of Cyber 2025 -->
       <div class="cert-pro-card">
         <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
           <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/AOC2025.JPG" alt="AoC 2025" class="w-full h-full object-cover rounded-lg" />
@@ -497,7 +477,7 @@
         <button onclick="openCertModal('Advent of Cyber 2025 Certification', 'TryHackMe', 'Completed 24-Day Advanced Cyber Defense and Incident Response Challenges', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/AOC2025.JPG')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
       </div>
 
-      <!-- 12. Infocom Hackstar '24 -->
+      <!-- 8. Infocom Hackstar '24 -->
       <div class="cert-pro-card">
         <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
           <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg" alt="Hackstar 24" class="w-full h-full object-cover rounded-lg" />
@@ -507,7 +487,7 @@
         <button onclick="openCertModal('Infocom Hackstar 2024', 'Infocom ABP & ISOEH', 'CTF Competition Certificate 2024', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2024).jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
       </div>
 
-      <!-- 13. Infocom Hackstar '23 -->
+      <!-- 9. Infocom Hackstar '23 -->
       <div class="cert-pro-card">
         <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
           <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg" alt="Hackstar 23" class="w-full h-full object-cover rounded-lg" />
@@ -517,7 +497,7 @@
         <button onclick="openCertModal('Infocom Hackstar 2023', 'Infocom ABP & ISOEH', 'CTF Participation in Hackstar 2023', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/CTF%20Participation%20of%20Infocom%20Hackstar%20by%20ABP%20(2023).jpeg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
       </div>
 
-      <!-- 14. MAKAUT CTF -->
+      <!-- 10. MAKAUT CTF -->
       <div class="cert-pro-card">
         <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
           <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg" alt="MAKAUT CTF" class="w-full h-full object-cover rounded-lg" />
@@ -527,7 +507,7 @@
         <button onclick="openCertModal('MAKAUT CTF Participation', 'MAKAUT University', 'CTF Organised by MAKAUT', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20Organised%20by%20Our%20University%20Maulana%20Abul%20Kalam%20Azad%20University%20OF%20Technology%20(MAKAUT)%2C%20West%20Bengal.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
       </div>
 
-      <!-- 15. Cyraksha Hackathon 2 -->
+      <!-- 11. Cyraksha Hackathon 2 -->
       <div class="cert-pro-card">
         <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
           <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg" alt="Cyraksha" class="w-full h-full object-cover rounded-lg" />
@@ -537,8 +517,7 @@
         <button onclick="openCertModal('Cyraksha CTF Hackathon 2', 'Cyraksha (The Cyber Club of Kolkata)', 'Participation in CTF of Cyraksha', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20CTF%20of%20Cyraksha%20(The%20Cyber%20Club%20of%20Kolkata)%20%5BHackathon%202%5D.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
       </div>
 
-
-      <!-- 17. Cryptoquest -->
+      <!-- 12. Cryptoquest -->
       <div class="cert-pro-card">
         <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
           <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg" alt="Cryptoquest" class="w-full h-full object-cover rounded-lg" />
@@ -548,7 +527,7 @@
         <button onclick="openCertModal('Cryptoquest Participation', 'EDGE\'24 (Geekonix)', 'Participation in Cryptoquest Cryptography Competition at EDGE\'24', 'https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Participation%20in%20Cryptoquest.jpg')" class="text-xs font-mono text-sky-400 font-bold hover:underline text-left">VERIFY &rarr;</button>
       </div>
 
-      <!-- 18. GroundZero WB Hackathon -->
+      <!-- 13. GroundZero WB Hackathon -->
       <div class="cert-pro-card">
         <div class="w-full h-36 bg-black/40 rounded-xl overflow-hidden mb-3 border border-white/10 flex items-center justify-center p-1">
           <img src="https://raw.githubusercontent.com/isayani-78/sayanimaity78/refs/heads/main/assets/Sayani%20Maity%20GroundZero%20WB%20Hackathon%20ISOEH%20Certificate.jpg" alt="GroundZero" class="w-full h-full object-cover rounded-lg" />
@@ -648,7 +627,7 @@
       </div>
 
       <div class="pro-box p-6 pro-box-featured">
-        <span class="text-xs font-bold text-sky-400 uppercase font-mono block mb-3">// 06. ETHICAL HACKING &amp; DATA SECURITY </span>
+        <span class="text-xs font-bold text-sky-400 uppercase font-mono block mb-3">// 06. ETHICAL HACKING &amp; DATA SECURITY</span>
         <div class="flex flex-wrap gap-2 text-xs">
           <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Ethical Hacking</span>
           <span class="px-3.5 py-1.5 rounded-full bg-[#141824] border border-[#23283a] text-white">Footprinting &amp; Reconnaissance</span>
@@ -676,6 +655,16 @@
       </div>
       <div id="modal-img-container" class="rounded-lg overflow-hidden border border-[#1a1e2c] mb-3 bg-black flex flex-col gap-3 p-2 max-h-[60vh] overflow-y-auto"></div>
       <p id="modal-desc" class="text-xs text-slate-400 font-mono mb-2"></p>
+    </div>
+  </div>
+
+  <!-- ART MODAL POPUP -->
+  <div id="art-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[110] hidden items-center justify-center p-4">
+    <div class="relative max-w-2xl w-full bg-[#0d0f17] border border-[#1a1e2c] p-4 rounded-2xl shadow-2xl">
+      <button onclick="closeArtModal()" class="absolute -top-3 -right-3 w-8 h-8 bg-sky-600 text-white rounded-full flex items-center justify-center font-bold text-lg hover:bg-sky-500 transition-all shadow-lg cursor-pointer">&times;</button>
+      <div class="rounded-xl overflow-hidden max-h-[80vh] flex items-center justify-center bg-black/50">
+        <img id="art-modal-img" src="" alt="Ankan Bivakar Certificate" class="max-w-full max-h-[75vh] object-contain rounded-lg" />
+      </div>
     </div>
   </div>
 
@@ -793,7 +782,7 @@
       if (img2) {
         const i2 = document.createElement('img');
         i2.src = img2;
-        i2.className = 'w-full h-auto object-containross border border-[#1a1e2c]';
+        i2.className = 'w-full h-auto object-contain rounded border border-[#1a1e2c]';
         box.appendChild(i2);
       }
       document.getElementById('cert-modal').classList.add('active');
@@ -804,21 +793,8 @@
     document.getElementById('cert-modal').addEventListener('click', (e) => {
       if (e.target.id === 'cert-modal') closeModal();
     });
+
     function openArtModal(imgSrc) {
-  const modal = document.getElementById('art-modal');
-  const img = document.getElementById('art-modal-img');
-  img.src = imgSrc;
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
-}
-
-function closeArtModal() {
-  const modal = document.getElementById('art-modal');
-  modal.classList.remove('flex');
-  modal.classList.add('hidden');
-}
-
-function openArtModal(imgSrc) {
       const modal = document.getElementById('art-modal');
       const img = document.getElementById('art-modal-img');
       if (modal && img) {
@@ -845,17 +821,5 @@ function openArtModal(imgSrc) {
       }
     });
   </script>
-  
-<!-- ART MODAL POPUP -->
-<div id="art-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[110] hidden items-center justify-center p-4">
-  <div class="relative max-w-2xl w-full bg-[#0d0f17] border border-[#1a1e2c] p-4 rounded-2xl shadow-2xl">
-    <button onclick="closeArtModal()" class="absolute -top-3 -right-3 w-8 h-8 bg-sky-600 text-white rounded-full flex items-center justify-center font-bold text-lg hover:bg-sky-500 transition-all shadow-lg cursor-pointer">&times;</button>
-    <div class="rounded-xl overflow-hidden max-h-[80vh] flex items-center justify-center bg-black/50">
-      <img id="art-modal-img" src="" alt="Ankan Bivakar Certificate" class="max-w-full max-h-[75vh] object-contain rounded-lg" />
-    </div>
-  </div>
-</div>
-  </div>
-</div>
 </body>
 </html>
