@@ -54,9 +54,7 @@
 
         a { text-decoration: none; color: inherit; }
 
-        /* =========================
-            NAVIGATION
-        ========================= */
+        /* NAVIGATION */
         nav {
             position: sticky; top: 0; z-index: 1000; width: 100%; padding: 1rem 2.5rem;
             display: flex; justify-content: space-between; align-items: center;
@@ -83,17 +81,13 @@
         }
         .back-btn:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
 
-        /* =========================
-            HEADER
-        ========================= */
+        /* HEADER */
         .blog-header { text-align: center; padding: 5rem 1.5rem 3rem; max-width: 850px; margin: 0 auto; }
         .blog-header h1 { font-family: var(--font-display); color: var(--white); font-size: clamp(2.5rem, 5vw, 3.8rem); font-weight: 700; margin-bottom: 1rem; letter-spacing: -0.02em; }
         .terminal-top { font-family: var(--font-mono); color: #ff00ff; font-size: 0.85rem; margin-bottom: 0.75rem; letter-spacing: 1px; }
         .blog-header p { color: #94a3b8; font-size: 0.95rem; max-width: 650px; margin: 0.75rem auto 0; }
 
-        /* =========================
-            SEARCH & FILTERS BAR
-        ========================= */
+        /* SEARCH & FILTERS BAR */
         .filter-container { width: min(1050px, 90%); margin: 0 auto 3rem; display: flex; flex-direction: column; gap: 1.2rem; }
         .search-bar-wrapper { position: relative; width: 100%; max-width: 320px; }
         .search-input {
@@ -110,9 +104,7 @@
         }
         .filter-pill:hover, .filter-pill.active { background: #141824; border-color: var(--secondary); color: var(--white); }
 
-        /* =========================
-            BLOG CONTAINER & CARDS
-        ========================= */
+        /* BLOG CONTAINER & CARDS */
         .blog-container { width: min(1050px, 90%); margin: 0 auto 6rem; }
         .blog-grid { display: flex; flex-direction: column; gap: 1.5rem; }
 
@@ -170,7 +162,6 @@
         <h1>Blog &amp; Writeups</h1>
         <p>Technical write-ups, cybersecurity research, digital forensics, penetration testing, investigations, labs and security experiments.</p>
         
-        <!-- Automated Total Views Counter Display -->
         <div class="mt-4 flex items-center justify-center gap-2 font-mono text-xs text-sky-400">
             <span id="globalBlogViews">◉ Loading total views...</span>
         </div>
@@ -196,7 +187,7 @@
         <div class="blog-grid" id="blogGrid">
 
             <!-- POST 01: LLM Injection Security -->
-            <article class="blog-card" data-tags="ai security" onclick="window.location.href='llm-injection-security'">
+            <article class="blog-card" data-tags="ai security" onclick="window.location.href='llm-injection-security/'">
                 <div class="blog-image-wrapper">
                     <img src="../assets/images/blog-placeholder.jpg" alt="LLM Security" class="blog-image" loading="lazy">
                 </div>
@@ -204,7 +195,7 @@
                     <div class="blog-meta-top">
                         <span class="blog-date">Sep 23, 2026</span>
                         <span>•</span>
-                        <span class="reading-time" data-article="llm-injection-security">⏱ Calculating...</span>
+                        <span class="reading-time" data-article="llm-injection-security/index.html">⏱ Calculating...</span>
                         <span>•</span>
                         <span class="views" data-page="llm_injection_security">◉ Loading views...</span>
                     </div>
@@ -212,12 +203,12 @@
                     <p class="blog-description">
                         Understanding semantic layer vulnerabilities, direct/indirect injection vectors, many-shot jailbreaking, and AI security testing tools.
                     </p>
-                    <a href="llm-injection-security" class="read-link">READ →</a>
+                    <a href="llm-injection-security/" class="read-link">READ →</a>
                 </div>
             </article>
 
             <!-- POST 02: Snort 3 IDS -->
-            <article class="blog-card" data-tags="snort security" onclick="window.location.href='snort-3-ids-ips'">
+            <article class="blog-card" data-tags="snort security" onclick="window.location.href='snort-3-ids-ips.html'">
                 <div class="blog-image-wrapper">
                     <img src="assets/snort cover.jpg" alt="Snort 3 IDS and IPS Lab" class="blog-image" loading="lazy">
                 </div>
@@ -225,7 +216,7 @@
                     <div class="blog-meta-top">
                         <span class="blog-date">Aug 27, 2026</span>
                         <span>•</span>
-                        <span class="reading-time" data-article="snort-3-ids-ips">⏱ Calculating...</span>
+                        <span class="reading-time" data-article="snort-3-ids-ips.html">⏱ Calculating...</span>
                         <span>•</span>
                         <span class="views" data-page="snort_3_ids_ips">◉ Loading views...</span>
                     </div>
@@ -233,7 +224,7 @@
                     <p class="blog-description">
                         Building a practical network security lab using Snort 3, CentOS Firewall, Kali Linux, and Metasploitable 2 to evaluate rule configurations and threat detection triggers.
                     </p>
-                    <a href="snort-3-ids-ips" class="read-link">READ →</a>
+                    <a href="snort-3-ids-ips.html" class="read-link">READ →</a>
                 </div>
             </article>
 
@@ -251,7 +242,6 @@
             lucide.createIcons();
         }
 
-        // Automated Global/Total Views Counter
         async function updateGlobalViews() {
             const el = document.getElementById('globalBlogViews');
             if (!el) return;
@@ -271,7 +261,6 @@
         }
         updateGlobalViews();
 
-        // Fully Automated Reading Time Calculator
         document.querySelectorAll(".reading-time").forEach(async (element) => {
             const articlePath = element.dataset.article;
             if (!articlePath) {
@@ -296,7 +285,6 @@
             }
         });
 
-        // Fully Automated Real-time Individual View Counter
         document.querySelectorAll(".views").forEach(async (element) => {
             const pageId = element.dataset.page;
             if (!pageId) {
@@ -318,7 +306,6 @@
             }
         });
 
-        // Search and Filter functionality
         const searchInput = document.getElementById('searchInput');
         const filterPills = document.querySelectorAll('.filter-pill');
         const blogCards = document.querySelectorAll('.blog-card');
